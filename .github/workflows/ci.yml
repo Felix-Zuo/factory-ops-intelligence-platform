@@ -23,6 +23,8 @@ jobs:
         run: npm --prefix apps/web-dashboard install
       - name: Seed demo data
         run: python scripts/seed_demo_data.py
+      - name: Generate frontend snapshot
+        run: python scripts/generate_frontend_snapshot.py
       - name: Self check
         run: python scripts/self_check.py
       - name: Unit tests
@@ -33,4 +35,3 @@ jobs:
         run: python scripts/check_ai_tone.py
       - name: Frontend build
         run: npm --prefix apps/web-dashboard run build
-

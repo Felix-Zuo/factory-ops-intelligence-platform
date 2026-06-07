@@ -23,3 +23,5 @@
 | Repair screenshot layout issues | done | Browser checked local app at `http://127.0.0.1:5178`; fixed source trace, notice and timeline overflow |
 | Regenerate screenshots | done | Updated PNGs in `docs/assets/screenshots/` from current local pages |
 | Expand validation coverage | done | pytest now covers schema depth, BOM explosion, API route functions, agent registry, material trace and frontend snapshot |
+| Open-source showcase polish | done | Reworked `README.md`, `docs/showcase.html`, `docs/index.html`, screenshot set and release notes |
+| Open-source repository cleanup | done | Removed non-project files/wording, added issue templates, social preview, stable snapshot IDs and stronger tone scan |

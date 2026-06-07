@@ -41,4 +41,4 @@ The agent runtime is a caller and narrator, not the source of truth. Business va
 
 ## Adapter Boundary
 
-Live integrations are not required for the portfolio demo. Adapters expose clear scope and mode so future ERP/WMS/MES/PLC work can connect without changing the business engines.
+Live integrations are not required for the public demo. Adapters expose clear scope and mode so future ERP/WMS/MES/PLC work can connect without changing the business engines.

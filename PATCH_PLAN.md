@@ -39,10 +39,10 @@
   - tool call trace.
 - Keep bilingual UI but avoid prompt-like wording.
 
-## Phase 4 - Documentation and Portfolio
+## Phase 4 - Documentation and Open-source Release
 
 - Update README quick start and validation commands.
-- Strengthen `PORTFOLIO_CASE_STUDY.md` with concrete evidence and tested routes.
+- Strengthen `docs/showcase.html` with concrete evidence and tested routes.
 - Keep user-visible copy product-oriented and engineering-specific.
 - Keep development instructions in `AGENTS.md`, `RUNBOOK.md`, `TASK_LEDGER.md`, `PATCH_PLAN.md` and code comments only.
 

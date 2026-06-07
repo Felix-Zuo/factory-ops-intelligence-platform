@@ -1122,7 +1122,7 @@ const demoSnapshot = {
     ]
   },
   "notice": {
-    "notice_id": "PN-20260607141539-381D71",
+    "notice_id": "PN-DEMO-6205-2RS",
     "product_id": "FG-6205-2RS",
     "product_name": "6205-2RS Deep Groove Bearing",
     "quantity": 12000,
@@ -1222,7 +1222,7 @@ const demoSnapshot = {
         "supplier_note": "Grease batch QA release is the current watch item"
       }
     ],
-    "html_preview": "<section class='notice-sheet'><h1>Production Notice PN-20260607141539-381D71</h1><p><strong>Product:</strong> 6205-2RS Deep Groove Bearing (FG-6205-2RS)</p><p><strong>Quantity:</strong> 12,000 pcs</p><p><strong>Customer order:</strong> SO-2026-0607-01 / due 2026-06-18</p><p><strong>Material gate:</strong> release_with_follow_up</p><table><thead><tr><th>Material</th><th>Required</th><th>Coverage</th><th>Status</th></tr></thead><tbody><tr><td>MAT-6205-OR</td><td>12,000.0 pcs</td><td>17,200.0</td><td>covered</td></tr><tr><td>MAT-6205-IR</td><td>12,000.0 pcs</td><td>16,300.0</td><td>covered</td></tr><tr><td>MAT-BALL-7.94</td><td>108,000.0 pcs</td><td>128,400.0</td><td>watch</td></tr><tr><td>MAT-CAGE-6205</td><td>12,000.0 pcs</td><td>17,000.0</td><td>covered</td></tr><tr><td>MAT-SEAL-6205</td><td>24,000.0 pcs</td><td>32,100.0</td><td>covered</td></tr><tr><td>MAT-GREASE-L2</td><td>21,600.0 g</td><td>26,200.0</td><td>watch</td></tr><tr><td>MAT-PACK-STD</td><td>12,000.0 pcs</td><td>68,800.0</td><td>surplus</td></tr></tbody></table></section>",
+    "html_preview": "<section class='notice-sheet'><h1>Production Notice PN-DEMO-6205-2RS</h1><p><strong>Product:</strong> 6205-2RS Deep Groove Bearing (FG-6205-2RS)</p><p><strong>Quantity:</strong> 12,000 pcs</p><p><strong>Customer order:</strong> SO-2026-0607-01 / due 2026-06-18</p><p><strong>Material gate:</strong> release_with_follow_up</p><table><thead><tr><th>Material</th><th>Required</th><th>Coverage</th><th>Status</th></tr></thead><tbody><tr><td>MAT-6205-OR</td><td>12,000.0 pcs</td><td>17,200.0</td><td>covered</td></tr><tr><td>MAT-6205-IR</td><td>12,000.0 pcs</td><td>16,300.0</td><td>covered</td></tr><tr><td>MAT-BALL-7.94</td><td>108,000.0 pcs</td><td>128,400.0</td><td>watch</td></tr><tr><td>MAT-CAGE-6205</td><td>12,000.0 pcs</td><td>17,000.0</td><td>covered</td></tr><tr><td>MAT-SEAL-6205</td><td>24,000.0 pcs</td><td>32,100.0</td><td>covered</td></tr><tr><td>MAT-GREASE-L2</td><td>21,600.0 g</td><td>26,200.0</td><td>watch</td></tr><tr><td>MAT-PACK-STD</td><td>12,000.0 pcs</td><td>68,800.0</td><td>surplus</td></tr></tbody></table></section>",
     "template_version": "bearing-production-notice/v1",
     "source_trace": {
       "bom_components": 7,
@@ -1329,7 +1329,7 @@ const demoSnapshot = {
     ]
   },
   "simulation": {
-    "run_id": "SIM-20260607141539-08A3CF",
+    "run_id": "SIM-DEMO-LINE-A",
     "line_id": "LINE-BRG-6205-A",
     "line_name": "6205 Bearing Assembly Line A",
     "hours": 24,
@@ -1652,7 +1652,7 @@ const demoSnapshot = {
         "source_column": "qty"
       }
     ],
-    "simulation_run_id": "SIM-20260607141539-2D1404"
+    "simulation_run_id": "SIM-DEMO-LINE-A"
   },
   "integrations": [
     {
@@ -2005,9 +2005,9 @@ const demoSnapshot = {
     }
   ],
   "agentAnswer": {
-    "answer": "Result: production notice PN-20260607141539-8B08CB is ready for preview. Evidence: material gate is release_with_follow_up with 2 watch items. Source: order row 2 and BOM 7 rows are linked. Next check: confirm watch items before release.",
+    "answer": "Result: production notice PN-DEMO-6205-2RS is ready for preview. Evidence: material gate is release_with_follow_up with 2 watch items. Source: order row 2 and BOM 7 rows are linked. Next check: confirm watch items before release.",
     "trace": {
-      "trace_id": "TRC-ACCD5B65",
+      "trace_id": "TRC-9237B0B6",
       "user_question": "Can FG-6205-2RS be released for production?",
       "question": "Can FG-6205-2RS be released for production?",
       "selected_intent": "production_notice",
@@ -2660,7 +2660,7 @@ const demoSnapshot = {
               "source_column": "qty"
             }
           ],
-          "completed_at": "2026-06-07T14:15:39.238650+00:00"
+          "completed_at": "2026-06-07T08:00:00+00:00"
         },
         {
           "tool_name": "generate_production_notice",
@@ -2669,7 +2669,7 @@ const demoSnapshot = {
             "quantity": 12000
           },
           "output_json": {
-            "notice_id": "PN-20260607141539-8B08CB",
+            "notice_id": "PN-DEMO-6205-2RS",
             "product_id": "FG-6205-2RS",
             "product_name": "6205-2RS Deep Groove Bearing",
             "quantity": 12000,
@@ -2769,7 +2769,7 @@ const demoSnapshot = {
                 "supplier_note": "Grease batch QA release is the current watch item"
               }
             ],
-            "html_preview": "<section class='notice-sheet'><h1>Production Notice PN-20260607141539-8B08CB</h1><p><strong>Product:</strong> 6205-2RS Deep Groove Bearing (FG-6205-2RS)</p><p><strong>Quantity:</strong> 12,000 pcs</p><p><strong>Customer order:</strong> SO-2026-0607-01 / due 2026-06-18</p><p><strong>Material gate:</strong> release_with_follow_up</p><table><thead><tr><th>Material</th><th>Required</th><th>Coverage</th><th>Status</th></tr></thead><tbody><tr><td>MAT-6205-OR</td><td>12,000.0 pcs</td><td>17,200.0</td><td>covered</td></tr><tr><td>MAT-6205-IR</td><td>12,000.0 pcs</td><td>16,300.0</td><td>covered</td></tr><tr><td>MAT-BALL-7.94</td><td>108,000.0 pcs</td><td>128,400.0</td><td>watch</td></tr><tr><td>MAT-CAGE-6205</td><td>12,000.0 pcs</td><td>17,000.0</td><td>covered</td></tr><tr><td>MAT-SEAL-6205</td><td>24,000.0 pcs</td><td>32,100.0</td><td>covered</td></tr><tr><td>MAT-GREASE-L2</td><td>21,600.0 g</td><td>26,200.0</td><td>watch</td></tr><tr><td>MAT-PACK-STD</td><td>12,000.0 pcs</td><td>68,800.0</td><td>surplus</td></tr></tbody></table></section>",
+            "html_preview": "<section class='notice-sheet'><h1>Production Notice PN-DEMO-6205-2RS</h1><p><strong>Product:</strong> 6205-2RS Deep Groove Bearing (FG-6205-2RS)</p><p><strong>Quantity:</strong> 12,000 pcs</p><p><strong>Customer order:</strong> SO-2026-0607-01 / due 2026-06-18</p><p><strong>Material gate:</strong> release_with_follow_up</p><table><thead><tr><th>Material</th><th>Required</th><th>Coverage</th><th>Status</th></tr></thead><tbody><tr><td>MAT-6205-OR</td><td>12,000.0 pcs</td><td>17,200.0</td><td>covered</td></tr><tr><td>MAT-6205-IR</td><td>12,000.0 pcs</td><td>16,300.0</td><td>covered</td></tr><tr><td>MAT-BALL-7.94</td><td>108,000.0 pcs</td><td>128,400.0</td><td>watch</td></tr><tr><td>MAT-CAGE-6205</td><td>12,000.0 pcs</td><td>17,000.0</td><td>covered</td></tr><tr><td>MAT-SEAL-6205</td><td>24,000.0 pcs</td><td>32,100.0</td><td>covered</td></tr><tr><td>MAT-GREASE-L2</td><td>21,600.0 g</td><td>26,200.0</td><td>watch</td></tr><tr><td>MAT-PACK-STD</td><td>12,000.0 pcs</td><td>68,800.0</td><td>surplus</td></tr></tbody></table></section>",
             "template_version": "bearing-production-notice/v1",
             "source_trace": {
               "bom_components": 7,
@@ -2972,7 +2972,7 @@ const demoSnapshot = {
               "source_column": "qty"
             }
           ],
-          "completed_at": "2026-06-07T14:15:39.238654+00:00"
+          "completed_at": "2026-06-07T08:00:00+00:00"
         }
       ],
       "source_refs": [
@@ -3167,9 +3167,9 @@ const demoSnapshot = {
           "source_column": "qty"
         }
       ],
-      "final_answer": "Result: production notice PN-20260607141539-8B08CB is ready for preview. Evidence: material gate is release_with_follow_up with 2 watch items. Source: order row 2 and BOM 7 rows are linked. Next check: confirm watch items before release.",
+      "final_answer": "Result: production notice PN-DEMO-6205-2RS is ready for preview. Evidence: material gate is release_with_follow_up with 2 watch items. Source: order row 2 and BOM 7 rows are linked. Next check: confirm watch items before release.",
       "status": "completed",
-      "created_at": "2026-06-07T14:15:39.238660+00:00"
+      "created_at": "2026-06-07T08:00:00+00:00"
     },
     "data": {
       "coverage": {
@@ -3709,7 +3709,7 @@ const demoSnapshot = {
         ]
       },
       "notice": {
-        "notice_id": "PN-20260607141539-8B08CB",
+        "notice_id": "PN-DEMO-6205-2RS",
         "product_id": "FG-6205-2RS",
         "product_name": "6205-2RS Deep Groove Bearing",
         "quantity": 12000,
@@ -3809,7 +3809,7 @@ const demoSnapshot = {
             "supplier_note": "Grease batch QA release is the current watch item"
           }
         ],
-        "html_preview": "<section class='notice-sheet'><h1>Production Notice PN-20260607141539-8B08CB</h1><p><strong>Product:</strong> 6205-2RS Deep Groove Bearing (FG-6205-2RS)</p><p><strong>Quantity:</strong> 12,000 pcs</p><p><strong>Customer order:</strong> SO-2026-0607-01 / due 2026-06-18</p><p><strong>Material gate:</strong> release_with_follow_up</p><table><thead><tr><th>Material</th><th>Required</th><th>Coverage</th><th>Status</th></tr></thead><tbody><tr><td>MAT-6205-OR</td><td>12,000.0 pcs</td><td>17,200.0</td><td>covered</td></tr><tr><td>MAT-6205-IR</td><td>12,000.0 pcs</td><td>16,300.0</td><td>covered</td></tr><tr><td>MAT-BALL-7.94</td><td>108,000.0 pcs</td><td>128,400.0</td><td>watch</td></tr><tr><td>MAT-CAGE-6205</td><td>12,000.0 pcs</td><td>17,000.0</td><td>covered</td></tr><tr><td>MAT-SEAL-6205</td><td>24,000.0 pcs</td><td>32,100.0</td><td>covered</td></tr><tr><td>MAT-GREASE-L2</td><td>21,600.0 g</td><td>26,200.0</td><td>watch</td></tr><tr><td>MAT-PACK-STD</td><td>12,000.0 pcs</td><td>68,800.0</td><td>surplus</td></tr></tbody></table></section>",
+        "html_preview": "<section class='notice-sheet'><h1>Production Notice PN-DEMO-6205-2RS</h1><p><strong>Product:</strong> 6205-2RS Deep Groove Bearing (FG-6205-2RS)</p><p><strong>Quantity:</strong> 12,000 pcs</p><p><strong>Customer order:</strong> SO-2026-0607-01 / due 2026-06-18</p><p><strong>Material gate:</strong> release_with_follow_up</p><table><thead><tr><th>Material</th><th>Required</th><th>Coverage</th><th>Status</th></tr></thead><tbody><tr><td>MAT-6205-OR</td><td>12,000.0 pcs</td><td>17,200.0</td><td>covered</td></tr><tr><td>MAT-6205-IR</td><td>12,000.0 pcs</td><td>16,300.0</td><td>covered</td></tr><tr><td>MAT-BALL-7.94</td><td>108,000.0 pcs</td><td>128,400.0</td><td>watch</td></tr><tr><td>MAT-CAGE-6205</td><td>12,000.0 pcs</td><td>17,000.0</td><td>covered</td></tr><tr><td>MAT-SEAL-6205</td><td>24,000.0 pcs</td><td>32,100.0</td><td>covered</td></tr><tr><td>MAT-GREASE-L2</td><td>21,600.0 g</td><td>26,200.0</td><td>watch</td></tr><tr><td>MAT-PACK-STD</td><td>12,000.0 pcs</td><td>68,800.0</td><td>surplus</td></tr></tbody></table></section>",
         "template_version": "bearing-production-notice/v1",
         "source_trace": {
           "bom_components": 7,
@@ -3919,7 +3919,7 @@ const demoSnapshot = {
   },
   "agentTraces": [
     {
-      "trace_id": "TRC-ACCD5B65",
+      "trace_id": "TRC-9237B0B6",
       "user_question": "Can FG-6205-2RS be released for production?",
       "question": "Can FG-6205-2RS be released for production?",
       "selected_intent": "production_notice",
@@ -4572,7 +4572,7 @@ const demoSnapshot = {
               "source_column": "qty"
             }
           ],
-          "completed_at": "2026-06-07T14:15:39.238650+00:00"
+          "completed_at": "2026-06-07T08:00:00+00:00"
         },
         {
           "tool_name": "generate_production_notice",
@@ -4581,7 +4581,7 @@ const demoSnapshot = {
             "quantity": 12000
           },
           "output_json": {
-            "notice_id": "PN-20260607141539-8B08CB",
+            "notice_id": "PN-DEMO-6205-2RS",
             "product_id": "FG-6205-2RS",
             "product_name": "6205-2RS Deep Groove Bearing",
             "quantity": 12000,
@@ -4681,7 +4681,7 @@ const demoSnapshot = {
                 "supplier_note": "Grease batch QA release is the current watch item"
               }
             ],
-            "html_preview": "<section class='notice-sheet'><h1>Production Notice PN-20260607141539-8B08CB</h1><p><strong>Product:</strong> 6205-2RS Deep Groove Bearing (FG-6205-2RS)</p><p><strong>Quantity:</strong> 12,000 pcs</p><p><strong>Customer order:</strong> SO-2026-0607-01 / due 2026-06-18</p><p><strong>Material gate:</strong> release_with_follow_up</p><table><thead><tr><th>Material</th><th>Required</th><th>Coverage</th><th>Status</th></tr></thead><tbody><tr><td>MAT-6205-OR</td><td>12,000.0 pcs</td><td>17,200.0</td><td>covered</td></tr><tr><td>MAT-6205-IR</td><td>12,000.0 pcs</td><td>16,300.0</td><td>covered</td></tr><tr><td>MAT-BALL-7.94</td><td>108,000.0 pcs</td><td>128,400.0</td><td>watch</td></tr><tr><td>MAT-CAGE-6205</td><td>12,000.0 pcs</td><td>17,000.0</td><td>covered</td></tr><tr><td>MAT-SEAL-6205</td><td>24,000.0 pcs</td><td>32,100.0</td><td>covered</td></tr><tr><td>MAT-GREASE-L2</td><td>21,600.0 g</td><td>26,200.0</td><td>watch</td></tr><tr><td>MAT-PACK-STD</td><td>12,000.0 pcs</td><td>68,800.0</td><td>surplus</td></tr></tbody></table></section>",
+            "html_preview": "<section class='notice-sheet'><h1>Production Notice PN-DEMO-6205-2RS</h1><p><strong>Product:</strong> 6205-2RS Deep Groove Bearing (FG-6205-2RS)</p><p><strong>Quantity:</strong> 12,000 pcs</p><p><strong>Customer order:</strong> SO-2026-0607-01 / due 2026-06-18</p><p><strong>Material gate:</strong> release_with_follow_up</p><table><thead><tr><th>Material</th><th>Required</th><th>Coverage</th><th>Status</th></tr></thead><tbody><tr><td>MAT-6205-OR</td><td>12,000.0 pcs</td><td>17,200.0</td><td>covered</td></tr><tr><td>MAT-6205-IR</td><td>12,000.0 pcs</td><td>16,300.0</td><td>covered</td></tr><tr><td>MAT-BALL-7.94</td><td>108,000.0 pcs</td><td>128,400.0</td><td>watch</td></tr><tr><td>MAT-CAGE-6205</td><td>12,000.0 pcs</td><td>17,000.0</td><td>covered</td></tr><tr><td>MAT-SEAL-6205</td><td>24,000.0 pcs</td><td>32,100.0</td><td>covered</td></tr><tr><td>MAT-GREASE-L2</td><td>21,600.0 g</td><td>26,200.0</td><td>watch</td></tr><tr><td>MAT-PACK-STD</td><td>12,000.0 pcs</td><td>68,800.0</td><td>surplus</td></tr></tbody></table></section>",
             "template_version": "bearing-production-notice/v1",
             "source_trace": {
               "bom_components": 7,
@@ -4884,7 +4884,7 @@ const demoSnapshot = {
               "source_column": "qty"
             }
           ],
-          "completed_at": "2026-06-07T14:15:39.238654+00:00"
+          "completed_at": "2026-06-07T08:00:00+00:00"
         }
       ],
       "source_refs": [
@@ -5079,9 +5079,9 @@ const demoSnapshot = {
           "source_column": "qty"
         }
       ],
-      "final_answer": "Result: production notice PN-20260607141539-8B08CB is ready for preview. Evidence: material gate is release_with_follow_up with 2 watch items. Source: order row 2 and BOM 7 rows are linked. Next check: confirm watch items before release.",
+      "final_answer": "Result: production notice PN-DEMO-6205-2RS is ready for preview. Evidence: material gate is release_with_follow_up with 2 watch items. Source: order row 2 and BOM 7 rows are linked. Next check: confirm watch items before release.",
       "status": "completed",
-      "created_at": "2026-06-07T14:15:39.238660+00:00"
+      "created_at": "2026-06-07T08:00:00+00:00"
     }
   ],
   "workflows": [

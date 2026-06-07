@@ -56,3 +56,30 @@
 - API startup verified at `http://127.0.0.1:8017/health`.
 - API health returned 4 products, 20 materials, 8 orders and 12 machine events.
 - Web dashboard verified at `http://127.0.0.1:5178`.
+
+## 2026-06-07 - Open-source Showcase Polish
+
+- Rewrote `README.md` as a GitHub open-source project entry with screenshots, demo flow, module list, architecture overview, agent tools, adapter scope, quick start commands and roadmap.
+- Reworked `docs/showcase.html` into a static manufacturing operations case file suitable for GitHub Pages.
+- Added `docs/index.html` and `docs/.nojekyll` for direct Pages publishing from the `docs/` folder.
+- Added `RELEASE_NOTES_v0.1.0.md`.
+- Regenerated layout-sensitive screenshots for `product-material-trace.png` and `simulation-page.png` after browser verification.
+- Validation passed:
+  - `python scripts/check_ai_tone.py`
+  - `npm run test:all`
+  - local static docs returned HTTP 200 for `/` and `/showcase.html`
+
+## 2026-06-07 - Open-source Repository Cleanup
+
+- Removed non-project snippets and the old case-study document.
+- Replaced the old user-facing case-study label with `Project Notes` and `Project Showcase / Demo Walkthrough`.
+- Added `.github/ISSUE_TEMPLATE/bug_report.md` and `.github/ISSUE_TEMPLATE/feature_request.md`.
+- Added `docs/assets/social-preview.png` and `docs/assets/social-preview-spec.md`.
+- Made generated demo IDs and trace timestamps stable so snapshot regeneration is reproducible.
+- Added frontend snapshot generation to `.github/workflows/ci.yml`.
+- Validation passed:
+  - `python scripts/check_ai_tone.py`
+  - `python scripts/seed_demo_data.py`
+  - `python scripts/generate_frontend_snapshot.py`
+  - `npm run test:all`
+  - `npm --prefix apps/web-dashboard run build`

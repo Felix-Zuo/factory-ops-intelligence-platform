@@ -1,6 +1,6 @@
 # Security
 
-This repository is designed for public portfolio display.
+This repository is designed for public open-source demo review.
 
 ## Data Policy
 
@@ -15,4 +15,3 @@ ERP, WMS, MES, PLC, WeChat, and MCP integrations are mock/stub contracts in this
 ## Reporting
 
 Open an issue or contact the maintainer if public files accidentally expose sensitive data.
-

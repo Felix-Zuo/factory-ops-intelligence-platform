@@ -29,7 +29,7 @@ type Page =
   | 'qa'
   | 'agent'
   | 'integrations'
-  | 'portfolio';
+  | 'project';
 
 const pages: Array<{ id: Page; icon: typeof Factory; en: string; zh: string; code: string }> = [
   { id: 'home', icon: Factory, en: 'Operations Console', zh: '运营总控', code: 'OPS-00' },
@@ -42,7 +42,7 @@ const pages: Array<{ id: Page; icon: typeof Factory; en: string; zh: string; cod
   { id: 'qa', icon: Search, en: 'Factory Q&A', zh: '运营问答', code: 'QA-07' },
   { id: 'agent', icon: GitBranch, en: 'Agent Trace', zh: '工具轨迹', code: 'AGT-08' },
   { id: 'integrations', icon: ServerCog, en: 'Integrations', zh: '接口状态', code: 'INT-09' },
-  { id: 'portfolio', icon: ScrollText, en: 'Case Study', zh: '项目案例', code: 'CASE-10' },
+  { id: 'project', icon: ScrollText, en: 'Project Notes', zh: '项目说明', code: 'DOC-10' },
 ];
 
 function t(lang: Lang, en: string, zh: string) {
@@ -315,10 +315,10 @@ function Integrations({ lang }: { lang: Lang }) {
   );
 }
 
-function Portfolio({ lang }: { lang: Lang }) {
+function ProjectNotes({ lang }: { lang: Lang }) {
   return (
     <section>
-      <SectionHeader code="CASE-10" title={t(lang, 'Portfolio Case Study', '作品集案例')} subtitle={t(lang, 'A manufacturing operations prototype built from field workflows.', '来自现场流程的制造运营原型。')} />
+      <SectionHeader code="DOC-10" title={t(lang, 'Project Notes', '项目说明')} subtitle={t(lang, 'A manufacturing operations prototype built from reproducible demo workflows.', '基于可复现演示流程的制造运营原型。')} />
       <div className="case-columns">
         <div>
           <h3>Problem</h3>
@@ -348,7 +348,7 @@ function PageBody({ page, lang }: { page: Page; lang: Lang }) {
     case 'qa': return <QA lang={lang} />;
     case 'agent': return <AgentTrace lang={lang} />;
     case 'integrations': return <Integrations lang={lang} />;
-    case 'portfolio': return <Portfolio lang={lang} />;
+    case 'project': return <ProjectNotes lang={lang} />;
     default: return <Home lang={lang} />;
   }
 }

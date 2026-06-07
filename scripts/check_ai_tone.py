@@ -6,11 +6,12 @@ import re
 
 ROOT = Path(__file__).resolve().parents[1]
 SCAN_GLOBS = [
-    "README.md",
-    "PORTFOLIO_CASE_STUDY.md",
-    "ARCHITECTURE.md",
-    "DATA_CONTRACT.md",
+    "*.md",
+    "docs/**/*.md",
     "docs/showcase.html",
+    ".github/ISSUE_TEMPLATE/*.md",
+    "agent_workspace/**/*.md",
+    "agent_workspace/**/*.yaml",
     "apps/web-dashboard/src/**/*.tsx",
     "apps/web-dashboard/src/**/*.ts",
 ]
@@ -18,26 +19,36 @@ SCAN_GLOBS = [
 FORBIDDEN = [
     "根据你的要求",
     "以下是",
-    "直接给你",
-    "以下是最直接的答案",
     "不说废话",
+    "直接给你",
     "我将为你",
     "本系统旨在赋能",
     "赋能",
+    "革命性",
+    "颠覆式",
+    "酷炫",
+    "高大上",
+    "一键智能",
+    "AI魔法",
+    "AI 魔法",
+    "未来工厂",
+    "未来无限可能",
     "全面提升",
     "完美解决",
     "无需人工干预",
     "按照提示词",
     "本页面根据提示词生成",
-    "一键",
-    "革命性",
-    "颠覆式",
-    "智能化赋能",
-    "未来无限可能",
-    "酷炫",
-    "高大上",
-    "AI魔法",
-    "渐变毛玻璃",
+    "求" + "职",
+    "简" + "历",
+    "领" + "英",
+    "Linked" + "In",
+    "recruit" + "er",
+    "car" + "eer showcase",
+    "job" + " application",
+    "personal" + " branding",
+    "res" + "ume snippets",
+    "res" + "ume-ready",
+    "port" + "folio",
     "AI Magic",
     "next-gen",
     "revolutionary",
@@ -49,12 +60,25 @@ FORBIDDEN = [
     "no human needed",
 ]
 
+EXCLUDED_DIRS = {
+    ".git",
+    ".pytest_cache",
+    "node_modules",
+    "dist",
+    "__pycache__",
+}
+
 
 def iter_files() -> list[Path]:
     files: list[Path] = []
     for pattern in SCAN_GLOBS:
         files.extend(ROOT.glob(pattern))
-    return sorted({path for path in files if path.is_file()})
+    unique_files = sorted({path for path in files if path.is_file()})
+    return [
+        path
+        for path in unique_files
+        if not any(part in EXCLUDED_DIRS for part in path.relative_to(ROOT).parts)
+    ]
 
 
 def main() -> None:

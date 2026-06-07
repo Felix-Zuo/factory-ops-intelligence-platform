@@ -1,15 +1,15 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
-from uuid import uuid4
+import hashlib
 import json
 
 
 ROOT = Path(__file__).resolve().parents[3]
 DEMO_DATA = ROOT / "demo_data"
+DEMO_TIMESTAMP = "2026-06-07T08:00:00+00:00"
 
 
 def _load_json(name: str) -> list[dict[str, Any]]:
@@ -60,7 +60,16 @@ def _index(items: list[dict[str, Any]], key: str) -> dict[str, dict[str, Any]]:
 
 
 def _now_id(prefix: str) -> str:
-    return f"{prefix}-{datetime.now(UTC).strftime('%Y%m%d%H%M%S')}-{str(uuid4())[:6].upper()}"
+    stable_ids = {
+        "PN": "PN-DEMO-6205-2RS",
+        "SIM": "SIM-DEMO-LINE-A",
+    }
+    return stable_ids.get(prefix, f"{prefix}-DEMO")
+
+
+def _stable_trace_id(workflow: str) -> str:
+    digest = hashlib.sha1(workflow.encode("utf-8")).hexdigest()[:8].upper()
+    return f"TRC-{digest}"
 
 
 def source_ref(source_file: str, source_row: int | str, source_column: str = "") -> dict[str, Any]:
@@ -509,7 +518,7 @@ def _trace_call(tool_name: str, inputs: dict[str, Any], output: dict[str, Any]) 
         "input_json": inputs,
         "output_json": output,
         "source_refs": output.get("source_refs", []),
-        "completed_at": datetime.now(UTC).isoformat(),
+        "completed_at": DEMO_TIMESTAMP,
     }
 
 
@@ -563,7 +572,7 @@ def answer_factory_question(question: str, data: FactoryData | None = None) -> d
         )
         payload = {"bom": bom, "exploded_bom": exploded, "risk": risk}
     trace = {
-        "trace_id": f"TRC-{str(uuid4())[:8].upper()}",
+        "trace_id": _stable_trace_id(workflow),
         "user_question": question,
         "question": question,
         "selected_intent": intent,
@@ -575,7 +584,7 @@ def answer_factory_question(question: str, data: FactoryData | None = None) -> d
         "source_refs": [ref for call in tool_calls for ref in call.get("source_refs", [])],
         "final_answer": final_answer,
         "status": "completed",
-        "created_at": datetime.now(UTC).isoformat(),
+        "created_at": DEMO_TIMESTAMP,
     }
     AGENT_TRACES.insert(0, trace)
     return {"answer": final_answer, "trace": trace, "data": payload}

@@ -14,7 +14,7 @@
 - Expanded demo data while keeping records synthetic and public-safe.
 - Seed initially failed because `materials` gained `manufacturer` and related fields while SQLite still used the old schema.
 - Repaired by replacing `database/schema.sql`, making `scripts/seed_demo_data.py` rebuild the demo database, and JSON-encoding nested fields for SQLite.
-- Old tests assumed exactly 6 BOM rows; repaired tests to validate source-backed behavior and new portfolio-depth data instead.
+- Old tests assumed exactly 6 BOM rows; repaired tests to validate source-backed behavior and deeper demo data instead.
 - Backend smoke and pytest passed after repair.
 
 ## 2026-06-07 - Frontend Evidence Repair
@@ -34,3 +34,22 @@
 - API startup verified on port 8017 with `/health`.
 - Web dashboard verified on port 5178 after avoiding an older Vite process on port 5177.
 - Remaining watch items are local ignored runtime folders: `apps/web-dashboard/dist`, `apps/web-dashboard/node_modules`, caches and generated SQLite DB.
+
+## 2026-06-07 - Open-source Polish Repair Loop
+
+- Found the README was too thin for GitHub review and rewrote it around screenshots, demo flow, real commands, adapter boundaries and agent tools.
+- Added GitHub Pages entry files and release notes so the project can be reviewed without extra explanation.
+- Browser verification found Material Trace clean after CSS repair.
+- Browser verification showed Line Simulation cards were too narrow in a 6-column layout; changed the line map to a 3x2 layout and regenerated the screenshot.
+- `python scripts/check_ai_tone.py` and `npm run test:all` passed after the open-source polish.
+- Static docs returned HTTP 200 and all showcase images loaded in the browser.
+
+## 2026-06-07 - Open-source Cleanup Repair Loop
+
+- Removed non-project materials and renamed the old public case-study label to `Project Notes`.
+- Strengthened `scripts/check_ai_tone.py` to fail on application-oriented and personal-brand language.
+- Initial scan found legacy wording in planning files and an old case-study document; removed or rewrote those items.
+- Found snapshot generation was not reproducible because notice, simulation and trace IDs used wall-clock timestamps and random UUIDs.
+- Repaired demo ID generation with stable demo IDs and timestamps.
+- Refreshed screenshots for the current open-source UI and stable production notice ID.
+- Final validation passed with tone scan, seed, snapshot generation, full test chain and frontend build.

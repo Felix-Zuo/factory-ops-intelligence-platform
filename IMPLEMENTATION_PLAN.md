@@ -24,9 +24,8 @@
 - Scope: React/Vite frontend with bilingual pages, source trace, adapter status, tool trace, production notice preview, and line simulation schematic.
 - Acceptance: `npm run build` passes and screenshots are generated from the real UI.
 
-## Phase 5 - Portfolio Packaging
+## Phase 5 - Open-source Packaging
 
 - Status: pending
-- Scope: bilingual README, case study, architecture, data contract, roadmap, demo script, CI, screenshots.
+- Scope: README, project showcase, architecture, data contract, roadmap, demo script, CI, screenshots.
 - Acceptance: local tests pass, tone scan passes, screenshots render, GitHub remote is pushed.
-

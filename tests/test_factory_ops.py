@@ -18,7 +18,7 @@ def test_inventory_risk_keeps_source_trace() -> None:
     assert all(row["source_trace"]["source_file"] for row in risk["materials"])
 
 
-def test_demo_data_schema_has_portfolio_depth() -> None:
+def test_demo_data_schema_has_demo_depth() -> None:
     data = domain.load_factory_data()
     assert len(data.materials) >= 20
     assert len(data.customer_orders) >= 8

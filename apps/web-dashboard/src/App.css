@@ -411,7 +411,7 @@ th {
 
 .source-list div {
   display: grid;
-  grid-template-columns: 118px 1fr 180px;
+  grid-template-columns: 126px minmax(0, 1fr);
   gap: 10px;
   border: 1px solid #d2cbbb;
   background: #fffaf0;
@@ -420,9 +420,11 @@ th {
 }
 
 .source-list em {
+  grid-column: 1 / -1;
   color: #6b5f43;
   font-style: normal;
   font-family: Consolas, "SFMono-Regular", monospace;
+  overflow-wrap: anywhere;
 }
 
 .notice-layout {
@@ -470,16 +472,16 @@ th {
 
 .line-map {
   display: grid;
-  grid-template-columns: repeat(6, minmax(120px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
-  overflow: auto;
+  overflow: visible;
   padding: 8px 0;
 }
 
 .machine {
   position: relative;
-  min-height: 150px;
-  padding: 12px;
+  min-height: 142px;
+  padding: 10px;
 }
 
 .machine span {
@@ -507,6 +509,10 @@ th {
   right: -13px;
   width: 14px;
   border-top: 2px solid #7b806d;
+}
+
+.machine:nth-child(3n) i {
+  display: none;
 }
 
 .machine-blocked {

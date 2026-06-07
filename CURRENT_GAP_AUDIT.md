@@ -6,7 +6,7 @@ Reference basis: `reference_research/REFERENCE_DIGEST.md`
 
 ## Summary
 
-The repository already has a runnable skeleton: FastAPI routes, React/Vite dashboard, synthetic demo data, seed script, smoke script, agent workspace notes, screenshots and bilingual README. The current weakness is depth and proof. Several portfolio claims are present, but the implementation still relies on small static data, static frontend constants, thin database schema, incomplete tool registry, and narrow tests.
+The repository already has a runnable skeleton: FastAPI routes, React/Vite dashboard, synthetic demo data, seed script, smoke script, agent workspace notes, screenshots and bilingual README. The current weakness is depth and proof. Several public-demo claims are present, but the implementation still relies on small static data, static frontend constants, thin database schema, incomplete tool registry, and narrow tests.
 
 The next pass must turn the project from a documented prototype into a demo-ready engineering console:
 
