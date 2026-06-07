@@ -1,0 +1,12 @@
+name: file_to_dashboard
+trigger: on_file_uploaded
+steps:
+  - classify_factory_file
+  - extract_bom_structure
+  - calculate_inventory_risk
+  - refresh_dashboard
+outputs:
+  - file_import_log
+  - source_trace
+  - dashboard_summary
+

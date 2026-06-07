@@ -1,0 +1,11 @@
+name: frontend_demo_polish
+trigger: on_demo_review
+steps:
+  - design_distinctive_factory_ui
+  - create_portfolio_case_study_page
+  - run_self_repair_loop
+outputs:
+  - screenshot_list
+  - tone_scan_result
+  - build_result
+

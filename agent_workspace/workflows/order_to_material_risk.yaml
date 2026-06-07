@@ -1,0 +1,11 @@
+name: order_to_material_risk
+trigger: operations_question
+steps:
+  - get_product_bom
+  - explode_bom
+  - calculate_inventory_risk
+outputs:
+  - material_coverage
+  - supplier_context
+  - source_trace
+

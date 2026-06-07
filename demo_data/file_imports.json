@@ -1,0 +1,7 @@
+[
+  {"file_name": "bom_6205_demo.xlsx", "type": "bom", "status": "parsed", "rows": 6, "quality": "pass"},
+  {"file_name": "wms_inventory_demo.csv", "type": "inventory", "status": "parsed", "rows": 6, "quality": "pass"},
+  {"file_name": "sales_orders_demo.csv", "type": "customer_orders", "status": "parsed", "rows": 2, "quality": "pass"},
+  {"file_name": "shipment_in_transit_demo.csv", "type": "shipment_records", "status": "parsed", "rows": 3, "quality": "warning"}
+]
+

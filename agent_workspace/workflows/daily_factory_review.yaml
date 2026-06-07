@@ -1,0 +1,12 @@
+name: daily_factory_review
+trigger: on_daily_close
+steps:
+  - calculate_inventory_risk
+  - run_takt_simulation
+  - detect_bottleneck
+  - generate_daily_report
+outputs:
+  - daily_summary
+  - exceptions
+  - follow_up_list
+

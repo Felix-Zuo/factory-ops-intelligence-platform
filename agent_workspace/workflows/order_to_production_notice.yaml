@@ -1,0 +1,11 @@
+name: order_to_production_notice
+trigger: production_release_request
+steps:
+  - get_product_bom
+  - calculate_inventory_risk
+  - generate_production_notice
+outputs:
+  - notice_preview
+  - material_gate
+  - agent_trace
+

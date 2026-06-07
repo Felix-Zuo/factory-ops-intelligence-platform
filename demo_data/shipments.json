@@ -1,0 +1,6 @@
+[
+  {"shipment_id": "INB-6205-SEAL-01", "material_id": "MAT-SEAL-6205", "qty": 9000, "eta": "2026-06-12", "carrier": "Demo Logistics", "source_file": "shipment_in_transit_demo.csv", "source_row": 2},
+  {"shipment_id": "INB-6205-CAGE-01", "material_id": "MAT-CAGE-6205", "qty": 5000, "eta": "2026-06-10", "carrier": "Demo Logistics", "source_file": "shipment_in_transit_demo.csv", "source_row": 3},
+  {"shipment_id": "INB-GREASE-L2-01", "material_id": "MAT-GREASE-L2", "qty": 8000, "eta": "2026-06-14", "carrier": "Cold Chain Sample", "source_file": "shipment_in_transit_demo.csv", "source_row": 4}
+]
+

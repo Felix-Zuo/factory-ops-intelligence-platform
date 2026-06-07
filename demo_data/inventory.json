@@ -1,0 +1,9 @@
+[
+  {"material_id": "MAT-6205-OR", "available_qty": 18400, "reserved_qty": 1200, "location": "WMS-A1", "source_file": "wms_inventory_demo.csv", "source_row": 2},
+  {"material_id": "MAT-6205-IR", "available_qty": 17200, "reserved_qty": 900, "location": "WMS-A1", "source_file": "wms_inventory_demo.csv", "source_row": 3},
+  {"material_id": "MAT-BALL-7.94", "available_qty": 132000, "reserved_qty": 3600, "location": "WMS-B2", "source_file": "wms_inventory_demo.csv", "source_row": 4},
+  {"material_id": "MAT-CAGE-6205", "available_qty": 12600, "reserved_qty": 600, "location": "WMS-C1", "source_file": "wms_inventory_demo.csv", "source_row": 5},
+  {"material_id": "MAT-SEAL-6205", "available_qty": 24500, "reserved_qty": 1400, "location": "WMS-C2", "source_file": "wms_inventory_demo.csv", "source_row": 6},
+  {"material_id": "MAT-GREASE-L2", "available_qty": 19000, "reserved_qty": 800, "location": "WMS-CHEM", "source_file": "wms_inventory_demo.csv", "source_row": 7}
+]
+

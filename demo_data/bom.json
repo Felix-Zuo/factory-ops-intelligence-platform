@@ -1,0 +1,9 @@
+[
+  {"product_id": "FG-6205-2RS", "product_name": "6205-2RS Deep Groove Bearing", "material_id": "MAT-6205-OR", "qty_per_unit": 1},
+  {"product_id": "FG-6205-2RS", "product_name": "6205-2RS Deep Groove Bearing", "material_id": "MAT-6205-IR", "qty_per_unit": 1},
+  {"product_id": "FG-6205-2RS", "product_name": "6205-2RS Deep Groove Bearing", "material_id": "MAT-BALL-7.94", "qty_per_unit": 9},
+  {"product_id": "FG-6205-2RS", "product_name": "6205-2RS Deep Groove Bearing", "material_id": "MAT-CAGE-6205", "qty_per_unit": 1},
+  {"product_id": "FG-6205-2RS", "product_name": "6205-2RS Deep Groove Bearing", "material_id": "MAT-SEAL-6205", "qty_per_unit": 2},
+  {"product_id": "FG-6205-2RS", "product_name": "6205-2RS Deep Groove Bearing", "material_id": "MAT-GREASE-L2", "qty_per_unit": 1.8}
+]
+

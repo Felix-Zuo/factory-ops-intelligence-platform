@@ -1,0 +1,9 @@
+name: self_repair_and_continue
+trigger: on_build_failed
+steps:
+  - run_self_repair_loop
+outputs:
+  - repaired_items
+  - blockers
+  - next_task
+

@@ -1,0 +1,11 @@
+name: line_simulation_to_report
+trigger: on_simulation_requested
+steps:
+  - run_takt_simulation
+  - detect_bottleneck
+  - generate_daily_report
+outputs:
+  - simulation_report
+  - bottleneck_summary
+  - improvement_candidate
+

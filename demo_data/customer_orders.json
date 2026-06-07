@@ -1,0 +1,5 @@
+[
+  {"order_id": "SO-2026-0607-01", "customer": "Demo Export Account", "product_id": "FG-6205-2RS", "qty": 12000, "due_date": "2026-06-18", "priority": "high", "source_file": "sales_orders_demo.csv", "source_row": 2},
+  {"order_id": "SO-2026-0607-02", "customer": "Demo Aftermarket Account", "product_id": "FG-6205-2RS", "qty": 6000, "due_date": "2026-06-21", "priority": "normal", "source_file": "sales_orders_demo.csv", "source_row": 3}
+]
+

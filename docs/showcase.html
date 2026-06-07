@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Factory Ops Intelligence Platform</title>
+    <style>
+      body { margin: 0; font-family: "Segoe UI", Arial, sans-serif; background: #e6e2d8; color: #222826; }
+      main { max-width: 1160px; margin: 0 auto; padding: 34px 20px 48px; }
+      h1 { font-size: clamp(32px, 5vw, 58px); line-height: 1.02; margin: 0; letter-spacing: 0; }
+      p { line-height: 1.6; color: #535b54; }
+      .hero { border-bottom: 3px solid #222826; padding-bottom: 28px; }
+      .kicker { display: inline-block; background: #222826; color: #f7efd9; padding: 5px 9px; font: 700 12px Consolas, monospace; margin-bottom: 16px; }
+      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 28px; }
+      .panel { background: #f6f2e8; border: 1px solid #b7b4a7; padding: 18px; min-height: 150px; }
+      .panel strong { display: block; font-size: 22px; margin-bottom: 8px; }
+      img { width: 100%; border: 1px solid #b7b4a7; background: #f6f2e8; margin-top: 18px; }
+      @media (max-width: 820px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <span class="kicker">OPS-INTELLIGENCE</span>
+        <h1>AI Factory Operations Intelligence Platform</h1>
+        <p>A demo-ready operations intelligence layer for BOM, WMS stock, customer orders, production notices, line simulation, and agent-readable tools.</p>
+      </section>
+      <section class="grid">
+        <div class="panel"><strong>BOM & Inventory</strong><p>Component demand, stock coverage, inbound records, supplier status, and source trace.</p></div>
+        <div class="panel"><strong>Production Notice</strong><p>Preview built from product, order, BOM, material gate, and template version.</p></div>
+        <div class="panel"><strong>Line Simulation</strong><p>Machine states, transfer links, 24h output, quality bottleneck, and improvement candidate.</p></div>
+      </section>
+      <img src="assets/screenshots/overview.png" alt="Operations console screenshot" />
+      <img src="assets/screenshots/material-risk.png" alt="Material risk screenshot" />
+      <img src="assets/screenshots/notice-simulation-agent.png" alt="Notice simulation agent screenshot" />
+    </main>
+  </body>
+</html>

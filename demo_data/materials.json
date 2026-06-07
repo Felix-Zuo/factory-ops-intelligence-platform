@@ -1,0 +1,9 @@
+[
+  {"material_id": "MAT-6205-OR", "name": "Outer ring blank 6205", "category": "Ring blank", "uom": "pcs", "supplier": "Northline Forging", "lead_time_days": 6},
+  {"material_id": "MAT-6205-IR", "name": "Inner ring blank 6205", "category": "Ring blank", "uom": "pcs", "supplier": "Northline Forging", "lead_time_days": 6},
+  {"material_id": "MAT-BALL-7.94", "name": "Steel ball 7.94 mm", "category": "Rolling element", "uom": "pcs", "supplier": "Hengyuan Ball", "lead_time_days": 4},
+  {"material_id": "MAT-CAGE-6205", "name": "Pressed steel cage 6205", "category": "Cage", "uom": "pcs", "supplier": "Jinhe Stamping", "lead_time_days": 5},
+  {"material_id": "MAT-SEAL-6205", "name": "Rubber seal 6205", "category": "Seal", "uom": "pcs", "supplier": "Haicheng Rubber", "lead_time_days": 7},
+  {"material_id": "MAT-GREASE-L2", "name": "Low-noise bearing grease L2", "category": "Lubricant", "uom": "g", "supplier": "GreenChem", "lead_time_days": 8}
+]
+
