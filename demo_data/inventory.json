@@ -1,9 +1,22 @@
 [
-  {"material_id": "MAT-6205-OR", "available_qty": 18400, "reserved_qty": 1200, "location": "WMS-A1", "source_file": "wms_inventory_demo.csv", "source_row": 2},
-  {"material_id": "MAT-6205-IR", "available_qty": 17200, "reserved_qty": 900, "location": "WMS-A1", "source_file": "wms_inventory_demo.csv", "source_row": 3},
-  {"material_id": "MAT-BALL-7.94", "available_qty": 132000, "reserved_qty": 3600, "location": "WMS-B2", "source_file": "wms_inventory_demo.csv", "source_row": 4},
-  {"material_id": "MAT-CAGE-6205", "available_qty": 12600, "reserved_qty": 600, "location": "WMS-C1", "source_file": "wms_inventory_demo.csv", "source_row": 5},
-  {"material_id": "MAT-SEAL-6205", "available_qty": 24500, "reserved_qty": 1400, "location": "WMS-C2", "source_file": "wms_inventory_demo.csv", "source_row": 6},
-  {"material_id": "MAT-GREASE-L2", "available_qty": 19000, "reserved_qty": 800, "location": "WMS-CHEM", "source_file": "wms_inventory_demo.csv", "source_row": 7}
+  {"snapshot_id": "INV-001", "material_id": "MAT-6205-OR", "available_qty": 18400, "reserved_qty": 1200, "location": "WMS-A1", "lot_no": "OR6205-A", "source_file": "wms_inventory_demo.csv", "source_row": 2},
+  {"snapshot_id": "INV-002", "material_id": "MAT-6205-IR", "available_qty": 17200, "reserved_qty": 900, "location": "WMS-A1", "lot_no": "IR6205-A", "source_file": "wms_inventory_demo.csv", "source_row": 3},
+  {"snapshot_id": "INV-003", "material_id": "MAT-BALL-7.94", "available_qty": 132000, "reserved_qty": 3600, "location": "WMS-B2", "lot_no": "B794-A", "source_file": "wms_inventory_demo.csv", "source_row": 4},
+  {"snapshot_id": "INV-004", "material_id": "MAT-CAGE-6205", "available_qty": 12600, "reserved_qty": 600, "location": "WMS-C1", "lot_no": "CAGE6205-A", "source_file": "wms_inventory_demo.csv", "source_row": 5},
+  {"snapshot_id": "INV-005", "material_id": "MAT-SEAL-6205", "available_qty": 24500, "reserved_qty": 1400, "location": "WMS-C2", "lot_no": "SEAL6205-A", "source_file": "wms_inventory_demo.csv", "source_row": 6},
+  {"snapshot_id": "INV-006", "material_id": "MAT-GREASE-L2", "available_qty": 19000, "reserved_qty": 800, "location": "WMS-CHEM", "lot_no": "GR-L2-A", "source_file": "wms_inventory_demo.csv", "source_row": 7},
+  {"snapshot_id": "INV-007", "material_id": "MAT-6206-OR", "available_qty": 9200, "reserved_qty": 1100, "location": "WMS-A2", "lot_no": "OR6206-A", "source_file": "wms_inventory_demo.csv", "source_row": 8},
+  {"snapshot_id": "INV-008", "material_id": "MAT-6206-IR", "available_qty": 8900, "reserved_qty": 900, "location": "WMS-A2", "lot_no": "IR6206-A", "source_file": "wms_inventory_demo.csv", "source_row": 9},
+  {"snapshot_id": "INV-009", "material_id": "MAT-BALL-9.53", "available_qty": 83000, "reserved_qty": 4200, "location": "WMS-B2", "lot_no": "B953-A", "source_file": "wms_inventory_demo.csv", "source_row": 10},
+  {"snapshot_id": "INV-010", "material_id": "MAT-CAGE-6206", "available_qty": 7600, "reserved_qty": 500, "location": "WMS-C1", "lot_no": "CAGE6206-A", "source_file": "wms_inventory_demo.csv", "source_row": 11},
+  {"snapshot_id": "INV-011", "material_id": "MAT-SEAL-6206", "available_qty": 10100, "reserved_qty": 1200, "location": "WMS-C2", "lot_no": "SEAL6206-A", "source_file": "wms_inventory_demo.csv", "source_row": 12},
+  {"snapshot_id": "INV-012", "material_id": "MAT-SHIELD-6206", "available_qty": 13600, "reserved_qty": 1800, "location": "WMS-C3", "lot_no": "SH6206-A", "source_file": "wms_inventory_demo.csv", "source_row": 13},
+  {"snapshot_id": "INV-013", "material_id": "MAT-6304-OR", "available_qty": 6900, "reserved_qty": 700, "location": "WMS-A3", "lot_no": "OR6304-A", "source_file": "wms_inventory_demo.csv", "source_row": 14},
+  {"snapshot_id": "INV-014", "material_id": "MAT-6304-IR", "available_qty": 7100, "reserved_qty": 650, "location": "WMS-A3", "lot_no": "IR6304-A", "source_file": "wms_inventory_demo.csv", "source_row": 15},
+  {"snapshot_id": "INV-015", "material_id": "MAT-BALL-8.73", "available_qty": 65500, "reserved_qty": 3000, "location": "WMS-B3", "lot_no": "B873-A", "source_file": "wms_inventory_demo.csv", "source_row": 16},
+  {"snapshot_id": "INV-016", "material_id": "MAT-CAGE-6304", "available_qty": 6100, "reserved_qty": 400, "location": "WMS-C4", "lot_no": "CAGE6304-A", "source_file": "wms_inventory_demo.csv", "source_row": 17},
+  {"snapshot_id": "INV-017", "material_id": "MAT-SEAL-6304", "available_qty": 12300, "reserved_qty": 900, "location": "WMS-C4", "lot_no": "SEAL6304-A", "source_file": "wms_inventory_demo.csv", "source_row": 18},
+  {"snapshot_id": "INV-018", "material_id": "MAT-6004-OR", "available_qty": 21400, "reserved_qty": 2600, "location": "WMS-A4", "lot_no": "OR6004-A", "source_file": "wms_inventory_demo.csv", "source_row": 19},
+  {"snapshot_id": "INV-019", "material_id": "MAT-6004-IR", "available_qty": 21800, "reserved_qty": 2400, "location": "WMS-A4", "lot_no": "IR6004-A", "source_file": "wms_inventory_demo.csv", "source_row": 20},
+  {"snapshot_id": "INV-020", "material_id": "MAT-PACK-STD", "available_qty": 51000, "reserved_qty": 6200, "location": "WMS-PACK", "lot_no": "PKG-STD-A", "source_file": "wms_inventory_demo.csv", "source_row": 21}
 ]
-

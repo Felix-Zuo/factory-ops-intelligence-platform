@@ -1,0 +1,6 @@
+[
+  {"product_id": "FG-6205-2RS", "name": "6205-2RS Deep Groove Bearing", "revision": "R1", "default_bom_id": "BOM-6205-2RS-R1", "route_id": "ROUTE-BRG-A", "planning_policy": "make_to_order"},
+  {"product_id": "FG-6206-ZZ", "name": "6206-ZZ Shielded Bearing", "revision": "R1", "default_bom_id": "BOM-6206-ZZ-R1", "route_id": "ROUTE-BRG-B", "planning_policy": "make_to_order"},
+  {"product_id": "FG-6304-2RS", "name": "6304-2RS Deep Groove Bearing", "revision": "R1", "default_bom_id": "BOM-6304-2RS-R1", "route_id": "ROUTE-BRG-B", "planning_policy": "make_to_stock"},
+  {"product_id": "FG-6004-ZZ", "name": "6004-ZZ Compact Bearing", "revision": "R1", "default_bom_id": "BOM-6004-ZZ-R1", "route_id": "ROUTE-BRG-A", "planning_policy": "make_to_order"}
+]

@@ -1,9 +1,22 @@
 [
-  {"material_id": "MAT-6205-OR", "name": "Outer ring blank 6205", "category": "Ring blank", "uom": "pcs", "supplier": "Northline Forging", "lead_time_days": 6},
-  {"material_id": "MAT-6205-IR", "name": "Inner ring blank 6205", "category": "Ring blank", "uom": "pcs", "supplier": "Northline Forging", "lead_time_days": 6},
-  {"material_id": "MAT-BALL-7.94", "name": "Steel ball 7.94 mm", "category": "Rolling element", "uom": "pcs", "supplier": "Hengyuan Ball", "lead_time_days": 4},
-  {"material_id": "MAT-CAGE-6205", "name": "Pressed steel cage 6205", "category": "Cage", "uom": "pcs", "supplier": "Jinhe Stamping", "lead_time_days": 5},
-  {"material_id": "MAT-SEAL-6205", "name": "Rubber seal 6205", "category": "Seal", "uom": "pcs", "supplier": "Haicheng Rubber", "lead_time_days": 7},
-  {"material_id": "MAT-GREASE-L2", "name": "Low-noise bearing grease L2", "category": "Lubricant", "uom": "g", "supplier": "GreenChem", "lead_time_days": 8}
+  {"material_id": "MAT-6205-OR", "name": "Outer ring blank 6205", "category": "Ring blank", "uom": "pcs", "supplier": "Northline Forging", "manufacturer": "Northline Forging", "lead_time_days": 6, "is_serialized": false, "default_location_id": "WMS-A1"},
+  {"material_id": "MAT-6205-IR", "name": "Inner ring blank 6205", "category": "Ring blank", "uom": "pcs", "supplier": "Northline Forging", "manufacturer": "Northline Forging", "lead_time_days": 6, "is_serialized": false, "default_location_id": "WMS-A1"},
+  {"material_id": "MAT-BALL-7.94", "name": "Steel ball 7.94 mm", "category": "Rolling element", "uom": "pcs", "supplier": "Hengyuan Ball", "manufacturer": "Hengyuan Ball", "lead_time_days": 4, "is_serialized": false, "default_location_id": "WMS-B2"},
+  {"material_id": "MAT-CAGE-6205", "name": "Pressed steel cage 6205", "category": "Cage", "uom": "pcs", "supplier": "Jinhe Stamping", "manufacturer": "Jinhe Stamping", "lead_time_days": 5, "is_serialized": false, "default_location_id": "WMS-C1"},
+  {"material_id": "MAT-SEAL-6205", "name": "Rubber seal 6205", "category": "Seal", "uom": "pcs", "supplier": "Haicheng Rubber", "manufacturer": "Haicheng Rubber", "lead_time_days": 7, "is_serialized": false, "default_location_id": "WMS-C2"},
+  {"material_id": "MAT-GREASE-L2", "name": "Low-noise bearing grease L2", "category": "Lubricant", "uom": "g", "supplier": "GreenChem", "manufacturer": "GreenChem", "lead_time_days": 8, "is_serialized": false, "default_location_id": "WMS-CHEM"},
+  {"material_id": "MAT-6206-OR", "name": "Outer ring blank 6206", "category": "Ring blank", "uom": "pcs", "supplier": "Northline Forging", "manufacturer": "Northline Forging", "lead_time_days": 6, "is_serialized": false, "default_location_id": "WMS-A2"},
+  {"material_id": "MAT-6206-IR", "name": "Inner ring blank 6206", "category": "Ring blank", "uom": "pcs", "supplier": "Northline Forging", "manufacturer": "Northline Forging", "lead_time_days": 6, "is_serialized": false, "default_location_id": "WMS-A2"},
+  {"material_id": "MAT-BALL-9.53", "name": "Steel ball 9.53 mm", "category": "Rolling element", "uom": "pcs", "supplier": "Hengyuan Ball", "manufacturer": "Hengyuan Ball", "lead_time_days": 4, "is_serialized": false, "default_location_id": "WMS-B2"},
+  {"material_id": "MAT-CAGE-6206", "name": "Pressed steel cage 6206", "category": "Cage", "uom": "pcs", "supplier": "Jinhe Stamping", "manufacturer": "Jinhe Stamping", "lead_time_days": 5, "is_serialized": false, "default_location_id": "WMS-C1"},
+  {"material_id": "MAT-SEAL-6206", "name": "Rubber seal 6206", "category": "Seal", "uom": "pcs", "supplier": "Haicheng Rubber", "manufacturer": "Haicheng Rubber", "lead_time_days": 7, "is_serialized": false, "default_location_id": "WMS-C2"},
+  {"material_id": "MAT-SHIELD-6206", "name": "Metal shield 6206", "category": "Shield", "uom": "pcs", "supplier": "Yuhang Shielding", "manufacturer": "Yuhang Shielding", "lead_time_days": 6, "is_serialized": false, "default_location_id": "WMS-C3"},
+  {"material_id": "MAT-6304-OR", "name": "Outer ring blank 6304", "category": "Ring blank", "uom": "pcs", "supplier": "Northline Forging", "manufacturer": "Northline Forging", "lead_time_days": 6, "is_serialized": false, "default_location_id": "WMS-A3"},
+  {"material_id": "MAT-6304-IR", "name": "Inner ring blank 6304", "category": "Ring blank", "uom": "pcs", "supplier": "Northline Forging", "manufacturer": "Northline Forging", "lead_time_days": 6, "is_serialized": false, "default_location_id": "WMS-A3"},
+  {"material_id": "MAT-BALL-8.73", "name": "Steel ball 8.73 mm", "category": "Rolling element", "uom": "pcs", "supplier": "Hengyuan Ball", "manufacturer": "Hengyuan Ball", "lead_time_days": 4, "is_serialized": false, "default_location_id": "WMS-B3"},
+  {"material_id": "MAT-CAGE-6304", "name": "Pressed steel cage 6304", "category": "Cage", "uom": "pcs", "supplier": "Jinhe Stamping", "manufacturer": "Jinhe Stamping", "lead_time_days": 5, "is_serialized": false, "default_location_id": "WMS-C4"},
+  {"material_id": "MAT-SEAL-6304", "name": "Rubber seal 6304", "category": "Seal", "uom": "pcs", "supplier": "Haicheng Rubber", "manufacturer": "Haicheng Rubber", "lead_time_days": 7, "is_serialized": false, "default_location_id": "WMS-C4"},
+  {"material_id": "MAT-6004-OR", "name": "Outer ring blank 6004", "category": "Ring blank", "uom": "pcs", "supplier": "Eastbay Forging", "manufacturer": "Eastbay Forging", "lead_time_days": 5, "is_serialized": false, "default_location_id": "WMS-A4"},
+  {"material_id": "MAT-6004-IR", "name": "Inner ring blank 6004", "category": "Ring blank", "uom": "pcs", "supplier": "Eastbay Forging", "manufacturer": "Eastbay Forging", "lead_time_days": 5, "is_serialized": false, "default_location_id": "WMS-A4"},
+  {"material_id": "MAT-PACK-STD", "name": "Standard bearing carton", "category": "Packaging", "uom": "pcs", "supplier": "Harbor Packaging", "manufacturer": "Harbor Packaging", "lead_time_days": 3, "is_serialized": false, "default_location_id": "WMS-PACK"}
 ]
-

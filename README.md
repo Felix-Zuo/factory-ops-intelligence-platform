@@ -8,7 +8,7 @@ A demo-ready operations intelligence layer for fragmented manufacturing data.
 
 Factory teams often compare BOM, WMS stock, customer orders, inbound shipments, supplier delivery notes, production notice templates, and line assumptions across separated files. This repository connects those records into one traceable prototype.
 
-The demo follows `FG-6205-2RS` through material coverage, production release, 24h line simulation, and agent tool trace.
+The demo follows `FG-6205-2RS` through material coverage, production release, 24h line simulation, and agent tool trace. The data pack also includes additional finished products, customer orders, stock locations, adapter contracts, workflow runs, and machine events so reviewers can inspect more than one static scenario.
 
 ## Core Modules
 
@@ -62,6 +62,7 @@ cd factory-ops-intelligence-platform
 python -m pip install -r apps/api-server/requirements.txt
 npm --prefix apps/web-dashboard install
 python scripts/seed_demo_data.py
+python scripts/generate_frontend_snapshot.py
 ```
 
 Start API:
@@ -74,7 +75,13 @@ python -m uvicorn factory_ops_api.main:app --host 127.0.0.1 --port 8017
 Start dashboard:
 
 ```powershell
-npm --prefix apps/web-dashboard run dev -- --host 127.0.0.1 --port 5177
+npm --prefix apps/web-dashboard run dev -- --host 127.0.0.1 --port 5178
+```
+
+Or start both services with:
+
+```powershell
+.\scripts\run_dev.ps1
 ```
 
 Validate:
@@ -91,9 +98,23 @@ npm --prefix apps/web-dashboard run build
 
 The agent layer exposes tool contracts for material coverage, production notice generation, line simulation, bottleneck detection, daily reporting, and factory Q&A. The default provider is a mock runtime so the demo stays reproducible without live credentials.
 
+Registered tools:
+
+- `search_material`
+- `get_product_bom`
+- `explode_bom`
+- `calculate_inventory_risk`
+- `check_order_material_coverage`
+- `generate_production_notice`
+- `run_line_simulation`
+- `get_simulation_report`
+- `detect_bottleneck`
+- `generate_daily_report`
+- `answer_factory_question`
+
 ## Adapter Design
 
-ERP, WMS, MES, PLC, WeChat, and MCP are represented as adapter-ready contracts. The public demo uses synthetic data and mock/stub statuses.
+ERP, WMS, MES, PLC, Scheduling, and MCP are represented as adapter-ready contracts. The public demo uses synthetic data and explicit mock/stub/sample statuses.
 
 ## Related Showcase Projects
 
@@ -104,4 +125,3 @@ ERP, WMS, MES, PLC, WeChat, and MCP are represented as adapter-ready contracts. 
 ## Scope
 
 This is a portfolio-grade prototype. It is not a full ERP, WMS, MES, IoT platform, or production scheduler. The value is in the operating loop, traceable calculations, adapter boundaries, and agent-readable tools.
-

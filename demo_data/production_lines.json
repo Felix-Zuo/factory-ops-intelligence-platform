@@ -4,21 +4,45 @@
     "name": "6205 Bearing Assembly Line A",
     "product_id": "FG-6205-2RS",
     "shift_hours": 24,
+    "status": "ready",
+    "adapter_mode": "mes_adapter_mock",
     "machines": [
-      {"machine_id": "OP-10", "name": "Outer ring grinding", "cycle_time_sec": 2.7, "availability": 0.93, "yield_rate": 0.985, "buffer_capacity": 600},
-      {"machine_id": "OP-20", "name": "Inner ring grinding", "cycle_time_sec": 2.9, "availability": 0.92, "yield_rate": 0.982, "buffer_capacity": 520},
-      {"machine_id": "OP-30", "name": "Ball loading", "cycle_time_sec": 2.4, "availability": 0.95, "yield_rate": 0.992, "buffer_capacity": 750},
-      {"machine_id": "OP-40", "name": "Cage pressing", "cycle_time_sec": 3.2, "availability": 0.89, "yield_rate": 0.978, "buffer_capacity": 420},
-      {"machine_id": "OP-50", "name": "Seal and grease", "cycle_time_sec": 3.0, "availability": 0.91, "yield_rate": 0.981, "buffer_capacity": 460},
-      {"machine_id": "OP-60", "name": "Noise inspection", "cycle_time_sec": 2.8, "availability": 0.94, "yield_rate": 0.987, "buffer_capacity": 500}
+      {"machine_id": "OP-10", "name": "Outer ring grinding", "operation_id": "OP-10", "cycle_time_sec": 2.7, "availability": 0.93, "yield_rate": 0.985, "buffer_capacity": 600},
+      {"machine_id": "OP-20", "name": "Inner ring grinding", "operation_id": "OP-20", "cycle_time_sec": 2.9, "availability": 0.92, "yield_rate": 0.982, "buffer_capacity": 520},
+      {"machine_id": "OP-30", "name": "Ball loading", "operation_id": "OP-30", "cycle_time_sec": 2.4, "availability": 0.95, "yield_rate": 0.992, "buffer_capacity": 750},
+      {"machine_id": "OP-40", "name": "Cage pressing", "operation_id": "OP-40", "cycle_time_sec": 3.2, "availability": 0.89, "yield_rate": 0.978, "buffer_capacity": 420},
+      {"machine_id": "OP-50", "name": "Seal and grease", "operation_id": "OP-50", "cycle_time_sec": 3.0, "availability": 0.91, "yield_rate": 0.981, "buffer_capacity": 460},
+      {"machine_id": "OP-60", "name": "Noise inspection", "operation_id": "OP-60", "cycle_time_sec": 2.8, "availability": 0.94, "yield_rate": 0.987, "buffer_capacity": 500}
     ],
     "transport_links": [
-      {"from": "OP-10", "to": "OP-40", "mode": "conveyor"},
-      {"from": "OP-20", "to": "OP-40", "mode": "robot"},
-      {"from": "OP-30", "to": "OP-40", "mode": "feeder"},
-      {"from": "OP-40", "to": "OP-50", "mode": "conveyor"},
-      {"from": "OP-50", "to": "OP-60", "mode": "conveyor"}
+      {"link_id": "LNK-A-10-40", "from": "OP-10", "to": "OP-40", "mode": "conveyor", "capacity": 460, "transfer_time_sec": 24},
+      {"link_id": "LNK-A-20-40", "from": "OP-20", "to": "OP-40", "mode": "robot", "capacity": 420, "transfer_time_sec": 31},
+      {"link_id": "LNK-A-30-40", "from": "OP-30", "to": "OP-40", "mode": "feeder", "capacity": 680, "transfer_time_sec": 18},
+      {"link_id": "LNK-A-40-50", "from": "OP-40", "to": "OP-50", "mode": "conveyor", "capacity": 420, "transfer_time_sec": 28},
+      {"link_id": "LNK-A-50-60", "from": "OP-50", "to": "OP-60", "mode": "conveyor", "capacity": 500, "transfer_time_sec": 22}
+    ]
+  },
+  {
+    "line_id": "LINE-BRG-MIX-B",
+    "name": "Mixed Bearing Assembly Line B",
+    "product_id": "FG-6206-ZZ",
+    "shift_hours": 24,
+    "status": "sample",
+    "adapter_mode": "mes_adapter_mock",
+    "machines": [
+      {"machine_id": "B-OP-10", "name": "Ring grinding cell", "operation_id": "OP-10", "cycle_time_sec": 3.1, "availability": 0.9, "yield_rate": 0.982, "buffer_capacity": 420},
+      {"machine_id": "B-OP-20", "name": "Inner ring finishing", "operation_id": "OP-20", "cycle_time_sec": 3.0, "availability": 0.9, "yield_rate": 0.981, "buffer_capacity": 380},
+      {"machine_id": "B-OP-30", "name": "Rolling element feed", "operation_id": "OP-30", "cycle_time_sec": 2.7, "availability": 0.93, "yield_rate": 0.99, "buffer_capacity": 600},
+      {"machine_id": "B-OP-40", "name": "Cage and shield press", "operation_id": "OP-40", "cycle_time_sec": 3.4, "availability": 0.87, "yield_rate": 0.976, "buffer_capacity": 360},
+      {"machine_id": "B-OP-50", "name": "Grease and closure", "operation_id": "OP-50", "cycle_time_sec": 3.2, "availability": 0.89, "yield_rate": 0.979, "buffer_capacity": 390},
+      {"machine_id": "B-OP-60", "name": "Final inspection", "operation_id": "OP-60", "cycle_time_sec": 3.0, "availability": 0.91, "yield_rate": 0.985, "buffer_capacity": 420}
+    ],
+    "transport_links": [
+      {"link_id": "LNK-B-10-40", "from": "B-OP-10", "to": "B-OP-40", "mode": "conveyor", "capacity": 360, "transfer_time_sec": 30},
+      {"link_id": "LNK-B-20-40", "from": "B-OP-20", "to": "B-OP-40", "mode": "manual-cart", "capacity": 300, "transfer_time_sec": 42},
+      {"link_id": "LNK-B-30-40", "from": "B-OP-30", "to": "B-OP-40", "mode": "feeder", "capacity": 520, "transfer_time_sec": 24},
+      {"link_id": "LNK-B-40-50", "from": "B-OP-40", "to": "B-OP-50", "mode": "conveyor", "capacity": 340, "transfer_time_sec": 30},
+      {"link_id": "LNK-B-50-60", "from": "B-OP-50", "to": "B-OP-60", "mode": "conveyor", "capacity": 380, "transfer_time_sec": 24}
     ]
   }
 ]
-

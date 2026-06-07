@@ -1,0 +1,14 @@
+[
+  {"location_id": "WMS-A1", "name": "Ring Blank Zone A1", "parent_location_id": "WMS-A", "location_type": "internal", "is_external": false},
+  {"location_id": "WMS-A2", "name": "Ring Blank Zone A2", "parent_location_id": "WMS-A", "location_type": "internal", "is_external": false},
+  {"location_id": "WMS-A3", "name": "Ring Blank Zone A3", "parent_location_id": "WMS-A", "location_type": "internal", "is_external": false},
+  {"location_id": "WMS-A4", "name": "Ring Blank Zone A4", "parent_location_id": "WMS-A", "location_type": "internal", "is_external": false},
+  {"location_id": "WMS-B2", "name": "Rolling Element Zone B2", "parent_location_id": "WMS-B", "location_type": "internal", "is_external": false},
+  {"location_id": "WMS-B3", "name": "Rolling Element Zone B3", "parent_location_id": "WMS-B", "location_type": "internal", "is_external": false},
+  {"location_id": "WMS-C1", "name": "Cage Storage C1", "parent_location_id": "WMS-C", "location_type": "internal", "is_external": false},
+  {"location_id": "WMS-C2", "name": "Seal Storage C2", "parent_location_id": "WMS-C", "location_type": "internal", "is_external": false},
+  {"location_id": "WMS-C3", "name": "Shield Storage C3", "parent_location_id": "WMS-C", "location_type": "internal", "is_external": false},
+  {"location_id": "WMS-C4", "name": "Large Bearing Seal Zone C4", "parent_location_id": "WMS-C", "location_type": "internal", "is_external": false},
+  {"location_id": "WMS-CHEM", "name": "Controlled Chemical Storage", "parent_location_id": "WMS-QA", "location_type": "quarantine", "is_external": false},
+  {"location_id": "WMS-PACK", "name": "Packaging Buffer", "parent_location_id": "WMS-P", "location_type": "internal", "is_external": false}
+]

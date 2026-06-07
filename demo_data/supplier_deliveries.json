@@ -1,8 +1,10 @@
 [
-  {"supplier": "Northline Forging", "on_time_rate": 0.94, "open_po_qty": 12000, "risk_note": "Stable ring blank supply"},
-  {"supplier": "Hengyuan Ball", "on_time_rate": 0.91, "open_po_qty": 60000, "risk_note": "Monitor polishing line capacity"},
-  {"supplier": "Jinhe Stamping", "on_time_rate": 0.86, "open_po_qty": 5000, "risk_note": "Cage supply close to demand"},
-  {"supplier": "Haicheng Rubber", "on_time_rate": 0.82, "open_po_qty": 9000, "risk_note": "Seal delivery needs confirmation"},
-  {"supplier": "GreenChem", "on_time_rate": 0.88, "open_po_qty": 8000, "risk_note": "Grease lot pending QC release"}
+  {"supplier": "Northline Forging", "on_time_rate": 0.94, "open_po_qty": 29200, "risk_note": "Stable ring blank supply"},
+  {"supplier": "Eastbay Forging", "on_time_rate": 0.91, "open_po_qty": 14000, "risk_note": "Short lead time but high reserved stock"},
+  {"supplier": "Hengyuan Ball", "on_time_rate": 0.97, "open_po_qty": 62000, "risk_note": "Rolling element supply stable"},
+  {"supplier": "Jinhe Stamping", "on_time_rate": 0.89, "open_po_qty": 18000, "risk_note": "Stamping changeover can slip by one shift"},
+  {"supplier": "Haicheng Rubber", "on_time_rate": 0.86, "open_po_qty": 22000, "risk_note": "Seal lot release requires incoming inspection"},
+  {"supplier": "GreenChem", "on_time_rate": 0.81, "open_po_qty": 12000, "risk_note": "Grease batch QA release is the current watch item"},
+  {"supplier": "Yuhang Shielding", "on_time_rate": 0.9, "open_po_qty": 10000, "risk_note": "Shield stock depends on inbound truck confirmation"},
+  {"supplier": "Harbor Packaging", "on_time_rate": 0.96, "open_po_qty": 24000, "risk_note": "Packaging buffer is sufficient"}
 ]
-

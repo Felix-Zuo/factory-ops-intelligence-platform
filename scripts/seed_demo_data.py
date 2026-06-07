@@ -13,11 +13,18 @@ DEMO_PATH = ROOT / "demo_data"
 
 TABLE_FILES = {
     "materials": "materials.json",
+    "finished_products": "finished_products.json",
     "bom_components": "bom.json",
+    "stock_locations": "stock_locations.json",
     "inventory_snapshots": "inventory.json",
     "customer_orders": "customer_orders.json",
     "shipment_records": "shipments.json",
     "supplier_delivery_records": "supplier_deliveries.json",
+    "production_lines": "production_lines.json",
+    "machine_events": "machine_events.json",
+    "adapter_contracts": "adapters.json",
+    "workflow_runs": "workflow_runs.json",
+    "file_import_logs": "file_imports.json",
 }
 
 
@@ -35,12 +42,22 @@ def insert_rows(conn: sqlite3.Connection, table: str, rows: list[dict]) -> None:
     col_sql = ", ".join(columns)
     conn.executemany(
         f"INSERT INTO {table} ({col_sql}) VALUES ({placeholders})",
-        [[row.get(column) for column in columns] for row in rows],
+        [[normalize_value(row.get(column)) for column in columns] for row in rows],
     )
+
+
+def normalize_value(value):
+    if isinstance(value, (dict, list)):
+        return json.dumps(value, ensure_ascii=False, sort_keys=True)
+    if isinstance(value, bool):
+        return int(value)
+    return value
 
 
 def main() -> None:
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    if DB_PATH.exists():
+        DB_PATH.unlink()
     conn = sqlite3.connect(DB_PATH)
     try:
         conn.executescript(SCHEMA_PATH.read_text(encoding="utf-8"))
@@ -54,4 +71,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

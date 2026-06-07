@@ -10,17 +10,25 @@ SCAN_GLOBS = [
     "PORTFOLIO_CASE_STUDY.md",
     "ARCHITECTURE.md",
     "DATA_CONTRACT.md",
+    "docs/showcase.html",
     "apps/web-dashboard/src/**/*.tsx",
     "apps/web-dashboard/src/**/*.ts",
-    "agent_workspace/**/*.md",
 ]
 
 FORBIDDEN = [
     "根据你的要求",
+    "以下是",
+    "直接给你",
     "以下是最直接的答案",
     "不说废话",
     "我将为你",
+    "本系统旨在赋能",
     "赋能",
+    "全面提升",
+    "完美解决",
+    "无需人工干预",
+    "按照提示词",
+    "本页面根据提示词生成",
     "一键",
     "革命性",
     "颠覆式",
@@ -28,6 +36,7 @@ FORBIDDEN = [
     "未来无限可能",
     "酷炫",
     "高大上",
+    "AI魔法",
     "渐变毛玻璃",
     "AI Magic",
     "next-gen",
@@ -71,4 +80,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

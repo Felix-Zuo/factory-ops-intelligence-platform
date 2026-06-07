@@ -52,8 +52,15 @@ def health() -> dict[str, Any]:
         "mode": "demo",
         "products": len(domain.list_products(data)),
         "materials": len(data.materials),
+        "orders": len(data.customer_orders),
+        "machine_events": len(data.machine_events),
         "adapters": "mock/stub",
     }
+
+
+@app.get("/api/demo/snapshot")
+def demo_snapshot() -> dict[str, Any]:
+    return domain.demo_snapshot()
 
 
 @app.get("/api/files/imports")
@@ -62,19 +69,8 @@ def file_imports() -> list[dict[str, Any]]:
 
 
 @app.post("/api/files/classify")
-def classify_file(payload: dict[str, str]) -> dict[str, str]:
-    name = payload.get("file_name", "").lower()
-    if "bom" in name:
-        file_type = "bom"
-    elif "inventory" in name or "wms" in name:
-        file_type = "inventory"
-    elif "order" in name or "sales" in name:
-        file_type = "customer_orders"
-    elif "shipment" in name or "in_transit" in name:
-        file_type = "shipment_records"
-    else:
-        file_type = "unknown"
-    return {"file_name": payload.get("file_name", ""), "file_type": file_type, "mode": "rule-based-demo"}
+def classify_file(payload: dict[str, str]) -> dict[str, Any]:
+    return domain.classify_factory_file(payload.get("file_name", ""))
 
 
 @app.get("/api/materials/search")
@@ -97,7 +93,7 @@ def product_bom(product_id: str) -> dict[str, Any]:
 
 @app.post("/api/bom/explode")
 def explode_bom(request: BomRequest) -> dict[str, Any]:
-    return domain.calculate_inventory_risk(request.product_id, request.quantity)
+    return domain.explode_bom(request.product_id, request.quantity)
 
 
 @app.get("/api/inventory/risk")
@@ -138,23 +134,17 @@ def run_simulation(request: SimulationRequest) -> dict[str, Any]:
 
 @app.get("/api/simulation/{run_id}/report")
 def simulation_report(run_id: str) -> dict[str, Any]:
-    report = domain.run_line_simulation("LINE-BRG-6205-A", 24)
-    return {**report, "run_id": run_id}
+    return domain.get_simulation_report(run_id)
 
 
 @app.get("/api/production-lines/{line_id}/bottlenecks")
 def line_bottleneck(line_id: str) -> dict[str, Any]:
     report = domain.run_line_simulation(line_id, 24)
-    return {
-        "line_id": line_id,
-        "bottleneck_machine": report["bottleneck_machine"],
-        "quality_bottleneck": report["quality_bottleneck"],
-        "improvement_suggestion": report["improvement_suggestion"],
-    }
+    return {"line_id": line_id, **domain.detect_bottleneck(report)}
 
 
 @app.get("/api/agent/tools")
-def agent_tools() -> list[dict[str, str]]:
+def agent_tools() -> list[dict[str, Any]]:
     return domain.agent_tools()
 
 
@@ -167,23 +157,27 @@ def agent_chat(request: AgentRequest) -> dict[str, Any]:
 def run_workflow(payload: dict[str, Any]) -> dict[str, Any]:
     workflow = payload.get("workflow", "order_to_material_risk")
     if workflow == "line_simulation_to_report":
-        return domain.run_line_simulation("LINE-BRG-6205-A", 24)
+        report = domain.run_line_simulation("LINE-BRG-6205-A", 24)
+        return {"workflow": workflow, "result": report, "bottleneck": domain.detect_bottleneck(report)}
     if workflow == "order_to_production_notice":
-        return domain.generate_production_notice("FG-6205-2RS", 12000, "SO-2026-0607-01")
-    return domain.calculate_inventory_risk("FG-6205-2RS", 12000)
+        return {"workflow": workflow, "result": domain.generate_production_notice("FG-6205-2RS", 12000, "SO-2026-0607-01")}
+    if workflow == "daily_factory_review":
+        return {"workflow": workflow, "result": domain.generate_daily_report()}
+    return {"workflow": workflow, "result": domain.check_order_material_coverage("SO-2026-0607-01")}
 
 
 @app.get("/api/agent/traces")
 def agent_traces() -> list[dict[str, Any]]:
+    if not domain.AGENT_TRACES:
+        domain.answer_factory_question("Can FG-6205-2RS be released for production?")
     return domain.AGENT_TRACES
 
 
 @app.get("/api/integrations/status")
-def integrations() -> list[dict[str, str]]:
+def integrations() -> list[dict[str, Any]]:
     return domain.integration_status()
 
 
 @app.post("/api/integrations/{adapter}/import")
 def integration_import(adapter: str, payload: dict[str, Any]) -> dict[str, Any]:
     return {"adapter": adapter, "status": "accepted", "mode": "mock", "records": len(payload.get("records", []))}
-

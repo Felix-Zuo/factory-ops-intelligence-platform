@@ -16,7 +16,7 @@ import {
   ServerCog,
 } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { copy, integrations, imports, Lang, machines, materials, traces } from './data';
+import { copy, integrations, imports, Lang, machines, materials, snapshot, topSources, traces } from './data';
 
 type Page =
   | 'home'
@@ -89,9 +89,9 @@ function Home({ lang }: { lang: Lang }) {
         {[
           c.statusLoaded,
           c.mode,
-          'Source rows linked',
-          'Tool call recorded',
-          'Adapter-ready contracts',
+          `${snapshot.health.products} products`,
+          `${snapshot.health.materials} materials`,
+          `${snapshot.agentTools.length} registered tools`,
         ].map((item) => (
           <div className="rail-row" key={item}>
             <span className="signal signal-green" />
@@ -102,7 +102,7 @@ function Home({ lang }: { lang: Lang }) {
       <section className="wide-panel">
         <h3>{t(lang, 'Main operating loop', '主业务闭环')}</h3>
         <div className="flow-line">
-          {['File import', 'BOM demand', 'Inventory coverage', 'Production notice', '24h simulation', 'Agent report'].map((item) => (
+          {['File import', 'BOM demand', 'Inventory coverage', 'Production notice', '24h simulation', 'Tool trace'].map((item) => (
             <div className="flow-step" key={item}>
               {item}
             </div>
@@ -140,20 +140,20 @@ function Inventory({ lang }: { lang: Lang }) {
     <section>
       <SectionHeader code="BOM-02" title={t(lang, 'BOM & Inventory Dashboard', 'BOM 与库存看板')} subtitle={t(lang, 'Finished product demand is exploded into component coverage.', '成品需求被拆解为组件覆盖状态。')} />
       <div className="metric-strip">
-        <div><span>Order</span><strong>SO-2026-0607-01</strong></div>
-        <div><span>Product</span><strong>FG-6205-2RS</strong></div>
-        <div><span>Quantity</span><strong>12,000 pcs</strong></div>
-        <div><span>Coverage</span><strong>5 covered / 1 watch</strong></div>
+        <div><span>Order</span><strong>{snapshot.orders[0].order_id}</strong></div>
+        <div><span>Product</span><strong>{snapshot.inventoryRisk.product_id}</strong></div>
+        <div><span>Quantity</span><strong>{snapshot.inventoryRisk.order_qty.toLocaleString()} pcs</strong></div>
+        <div><span>Coverage</span><strong>{snapshot.inventoryRisk.summary.covered_items} covered / {snapshot.inventoryRisk.summary.watch_items} watch</strong></div>
       </div>
       <div className="table-panel">
         <table>
           <thead>
-            <tr><th>Material</th><th>Name</th><th>Required</th><th>Coverage</th><th>Status</th><th>Supplier</th><th>Source</th></tr>
+            <tr><th>Material</th><th>Name</th><th>Required</th><th>Coverage</th><th>Status</th><th>Supplier</th><th>Location</th><th>Source</th></tr>
           </thead>
           <tbody>
             {materials.map((row) => (
               <tr key={row.id}>
-                <td>{row.id}</td><td>{row.name}</td><td>{row.required.toLocaleString()}</td><td>{row.coverage.toLocaleString()}</td><td><StatusChip value={row.status} /></td><td>{row.supplier}</td><td>{row.source}</td>
+                <td>{row.id}</td><td>{row.name}</td><td>{row.required.toLocaleString()}</td><td>{row.coverage.toLocaleString()}</td><td><StatusChip value={row.status} /></td><td>{row.supplier}</td><td>{row.location}</td><td>{row.source}</td>
               </tr>
             ))}
           </tbody>
@@ -168,10 +168,11 @@ function TracePage({ lang }: { lang: Lang }) {
     <section>
       <SectionHeader code="TRC-03" title={t(lang, 'Product Material Trace', '成品物料追溯')} subtitle={t(lang, 'Finished product to BOM, stock, inbound, order, and supplier.', '成品连接 BOM、库存、在途、订单和供应商。')} />
       <div className="trace-chain">
-        {['FG-6205-2RS', 'BOM v1', '6 components', 'WMS stock', 'Inbound ETA', 'Supplier status'].map((item, index) => (
-          <div className="trace-card" key={item}>
+        {snapshot.materialTrace.trace_summary.map((item, index) => (
+          <div className="trace-card" key={`${item.stage}-${item.label}`}>
             <span>{`T${index + 1}`}</span>
-            <strong>{item}</strong>
+            <strong>{item.label}</strong>
+            <em>{item.detail}</em>
           </div>
         ))}
       </div>
@@ -194,15 +195,15 @@ function Notice({ lang }: { lang: Lang }) {
       <SectionHeader code="PN-04" title={t(lang, 'Production Notice Generator', '生产通知单生成器')} subtitle={t(lang, 'Preview built from product, order, BOM, and material gate.', '根据成品、订单、BOM 和物料放行状态生成预览。')} />
       <div className="notice-layout">
         <aside className="form-stack">
-          <label>Product <strong>FG-6205-2RS</strong></label>
-          <label>Quantity <strong>12,000 pcs</strong></label>
-          <label>Order <strong>SO-2026-0607-01</strong></label>
-          <label>Template <strong>bearing-production-notice/v1</strong></label>
+          <label>Product <strong>{snapshot.notice.product_id}</strong></label>
+          <label>Quantity <strong>{snapshot.notice.quantity.toLocaleString()} pcs</strong></label>
+          <label>Order <strong>{snapshot.notice.order_id}</strong></label>
+          <label>Template <strong>{snapshot.notice.template_version}</strong></label>
         </aside>
         <article className="notice-sheet">
-          <h1>Production Notice PN-20260607-DEMO</h1>
-          <p><b>Product:</b> 6205-2RS Deep Groove Bearing</p>
-          <p><b>Material gate:</b> Release with GreenChem follow-up</p>
+          <h1>Production Notice {snapshot.notice.notice_id}</h1>
+          <p><b>Product:</b> {snapshot.notice.product_name}</p>
+          <p><b>Material gate:</b> {snapshot.notice.material_gate}</p>
           <table>
             <tbody>
               {materials.slice(0, 4).map((row) => (
@@ -212,8 +213,8 @@ function Notice({ lang }: { lang: Lang }) {
           </table>
         </article>
         <aside className="form-stack">
-          <label>Field status <strong>validated</strong></label>
-          <label>Source rows <strong>14 linked</strong></label>
+          <label>Field status <strong>{snapshot.notice.material_status}</strong></label>
+          <label>Source rows <strong>{snapshot.notice.source_refs.length} linked</strong></label>
           <label>Export <strong>HTML / JSON</strong></label>
         </aside>
       </div>
@@ -231,6 +232,7 @@ function Simulation({ lang }: { lang: Lang }) {
             <span>{machine.id}</span>
             <strong>{machine.name}</strong>
             <em>{machine.output.toLocaleString()} pcs</em>
+            <small>{Math.round(machine.util * 100)}% util / {machine.blocking}h block</small>
             {index < machines.length - 1 && <i />}
           </div>
         ))}
@@ -245,12 +247,12 @@ function Report({ lang }: { lang: Lang }) {
       <SectionHeader code="REP-06" title={t(lang, 'Simulation Report', '仿真报告')} subtitle={t(lang, 'Bottleneck, output, scrap, utilization, waiting, and blocking.', '瓶颈、产量、废品、利用率、等待和堵料。')} />
       <div className="report-grid">
         {[
-          ['Good output', '23,512 pcs'],
-          ['Scrap output', '410 pcs'],
-          ['Bottleneck', 'OP-40 Cage pressing'],
-          ['Quality bottleneck', 'OP-50 Seal and grease'],
-          ['Avg utilization', '88.6%'],
-          ['Blocking time', '5.14 h'],
+          ['Good output', `${snapshot.simulation.good_output.toLocaleString()} pcs`],
+          ['Scrap output', `${snapshot.simulation.scrap_output.toLocaleString()} pcs`],
+          ['Bottleneck', snapshot.simulation.bottleneck_machine],
+          ['Quality bottleneck', snapshot.simulation.quality_bottleneck],
+          ['Avg utilization', `${Math.round(snapshot.simulation.machine_utilization * 1000) / 10}%`],
+          ['Blocking time', `${snapshot.simulation.blocking_time_hours} h`],
         ].map(([label, value]) => (
           <div className="report-cell" key={label}><span>{label}</span><strong>{value}</strong></div>
         ))}
@@ -264,12 +266,12 @@ function QA({ lang }: { lang: Lang }) {
     <section>
       <SectionHeader code="QA-07" title={t(lang, 'AI Factory Q&A', '工厂运营问答')} subtitle={t(lang, 'Questions are answered through registered factory tools.', '问题通过已注册的工厂工具回答。')} />
       <div className="qa-layout">
-        <div className="question-box">Can FG-6205-2RS be released for production?</div>
+        <div className="question-box">{snapshot.agentAnswer.trace.user_question}</div>
         <div className="answer-box">
-          <b>Result:</b> material coverage status is watch.<br />
-          <b>Evidence:</b> 5 covered items, 1 watch item, 0 critical items.<br />
-          <b>Source:</b> BOM rows and WMS inventory rows are linked.<br />
-          <b>Next check:</b> confirm GreenChem lot release before batch start.
+          <b>Intent:</b> {snapshot.agentAnswer.trace.selected_intent}<br />
+          <b>Workflow:</b> {snapshot.agentAnswer.trace.workflow}<br />
+          <b>Tools:</b> {snapshot.agentAnswer.trace.selected_tools.join(' -> ')}<br />
+          <b>Answer:</b> {snapshot.agentAnswer.answer}
         </div>
       </div>
     </section>
@@ -304,6 +306,8 @@ function Integrations({ lang }: { lang: Lang }) {
             <strong>{item.adapter}</strong>
             <StatusChip value={item.mode} />
             <p>{item.scope}</p>
+            <small>{item.status} / {item.lastSample}</small>
+            <small>{item.gaps}</small>
           </div>
         ))}
       </div>
@@ -318,15 +322,15 @@ function Portfolio({ lang }: { lang: Lang }) {
       <div className="case-columns">
         <div>
           <h3>Problem</h3>
-          <p>Factory teams often compare BOM, stock, orders, inbound shipments, notice templates, and line assumptions across separated files.</p>
+          <p>{snapshot.products.length} products, {snapshot.inventoryRisk.materials.length} BOM components, {snapshot.orders.length} orders and {snapshot.integrations.length} adapters are represented in the demo.</p>
         </div>
         <div>
           <h3>System</h3>
-          <p>The prototype connects those records into a traceable operating layer with adapters, deterministic tools, and a dashboard.</p>
+          <p>The operating loop connects imports, BOM demand, stock coverage, production notice, simulation report and agent trace.</p>
         </div>
         <div>
           <h3>Agent design</h3>
-          <p>The agent layer calls factory tools, records workflow traces, and explains results with source-backed evidence.</p>
+          <p>{snapshot.agentTools.length} tools are registered with schemas; Q&A records selected intent, workflow, tool calls, result and source refs.</p>
         </div>
       </div>
     </section>
@@ -389,9 +393,9 @@ export default function App() {
       </main>
       <aside className="trace-rail">
         <h3>{c.sourceTrace}</h3>
-        <div className="trace-mini"><span>BOM</span><strong>bom_6205_demo.xlsx:2-7</strong></div>
-        <div className="trace-mini"><span>WMS</span><strong>wms_inventory_demo.csv:2-7</strong></div>
-        <div className="trace-mini"><span>Order</span><strong>sales_orders_demo.csv:2</strong></div>
+        {topSources.map((item) => (
+          <div className="trace-mini" key={`${item.label}-${item.value}`}><span>{item.label}</span><strong>{item.value}</strong></div>
+        ))}
         <h3>{c.adapterStatus}</h3>
         {integrations.slice(0, 4).map((item) => (
           <div className="adapter-mini" key={item.adapter}>

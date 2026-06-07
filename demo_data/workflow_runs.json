@@ -1,0 +1,7 @@
+[
+  {"workflow_run_id": "WF-001", "workflow_name": "file_to_dashboard", "status": "completed", "current_step": "dashboard_summary", "input_json": {"file_name": "bom_6205_demo.xlsx"}, "result_json": {"rows": 7, "quality": "pass"}, "checkpoint_json": {"source_refs": 7}},
+  {"workflow_run_id": "WF-002", "workflow_name": "order_to_material_risk", "status": "completed", "current_step": "material_coverage", "input_json": {"order_id": "SO-2026-0607-01"}, "result_json": {"overall_status": "watch"}, "checkpoint_json": {"tool_calls": 3}},
+  {"workflow_run_id": "WF-003", "workflow_name": "order_to_production_notice", "status": "completed", "current_step": "notice_preview", "input_json": {"order_id": "SO-2026-0607-01"}, "result_json": {"template_version": "bearing-production-notice/v1"}, "checkpoint_json": {"tool_calls": 3}},
+  {"workflow_run_id": "WF-004", "workflow_name": "line_simulation_to_report", "status": "completed", "current_step": "simulation_report", "input_json": {"line_id": "LINE-BRG-6205-A", "hours": 24}, "result_json": {"bottleneck_machine": "OP-40"}, "checkpoint_json": {"tool_calls": 3}},
+  {"workflow_run_id": "WF-005", "workflow_name": "daily_factory_review", "status": "sample", "current_step": "follow_up_list", "input_json": {"day": "2026-06-07"}, "result_json": {"exceptions": 2}, "checkpoint_json": {"tool_calls": 4}}
+]

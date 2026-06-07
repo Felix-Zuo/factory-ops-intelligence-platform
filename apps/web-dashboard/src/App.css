@@ -202,7 +202,7 @@ section {
 
 .ops-loop {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin-top: 22px;
 }
@@ -236,6 +236,7 @@ section {
   display: block;
   margin-top: 10px;
   line-height: 1.25;
+  overflow-wrap: anywhere;
 }
 
 .right-rail h3,
@@ -389,6 +390,18 @@ th {
   line-height: 1.25;
 }
 
+.trace-card em,
+.machine small,
+.adapter small {
+  display: block;
+  margin-top: 7px;
+  color: #5f665f;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
 .source-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -414,8 +427,13 @@ th {
 
 .notice-layout {
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr) 210px;
+  grid-template-columns: 200px minmax(320px, 1fr);
   gap: 14px;
+}
+
+.notice-layout > .form-stack:last-child {
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .form-stack {
@@ -445,7 +463,9 @@ th {
 
 .notice-sheet h1 {
   margin: 0 0 14px;
-  font-size: 24px;
+  font-size: 21px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
 .line-map {
@@ -526,11 +546,18 @@ th {
 
 .timeline-row {
   display: grid;
-  grid-template-columns: 90px 150px 1fr;
+  grid-template-columns: 82px minmax(0, 1fr) minmax(120px, 0.65fr);
   gap: 12px;
   border: 1px solid #c7c0ae;
   background: #fffaf0;
   padding: 12px;
+}
+
+.timeline-row strong,
+.timeline-row em {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
 }
 
 .timeline-row em {
@@ -588,13 +615,21 @@ th {
 .trace-mini,
 .adapter-mini {
   display: grid;
-  grid-template-columns: 72px 1fr;
+  grid-template-columns: 1fr;
   align-items: center;
 }
 
 .trace-mini strong {
   font-size: 12px;
   font-family: Consolas, "SFMono-Regular", monospace;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.35;
+}
+
+.adapter-mini {
+  grid-template-columns: 72px 1fr;
 }
 
 @media (max-width: 1180px) {
