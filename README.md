@@ -20,6 +20,10 @@ Manufacturing teams often make release decisions from separate ERP exports, WMS 
 
 中文摘要：这个项目把 BOM、库存、客户订单、在途记录、生产通知单、产线仿真、接口状态和工具调用轨迹放进同一个可复现的制造业运营 demo 中。公开版本只使用合成数据和 mock/stub 接口。
 
+Public demo boundary: keep production exports, customer lists, supplier lists,
+real BOMs, shipment plans, screenshots with company identifiers, and logs out of
+the repository unless they have been intentionally sanitized.
+
 ## Quick Start
 
 Requirements:
@@ -184,4 +188,3 @@ Registered tools:
 ## License
 
 MIT. See [LICENSE](LICENSE).
-
