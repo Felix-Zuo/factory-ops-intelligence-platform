@@ -2,7 +2,9 @@
 
 ## Position
 
-This project is a demo-ready operations intelligence layer between fragmented manufacturing data and operator-facing decisions. ERP, WMS, MES, PLC, spreadsheet exports, production notice workflows, line simulation, and agent-readable tools are connected through a small reproducible prototype.
+This project is a demo-ready operations intelligence layer between fragmented manufacturing data and operator-facing decisions. ERP, WMS, MES, PLC, spreadsheet exports, release notice workflows, line simulation and agent-readable tools are connected through a reproducible prototype.
+
+The public version is intentionally generic. The default data set uses several synthetic product families, shared material classes, mixed supplier contexts and configurable assembly lines instead of a single product category.
 
 ## Runtime Layout
 
@@ -19,13 +21,13 @@ demo_data
 
 | Module | Responsibility |
 |---|---|
-| Data Import Center | Classify and parse demo factory files |
+| Data Import Center | Classify and parse synthetic operations files |
 | BOM & Inventory | Explode BOM, calculate stock coverage, retain source trace |
-| Product Material Trace | Connect finished product, components, inventory, inbound records, orders, and suppliers |
-| Production Notice | Generate preview and export-ready content from product/order/material context |
+| Product Material Trace | Connect product, components, inventory, inbound records, orders and suppliers |
+| Release Notice | Generate preview and export-ready content from product/order/material context |
 | Line Simulation | Run deterministic 24h line output and bottleneck calculation |
-| Agent Runtime | Register tools, execute workflows, store traces |
-| Integration Status | Show ERP/WMS/MES/PLC/WeChat/MCP adapter mode |
+| Agent Runtime | Register tools, execute workflows and store traces |
+| Integration Status | Show ERP/WMS/MES/PLC/scheduling/MCP adapter mode |
 
 ## Data Surface
 
@@ -37,7 +39,7 @@ The dashboard uses `scripts/generate_frontend_snapshot.py` to write `apps/web-da
 
 ## Agent Boundary
 
-The agent runtime is a caller and narrator, not the source of truth. Business values are computed by tools. The answer format is result, evidence, source, and next check.
+The agent runtime is a caller and narrator, not the source of truth. Business values are computed by tools. The answer format is result, evidence, source and next check.
 
 ## Adapter Boundary
 

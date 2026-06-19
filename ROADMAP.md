@@ -2,25 +2,25 @@
 
 ## Current Scope
 
-- Synthetic demo data import.
-- BOM-based material coverage.
-- Production notice preview.
-- 24h line simulation.
-- Agent tool registry and traces.
-- Mock/stub adapters for ERP, WMS, MES, PLC, WeChat, and MCP.
+- Synthetic multi-product demo data import.
+- BOM-based material coverage and source trace.
+- Release notice preview from order, product and material gate.
+- 24h line simulation with bottleneck evidence.
+- Agent tool registry and workflow traces.
+- Mock/stub adapters for ERP, WMS, MES, PLC, scheduling and MCP boundaries.
 
 ## Next Adapter Work
 
-- ERP export adapter for sales orders and material master.
-- WMS export adapter for inventory snapshots and inbound records.
-- MES event adapter for work order status, scrap, downtime, and shift output.
-- PLC sample bridge for machine state, alarm, cycle signal, and buffer state.
+- ERP export adapter examples for sales orders and product master.
+- WMS export adapter examples for inventory snapshots and inbound records.
+- MES event adapter examples for work order status, scrap, downtime and shift output.
+- PLC sample bridge for machine state, alarm, cycle signal and buffer state.
 - MCP server wrapper for selected tools and resources.
 
-## Future Planning Work
+## Productization Work
 
-- Small job-shop scheduling sample.
-- Capacity constraints by machine family and shift.
-- Human review step before publishing production notices.
-- Daily operations report workflow.
-
+- Versioned notice-template registry with approval state.
+- Import profiles for additional BOM, order and inventory formats.
+- Visual regression checks for the dashboard and static docs.
+- Optional scheduling experiment behind the existing scheduling adapter boundary.
+- Daily operations report workflow with review notes and source refs.

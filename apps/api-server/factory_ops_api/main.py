@@ -15,13 +15,13 @@ class BomRequest(BaseModel):
 
 
 class NoticeRequest(BaseModel):
-    product_id: str = "FG-6205-2RS"
-    quantity: float = 12000
-    order_id: str | None = "SO-2026-0607-01"
+    product_id: str = domain.DEFAULT_PRODUCT_ID
+    quantity: float = domain.DEFAULT_ORDER_QTY
+    order_id: str | None = domain.DEFAULT_ORDER_ID
 
 
 class SimulationRequest(BaseModel):
-    line_id: str = "LINE-BRG-6205-A"
+    line_id: str = domain.DEFAULT_LINE_ID
     hours: float = 24
 
 
@@ -30,15 +30,15 @@ class AgentRequest(BaseModel):
 
 
 app = FastAPI(
-    title="Factory Ops Intelligence API",
-    version="0.1.0",
+    title="Operations Intelligence API",
+    version="0.2.0",
     description="Demo-ready operations intelligence API for fragmented manufacturing data.",
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=["http://127.0.0.1:5178", "http://localhost:5178"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -97,12 +97,12 @@ def explode_bom(request: BomRequest) -> dict[str, Any]:
 
 
 @app.get("/api/inventory/risk")
-def inventory_risk(product_id: str = "FG-6205-2RS", quantity: float = 12000) -> dict[str, Any]:
+def inventory_risk(product_id: str = domain.DEFAULT_PRODUCT_ID, quantity: float = domain.DEFAULT_ORDER_QTY) -> dict[str, Any]:
     return domain.calculate_inventory_risk(product_id, quantity)
 
 
 @app.get("/api/inventory/coverage")
-def inventory_coverage(product_id: str = "FG-6205-2RS", quantity: float = 12000) -> dict[str, Any]:
+def inventory_coverage(product_id: str = domain.DEFAULT_PRODUCT_ID, quantity: float = domain.DEFAULT_ORDER_QTY) -> dict[str, Any]:
     return domain.calculate_inventory_risk(product_id, quantity)
 
 
@@ -124,7 +124,7 @@ def export_notice(request: NoticeRequest) -> dict[str, Any]:
 
 @app.get("/api/production-notices/templates")
 def notice_templates() -> list[dict[str, str]]:
-    return [{"template_id": "bearing-production-notice/v1", "status": "active", "scope": "bearing assembly work order"}]
+    return [{"template_id": domain.NOTICE_TEMPLATE_VERSION, "status": "active", "scope": "generic assembly release notice"}]
 
 
 @app.post("/api/simulation/run")
@@ -157,19 +157,19 @@ def agent_chat(request: AgentRequest) -> dict[str, Any]:
 def run_workflow(payload: dict[str, Any]) -> dict[str, Any]:
     workflow = payload.get("workflow", "order_to_material_risk")
     if workflow == "line_simulation_to_report":
-        report = domain.run_line_simulation("LINE-BRG-6205-A", 24)
+        report = domain.run_line_simulation(domain.DEFAULT_LINE_ID, 24)
         return {"workflow": workflow, "result": report, "bottleneck": domain.detect_bottleneck(report)}
     if workflow == "order_to_production_notice":
-        return {"workflow": workflow, "result": domain.generate_production_notice("FG-6205-2RS", 12000, "SO-2026-0607-01")}
+        return {"workflow": workflow, "result": domain.generate_production_notice(domain.DEFAULT_PRODUCT_ID, domain.DEFAULT_ORDER_QTY, domain.DEFAULT_ORDER_ID)}
     if workflow == "daily_factory_review":
         return {"workflow": workflow, "result": domain.generate_daily_report()}
-    return {"workflow": workflow, "result": domain.check_order_material_coverage("SO-2026-0607-01")}
+    return {"workflow": workflow, "result": domain.check_order_material_coverage(domain.DEFAULT_ORDER_ID)}
 
 
 @app.get("/api/agent/traces")
 def agent_traces() -> list[dict[str, Any]]:
     if not domain.AGENT_TRACES:
-        domain.answer_factory_question("Can FG-6205-2RS be released for production?")
+        domain.answer_factory_question(f"Can {domain.DEFAULT_PRODUCT_ID} be released for production?")
     return domain.AGENT_TRACES
 
 

@@ -1,6 +1,6 @@
 :root {
   color: #1e2528;
-  background: #e6e2d8;
+  background: #eef1f4;
   font-family: Inter, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
   font-synthesis: none;
   text-rendering: geometricPrecision;
@@ -25,16 +25,16 @@ button {
   display: grid;
   grid-template-columns: 256px minmax(0, 1fr) 292px;
   background:
-    linear-gradient(90deg, rgba(42, 47, 43, 0.05) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(42, 47, 43, 0.04) 1px, transparent 1px),
-    #e6e2d8;
+    linear-gradient(90deg, rgba(27, 39, 51, 0.04) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(27, 39, 51, 0.035) 1px, transparent 1px),
+    #eef1f4;
   background-size: 34px 34px;
 }
 
 .sidebar {
-  background: #222826;
-  color: #f2efe7;
-  border-right: 1px solid #141817;
+  background: #1f2933;
+  color: #f8fafc;
+  border-right: 1px solid #111827;
   padding: 20px 14px;
 }
 
@@ -60,14 +60,14 @@ nav button {
   min-height: 42px;
   border: 1px solid transparent;
   background: transparent;
-  color: #c9cec8;
+  color: #cbd5e1;
   text-align: left;
   padding: 8px 9px;
   cursor: pointer;
 }
 
 nav button span {
-  color: #97a098;
+  color: #94a3b8;
   font-size: 11px;
   font-family: Consolas, "SFMono-Regular", monospace;
 }
@@ -80,9 +80,9 @@ nav button strong {
 
 nav button.active,
 nav button:hover {
-  background: #303933;
-  color: #fff8e8;
-  border-color: #6b735b;
+  background: #2f3b47;
+  color: #ffffff;
+  border-color: #59768a;
 }
 
 .workspace {
@@ -113,7 +113,7 @@ nav button:hover {
   height: 22px;
   padding: 0 8px;
   background: #323934;
-  color: #f3ead6;
+  color: #ffffff;
   font-size: 12px;
   font-weight: 750;
   font-family: Consolas, "SFMono-Regular", monospace;
@@ -133,7 +133,7 @@ nav button:hover {
   gap: 7px;
   min-height: 34px;
   border: 1px solid #9a9c8f;
-  background: #f5f1e7;
+  background: #ffffff;
   color: #27302b;
   padding: 0 10px;
   font-size: 12px;
@@ -152,8 +152,8 @@ section,
 .notice-sheet,
 .form-stack,
 .trace-rail {
-  background: #f6f2e8;
-  border: 1px solid #b7b4a7;
+  background: #ffffff;
+  border: 1px solid #d0d7de;
 }
 
 section {
@@ -213,8 +213,8 @@ section {
 .report-cell,
 .adapter,
 .machine {
-  border: 1px solid #a7a28f;
-  background: #fffaf0;
+  border: 1px solid #d0d7de;
+  background: #ffffff;
 }
 
 .loop-node {
@@ -226,7 +226,7 @@ section {
 .trace-card span,
 .timeline-row span {
   display: block;
-  color: #8b7442;
+  color: #1f6f78;
   font-family: Consolas, "SFMono-Regular", monospace;
   font-size: 12px;
   font-weight: 800;
@@ -255,7 +255,7 @@ section {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  border-top: 1px solid #d4d0c2;
+  border-top: 1px solid #d8dee4;
   padding: 10px 0;
   font-size: 13px;
 }
@@ -295,8 +295,8 @@ section {
 .metric-strip div,
 .question-box,
 .answer-box {
-  border: 1px solid #b7b4a7;
-  background: #fffaf0;
+  border: 1px solid #d0d7de;
+  background: #ffffff;
   padding: 12px;
 }
 
@@ -327,14 +327,14 @@ table {
 
 th,
 td {
-  border-bottom: 1px solid #d9d4c6;
+  border-bottom: 1px solid #d8dee4;
   padding: 10px 9px;
   text-align: left;
   white-space: nowrap;
 }
 
 th {
-  background: #ece6d7;
+  background: #e7edf2;
   color: #3a413c;
   font-size: 12px;
 }
@@ -344,9 +344,9 @@ th {
   align-items: center;
   min-height: 22px;
   padding: 0 8px;
-  border: 1px solid #a7a28f;
+  border: 1px solid #d0d7de;
   color: #26302a;
-  background: #ece6d7;
+  background: #e7edf2;
   font-size: 12px;
   font-weight: 760;
 }
@@ -363,14 +363,14 @@ th {
 .status-watch,
 .status-warning,
 .status-stub {
-  background: #efe2bd;
-  border-color: #c2a75d;
+  background: #fff2c2;
+  border-color: #d3a72f;
 }
 
 .status-critical,
 .status-blocked {
-  background: #ecd2ca;
-  border-color: #c98676;
+  background: #f8d7da;
+  border-color: #cf6f7a;
 }
 
 .trace-chain {
@@ -414,14 +414,14 @@ th {
   grid-template-columns: 126px minmax(0, 1fr);
   gap: 10px;
   border: 1px solid #d2cbbb;
-  background: #fffaf0;
+  background: #ffffff;
   padding: 9px;
   font-size: 13px;
 }
 
 .source-list em {
   grid-column: 1 / -1;
-  color: #6b5f43;
+  color: #51606d;
   font-style: normal;
   font-family: Consolas, "SFMono-Regular", monospace;
   overflow-wrap: anywhere;
@@ -460,7 +460,7 @@ th {
 .notice-sheet {
   min-height: 350px;
   padding: 24px;
-  box-shadow: inset 0 0 0 4px #f1eadb;
+  box-shadow: inset 0 0 0 4px #edf2f7;
 }
 
 .notice-sheet h1 {
@@ -516,8 +516,8 @@ th {
 }
 
 .machine-blocked {
-  background: #f4dfd7;
-  border-color: #c98676;
+  background: #f8d7da;
+  border-color: #cf6f7a;
 }
 
 .report-grid {
@@ -554,8 +554,8 @@ th {
   display: grid;
   grid-template-columns: 82px minmax(0, 1fr) minmax(120px, 0.65fr);
   gap: 12px;
-  border: 1px solid #c7c0ae;
-  background: #fffaf0;
+  border: 1px solid #d0d7de;
+  background: #ffffff;
   padding: 12px;
 }
 
@@ -597,8 +597,8 @@ th {
 }
 
 .case-columns div {
-  border: 1px solid #c7c0ae;
-  background: #fffaf0;
+  border: 1px solid #d0d7de;
+  background: #ffffff;
   padding: 14px;
 }
 

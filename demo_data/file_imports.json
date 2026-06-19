@@ -1,8 +1,8 @@
 [
-  {"file_name": "bom_6205_demo.xlsx", "type": "bom", "status": "parsed", "rows": 7, "quality": "pass", "parser": "bom_parser_v1", "source_system": "excel_export_adapter"},
-  {"file_name": "bom_6206_demo.xlsx", "type": "bom", "status": "parsed", "rows": 7, "quality": "pass", "parser": "bom_parser_v1", "source_system": "excel_export_adapter"},
-  {"file_name": "bom_6304_demo.xlsx", "type": "bom", "status": "parsed", "rows": 7, "quality": "pass", "parser": "bom_parser_v1", "source_system": "excel_export_adapter"},
-  {"file_name": "bom_6004_demo.xlsx", "type": "bom", "status": "parsed", "rows": 7, "quality": "pass", "parser": "bom_parser_v1", "source_system": "excel_export_adapter"},
+  {"file_name": "bom_control_kit_demo.xlsx", "type": "bom", "status": "parsed", "rows": 7, "quality": "pass", "parser": "bom_parser_v1", "source_system": "excel_export_adapter"},
+  {"file_name": "bom_sensor_pack_demo.xlsx", "type": "bom", "status": "parsed", "rows": 7, "quality": "pass", "parser": "bom_parser_v1", "source_system": "excel_export_adapter"},
+  {"file_name": "bom_fluid_kit_demo.xlsx", "type": "bom", "status": "parsed", "rows": 7, "quality": "pass", "parser": "bom_parser_v1", "source_system": "excel_export_adapter"},
+  {"file_name": "bom_fixture_demo.xlsx", "type": "bom", "status": "parsed", "rows": 7, "quality": "pass", "parser": "bom_parser_v1", "source_system": "excel_export_adapter"},
   {"file_name": "wms_inventory_demo.csv", "type": "inventory", "status": "parsed", "rows": 20, "quality": "pass", "parser": "inventory_parser_v1", "source_system": "wms_adapter_mock"},
   {"file_name": "sales_orders_demo.csv", "type": "orders", "status": "parsed", "rows": 8, "quality": "pass", "parser": "order_parser_v1", "source_system": "erp_adapter_mock"},
   {"file_name": "shipment_in_transit_demo.csv", "type": "shipments", "status": "parsed", "rows": 10, "quality": "warning", "parser": "shipment_parser_v1", "source_system": "wms_adapter_mock"},

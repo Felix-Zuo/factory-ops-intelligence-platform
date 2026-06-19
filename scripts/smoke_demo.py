@@ -12,10 +12,10 @@ from factory_ops_api import domain  # noqa: E402
 
 def main() -> None:
     data = domain.load_factory_data()
-    risk = domain.calculate_inventory_risk("FG-6205-2RS", 12000, data)
-    notice = domain.generate_production_notice("FG-6205-2RS", 12000, "SO-2026-0607-01", data)
-    simulation = domain.run_line_simulation("LINE-BRG-6205-A", 24, data)
-    answer = domain.answer_factory_question("Can FG-6205-2RS be released for production?", data)
+    risk = domain.calculate_inventory_risk(domain.DEFAULT_PRODUCT_ID, domain.DEFAULT_ORDER_QTY, data)
+    notice = domain.generate_production_notice(domain.DEFAULT_PRODUCT_ID, domain.DEFAULT_ORDER_QTY, domain.DEFAULT_ORDER_ID, data)
+    simulation = domain.run_line_simulation(domain.DEFAULT_LINE_ID, 24, data)
+    answer = domain.answer_factory_question(f"Can {domain.DEFAULT_PRODUCT_ID} be released for production?", data)
     checks = {
         "materials": len(data.materials) >= 20,
         "orders": len(data.customer_orders) >= 8,

@@ -1,10 +1,14 @@
 [
-  {"supplier": "Northline Forging", "on_time_rate": 0.94, "open_po_qty": 29200, "risk_note": "Stable ring blank supply"},
-  {"supplier": "Eastbay Forging", "on_time_rate": 0.91, "open_po_qty": 14000, "risk_note": "Short lead time but high reserved stock"},
-  {"supplier": "Hengyuan Ball", "on_time_rate": 0.97, "open_po_qty": 62000, "risk_note": "Rolling element supply stable"},
-  {"supplier": "Jinhe Stamping", "on_time_rate": 0.89, "open_po_qty": 18000, "risk_note": "Stamping changeover can slip by one shift"},
-  {"supplier": "Haicheng Rubber", "on_time_rate": 0.86, "open_po_qty": 22000, "risk_note": "Seal lot release requires incoming inspection"},
-  {"supplier": "GreenChem", "on_time_rate": 0.81, "open_po_qty": 12000, "risk_note": "Grease batch QA release is the current watch item"},
-  {"supplier": "Yuhang Shielding", "on_time_rate": 0.9, "open_po_qty": 10000, "risk_note": "Shield stock depends on inbound truck confirmation"},
-  {"supplier": "Harbor Packaging", "on_time_rate": 0.96, "open_po_qty": 24000, "risk_note": "Packaging buffer is sufficient"}
+  {"supplier": "Northline Components", "on_time_rate": 0.94, "open_po_qty": 1800, "risk_note": "Enclosure supply stable with one open expedite lane"},
+  {"supplier": "Metro Electronics", "on_time_rate": 0.88, "open_po_qty": 4100, "risk_note": "Controller boards and connectors need dock-date confirmation"},
+  {"supplier": "Helio Sensors", "on_time_rate": 0.86, "open_po_qty": 2600, "risk_note": "Sensor module release is the current watch item"},
+  {"supplier": "Vector Cable", "on_time_rate": 0.93, "open_po_qty": 1400, "risk_note": "Cable sets are stable after latest incoming lot"},
+  {"supplier": "Atlas Fasteners", "on_time_rate": 0.98, "open_po_qty": 5200, "risk_note": "Fastener stock is sufficient across open demand"},
+  {"supplier": "Pioneer Quality Systems", "on_time_rate": 0.9, "open_po_qty": 900, "risk_note": "Serialized configuration labels require release control"},
+  {"supplier": "Harbor Packaging", "on_time_rate": 0.96, "open_po_qty": 3200, "risk_note": "Packaging and labels have enough buffer"},
+  {"supplier": "Riverbend Machining", "on_time_rate": 0.87, "open_po_qty": 720, "risk_note": "Fabricated frame lead time can slip by one shift"},
+  {"supplier": "Civic Fluidics", "on_time_rate": 0.84, "open_po_qty": 1500, "risk_note": "Pump core lots require incoming functional test"},
+  {"supplier": "Clearflow Media", "on_time_rate": 0.92, "open_po_qty": 1700, "risk_note": "Filter insert stock is stable"},
+  {"supplier": "Nova Optics", "on_time_rate": 0.89, "open_po_qty": 520, "risk_note": "Camera module inbound needs QA sampling"},
+  {"supplier": "Cobalt Power", "on_time_rate": 0.91, "open_po_qty": 600, "risk_note": "Battery packs are inbound with standard safety check"}
 ]

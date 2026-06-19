@@ -1,6 +1,6 @@
 [
-  {"product_id": "FG-6205-2RS", "name": "6205-2RS Deep Groove Bearing", "revision": "R1", "default_bom_id": "BOM-6205-2RS-R1", "route_id": "ROUTE-BRG-A", "planning_policy": "make_to_order"},
-  {"product_id": "FG-6206-ZZ", "name": "6206-ZZ Shielded Bearing", "revision": "R1", "default_bom_id": "BOM-6206-ZZ-R1", "route_id": "ROUTE-BRG-B", "planning_policy": "make_to_order"},
-  {"product_id": "FG-6304-2RS", "name": "6304-2RS Deep Groove Bearing", "revision": "R1", "default_bom_id": "BOM-6304-2RS-R1", "route_id": "ROUTE-BRG-B", "planning_policy": "make_to_stock"},
-  {"product_id": "FG-6004-ZZ", "name": "6004-ZZ Compact Bearing", "revision": "R1", "default_bom_id": "BOM-6004-ZZ-R1", "route_id": "ROUTE-BRG-A", "planning_policy": "make_to_order"}
+  {"product_id": "FG-OPS-A100", "name": "Modular Control Kit A100", "revision": "R2", "default_bom_id": "BOM-OPS-A100-R2", "route_id": "ROUTE-UNIVERSAL-A", "planning_policy": "make_to_order"},
+  {"product_id": "FG-OPS-B200", "name": "Sensor Pack B200", "revision": "R1", "default_bom_id": "BOM-OPS-B200-R1", "route_id": "ROUTE-UNIVERSAL-B", "planning_policy": "make_to_order"},
+  {"product_id": "FG-OPS-C300", "name": "Fluid Service Kit C300", "revision": "R1", "default_bom_id": "BOM-OPS-C300-R1", "route_id": "ROUTE-FLEX-CELL-B", "planning_policy": "make_to_stock"},
+  {"product_id": "FG-OPS-D400", "name": "Inspection Fixture D400", "revision": "R1", "default_bom_id": "BOM-OPS-D400-R1", "route_id": "ROUTE-FLEX-CELL-B", "planning_policy": "engineer_to_order"}
 ]

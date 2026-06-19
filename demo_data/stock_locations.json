@@ -1,14 +1,16 @@
 [
-  {"location_id": "WMS-A1", "name": "Ring Blank Zone A1", "parent_location_id": "WMS-A", "location_type": "internal", "is_external": false},
-  {"location_id": "WMS-A2", "name": "Ring Blank Zone A2", "parent_location_id": "WMS-A", "location_type": "internal", "is_external": false},
-  {"location_id": "WMS-A3", "name": "Ring Blank Zone A3", "parent_location_id": "WMS-A", "location_type": "internal", "is_external": false},
-  {"location_id": "WMS-A4", "name": "Ring Blank Zone A4", "parent_location_id": "WMS-A", "location_type": "internal", "is_external": false},
-  {"location_id": "WMS-B2", "name": "Rolling Element Zone B2", "parent_location_id": "WMS-B", "location_type": "internal", "is_external": false},
-  {"location_id": "WMS-B3", "name": "Rolling Element Zone B3", "parent_location_id": "WMS-B", "location_type": "internal", "is_external": false},
-  {"location_id": "WMS-C1", "name": "Cage Storage C1", "parent_location_id": "WMS-C", "location_type": "internal", "is_external": false},
-  {"location_id": "WMS-C2", "name": "Seal Storage C2", "parent_location_id": "WMS-C", "location_type": "internal", "is_external": false},
-  {"location_id": "WMS-C3", "name": "Shield Storage C3", "parent_location_id": "WMS-C", "location_type": "internal", "is_external": false},
-  {"location_id": "WMS-C4", "name": "Large Bearing Seal Zone C4", "parent_location_id": "WMS-C", "location_type": "internal", "is_external": false},
-  {"location_id": "WMS-CHEM", "name": "Controlled Chemical Storage", "parent_location_id": "WMS-QA", "location_type": "quarantine", "is_external": false},
-  {"location_id": "WMS-PACK", "name": "Packaging Buffer", "parent_location_id": "WMS-P", "location_type": "internal", "is_external": false}
+  {"location_id": "FAB-A", "name": "Fabricated Parts Zone A", "parent_location_id": "FAB", "location_type": "internal", "is_external": false},
+  {"location_id": "FAB-B", "name": "Fabricated Parts Zone B", "parent_location_id": "FAB", "location_type": "internal", "is_external": false},
+  {"location_id": "FAB-QA", "name": "Fabrication QA Hold", "parent_location_id": "QA", "location_type": "quarantine", "is_external": false},
+  {"location_id": "ELEC-A", "name": "Electronics Shelf A", "parent_location_id": "ELEC", "location_type": "internal", "is_external": false},
+  {"location_id": "ELEC-B", "name": "Electronics Shelf B", "parent_location_id": "ELEC", "location_type": "internal", "is_external": false},
+  {"location_id": "ELEC-QA", "name": "Electronics QA Hold", "parent_location_id": "QA", "location_type": "quarantine", "is_external": false},
+  {"location_id": "CABLE-A", "name": "Cable and Harness Rack", "parent_location_id": "LINE-SUPPLY", "location_type": "internal", "is_external": false},
+  {"location_id": "HARD-A", "name": "Hardware Supermarket", "parent_location_id": "LINE-SUPPLY", "location_type": "internal", "is_external": false},
+  {"location_id": "CFG-A", "name": "Configuration Control Locker", "parent_location_id": "QA", "location_type": "controlled", "is_external": false},
+  {"location_id": "PACK-A", "name": "Packaging Buffer", "parent_location_id": "PACK", "location_type": "internal", "is_external": false},
+  {"location_id": "FLUID-A", "name": "Fluidics Component Zone", "parent_location_id": "FLUID", "location_type": "internal", "is_external": false},
+  {"location_id": "FLUID-QA", "name": "Fluidics QA Hold", "parent_location_id": "QA", "location_type": "quarantine", "is_external": false},
+  {"location_id": "OPT-A", "name": "Optical Component Cabinet", "parent_location_id": "OPT", "location_type": "controlled", "is_external": false},
+  {"location_id": "QA-A", "name": "Quality Tooling Cabinet", "parent_location_id": "QA", "location_type": "controlled", "is_external": false}
 ]

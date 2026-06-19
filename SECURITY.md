@@ -10,7 +10,7 @@ This repository is designed for public open-source demo review.
 
 ## Adapter Policy
 
-ERP, WMS, MES, PLC, WeChat, and MCP integrations are mock/stub contracts in this public project. Live credentials and live system URLs do not belong in this repository.
+ERP, WMS, MES, PLC, scheduling, messaging, and MCP integrations are mock/stub contracts in this public project. Live credentials and live system URLs do not belong in this repository.
 
 ## Reporting
 

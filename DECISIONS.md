@@ -10,7 +10,7 @@ BOM explosion, inventory coverage, notice generation, and simulation are calcula
 
 ## D-003 - Use Mock/Stub Adapters
 
-ERP, WMS, MES, PLC, WeChat, and MCP adapters are represented by clear mock or ready-schema statuses. Missing live systems must not block the main demo.
+ERP, WMS, MES, PLC, scheduling, messaging, and MCP adapters are represented by clear mock or ready-schema statuses. Missing live systems must not block the main demo.
 
 ## D-004 - Avoid Vendoring Existing Repositories
 

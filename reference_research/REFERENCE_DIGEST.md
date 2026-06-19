@@ -98,7 +98,7 @@ The goal is not to rank projects by popularity. The goal is to identify reusable
      - `daily_factory_review`
 
 4. **Adapter-ready, not integration-heavy**
-   - ERP/WMS/MES/PLC/WeChat should be mock/stub contracts first.
+   - ERP/WMS/MES/PLC/messaging should be mock/stub contracts first.
    - Each adapter should declare:
      - `adapter_name`
      - `mode`

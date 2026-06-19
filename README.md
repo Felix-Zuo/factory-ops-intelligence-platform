@@ -1,4 +1,4 @@
-# AI Factory Operations Intelligence Platform
+# Operations Intelligence Platform
 
 [![CI](https://github.com/Felix-Zuo/factory-ops-intelligence-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/Felix-Zuo/factory-ops-intelligence-platform/actions/workflows/ci.yml)
 ![Demo ready](https://img.shields.io/badge/demo-ready-4f6f46)
@@ -6,30 +6,48 @@
 ![Adapters](https://img.shields.io/badge/adapters-mock%20%2F%20stub-c7a24a)
 ![License](https://img.shields.io/badge/license-MIT-2f3a34)
 
-A demo-ready operations intelligence layer for fragmented manufacturing data.
+A reproducible operations intelligence layer for fragmented manufacturing data.
 
-This project connects BOM records, inventory exports, customer orders, shipment data, production notices, line simulation results, and agent tool calls into a single manufacturing operations prototype. It is built for local reproduction, technical review, and extension through parsers, adapters, deterministic engines, and tool-oriented agent workflows.
+The project connects BOM records, inventory exports, customer orders, inbound shipment data, release notices, line simulation results and agent tool calls into one local demo. The public version uses only synthetic data and generic product families, so it can be inspected without private factory systems.
+
+中文摘要：这是一个面向制造运营的通用演示项目。它把多产品 BOM、库存、订单、在途、供应商状态、放行通知、产线仿真和 Agent 工具轨迹放进同一套可复现的数据链路里，所有公开数据均为合成样例。
 
 Showcase page: [docs/showcase.html](docs/showcase.html)
 
 ![Operations console](docs/assets/screenshots/overview.png)
 
-## Why This Exists
+## What It Demonstrates
 
-Manufacturing teams often make release decisions from separate ERP exports, WMS stock files, spreadsheet BOMs, supplier updates, production notice templates, and line assumptions. This repository models that operating loop with synthetic demo data and explicit mock/stub adapters so the workflow can be inspected without private factory systems.
+| Capability | Evidence in this repo |
+|---|---|
+| Spreadsheet and export intake | `demo_data/file_imports.json`, parser labels, import dashboard |
+| BOM and material readiness | BOM explosion, inventory coverage, source-row trace |
+| Release notice generation | HTML/JSON notice preview from order, product and material gate |
+| Line takt and bottleneck analysis | Deterministic 24h simulation over configurable machine nodes |
+| Agent-readable operations tools | Tool registry, workflow routing, tool calls and source refs |
+| Adapter-ready boundaries | ERP/WMS/MES/PLC/scheduling/MCP mock or stub contracts |
 
-中文摘要：这个项目把 BOM、库存、客户订单、在途记录、生产通知单、产线仿真、接口状态和工具调用轨迹放进同一个可复现的制造业运营 demo 中。公开版本只使用合成数据和 mock/stub 接口。
+## Default Scenario
 
-Public demo boundary: keep production exports, customer lists, supplier lists,
-real BOMs, shipment plans, screenshots with company identifiers, and logs out of
-the repository unless they have been intentionally sanitized.
+The main scenario follows `FG-OPS-A100`, a synthetic modular control kit. The wider data pack also includes a sensor pack, fluid service kit and inspection fixture so the model is not tied to one product category.
+
+```text
+demo_data
+  -> parser and seed scripts
+  -> SQLite demo database
+  -> deterministic domain engines
+  -> FastAPI operations API
+  -> generated frontend snapshot
+  -> React operations console
+  -> agent tool registry and workflow trace
+```
 
 ## Quick Start
 
 Requirements:
 
 - Python 3.11+
-- Node.js 20+
+- Node.js 20.19+ or 22+
 
 ```powershell
 git clone https://github.com/Felix-Zuo/factory-ops-intelligence-platform.git
@@ -65,56 +83,41 @@ Run the full validation suite:
 npm run test:all
 ```
 
-The full check seeds demo data, regenerates the frontend snapshot, runs self-checks, runs pytest, runs the smoke demo, scans user-facing copy, and builds the web dashboard.
-
-## Demo Flow
-
-```text
-demo_data
-  -> parser and seed scripts
-  -> SQLite demo database
-  -> deterministic domain engines
-  -> FastAPI operations API
-  -> generated frontend snapshot
-  -> React engineering console
-  -> agent tool registry and workflow trace
-```
-
-The default scenario follows finished product `FG-6205-2RS` through BOM explosion, material coverage, stock risk, production notice generation, 24 hour line simulation, bottleneck reporting, and tool-backed factory Q&A.
+The full check seeds demo data, regenerates the frontend snapshot, runs self-checks, runs pytest, runs the smoke demo, scans user-facing copy and builds the web dashboard.
 
 ## Screenshots
 
-| BOM and inventory | Production notice |
+| BOM and inventory | Release notice |
 |---|---|
-| ![BOM and inventory](docs/assets/screenshots/material-risk.png) | ![Production notice](docs/assets/screenshots/notice-page.png) |
+| ![BOM and inventory](docs/assets/screenshots/material-risk.png) | ![Release notice](docs/assets/screenshots/notice-page.png) |
 
 | Material trace | Line simulation |
 |---|---|
 | ![Material trace](docs/assets/screenshots/product-material-trace.png) | ![Line simulation](docs/assets/screenshots/simulation-page.png) |
 
-| Factory Q&A | Integration status |
+| Operations Q&A | Integration status |
 |---|---|
-| ![Factory Q&A](docs/assets/screenshots/ai-factory-qa.png) | ![Integration status](docs/assets/screenshots/integration-status.png) |
+| ![Operations Q&A](docs/assets/screenshots/ai-factory-qa.png) | ![Integration status](docs/assets/screenshots/integration-status.png) |
 
-## What Runs Today
+## Runtime Modules
 
 | Module | Current behavior |
 |---|---|
-| Data Import Center | Classifies demo files, parser status, source rows, and quality flags |
-| BOM & Inventory | Explodes BOM demand into material coverage, inbound records, supplier notes, and shortage watch |
-| Product Material Trace | Links finished product, BOM, stock, inbound, order, supplier, and source refs |
-| Production Notice Generator | Builds a notice preview from product, order, BOM, material gate, and template version |
-| Line Simulation | Runs deterministic 24 hour output, utilization, waiting, blocking, scrap, and bottleneck checks |
-| Simulation Report | Summarizes line output, bottleneck, quality risk, and machine-level metrics |
-| Factory Q&A | Selects intent and workflow, calls registered tools, and returns source-backed output |
-| Integration Status | Shows ERP/WMS/MES/PLC/scheduling/WeChat/MCP mode and current gaps |
-| Agent Trace | Shows tool calls, inputs, source refs, and execution order |
+| Data Import Center | Classifies demo files, parser status, source rows and quality flags |
+| BOM & Inventory | Explodes BOM demand into material coverage, inbound records, supplier notes and shortage watch |
+| Product Material Trace | Links product, BOM, stock, inbound, order, supplier and source refs |
+| Release Notice Generator | Builds a notice preview from product, order, BOM, material gate and template version |
+| Line Simulation | Runs deterministic 24h output, utilization, waiting, blocking, scrap and bottleneck checks |
+| Simulation Report | Summarizes line output, bottleneck, quality risk and machine-level metrics |
+| Operations Q&A | Selects intent and workflow, calls registered tools and returns source-backed output |
+| Integration Status | Shows ERP/WMS/MES/PLC/scheduling/MCP mode and current gaps |
+| Agent Trace | Shows tool calls, inputs, source refs and execution order |
 
 ## Architecture
 
 ```text
 apps/api-server         FastAPI operations API
-apps/web-dashboard      React engineering console
+apps/web-dashboard      React operations console
 packages/core-domain    Shared domain boundary
 packages/parsers        Import parser boundary
 packages/engines        Deterministic calculation boundary
@@ -128,62 +131,34 @@ scripts                 Seed, smoke, tone scan, snapshot and validation
 
 The dashboard can run from a generated snapshot, so reviewers can inspect the UI without keeping the API process alive. Backend functions still produce the same values used by the smoke demo and tests.
 
-## Agent Runtime
+## Project History
 
-The agent layer is tool-backed. It selects an intent, runs a workflow, calls registered tools, returns tool output, and exposes source references.
+This repository is an independent public demo that consolidates several operation-tooling directions:
 
-Registered tools:
+- spreadsheet export intake and standardized records;
+- release notice generation from a structured order payload;
+- line takt simulation and bottleneck reporting;
+- manufacturing data-model examples for BOM, stock, supplier and traceability;
+- source-backed agent workflows with tool-call evidence.
 
-- `search_material`
-- `get_product_bom`
-- `explode_bom`
-- `calculate_inventory_risk`
-- `check_order_material_coverage`
-- `generate_production_notice`
-- `run_line_simulation`
-- `get_simulation_report`
-- `detect_bottleneck`
-- `generate_daily_report`
-- `answer_factory_question`
+See [PROJECT_HISTORY.md](PROJECT_HISTORY.md) for the detailed capability map and release trail.
 
-## Mock / Stub Boundaries
+## Public Data Boundary
 
-| Adapter | Demo mode | Boundary |
-|---|---|---|
-| ERP | mock | Orders, product master, BOM headers, work-order-shaped payloads |
-| WMS | mock | Inventory export, stock location, inbound quantity |
-| MES | stub | Production notice handoff and execution status shape |
-| PLC | sample | Machine events, cycle counts, utilization, waiting, blocking, scrap |
-| Scheduling | stub | Adapter contract only; no optimization solver in this release |
-| WeChat | webhook mock | Message-in and answer-out concept only |
-| MCP / Agent | schema-ready mock | Tool schemas, source refs, workflow trace |
+Keep production exports, customer lists, supplier lists, real BOMs, shipment plans, screenshots with company identifiers and logs out of the repository unless they have been intentionally sanitized.
 
-## Extending The Project
-
-- Add a parser in `packages/parsers/` and map it into `scripts/seed_demo_data.py`.
-- Add synthetic records under `demo_data/` and update `database/schema.sql` when a new table is needed.
-- Add deterministic calculations in the API/domain layer before exposing them to the agent runtime.
-- Add an adapter contract under `packages/integrations/` and mark whether it is `mock`, `stub`, or `sample`.
-- Add an agent tool schema in `agent_workspace/tool_registry.json`, then cover it in tests and the smoke demo.
-- Regenerate the dashboard snapshot with `python scripts/generate_frontend_snapshot.py`.
+Live integrations are represented by mock/stub/sample adapters. Credentials and live system URLs do not belong in this repo.
 
 ## Documentation
 
+- [Project history](PROJECT_HISTORY.md)
 - [Architecture](ARCHITECTURE.md)
 - [Data contract](DATA_CONTRACT.md)
 - [Demo script](DEMO_SCRIPT.md)
 - [Roadmap](ROADMAP.md)
-- [Release notes](RELEASE_NOTES_v0.1.0.md)
+- [Changelog](CHANGELOG.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security](SECURITY.md)
-
-## Roadmap
-
-- Add more import profiles for production notice and inventory exports.
-- Add a versioned notice-template registry with approval state.
-- Expand adapter examples for ERP, WMS, MES, PLC, and MCP.
-- Add visual regression checks for the dashboard and showcase page.
-- Add optional scheduling experiments behind the existing scheduling adapter boundary.
 
 ## License
 

@@ -10,6 +10,11 @@ import json
 ROOT = Path(__file__).resolve().parents[3]
 DEMO_DATA = ROOT / "demo_data"
 DEMO_TIMESTAMP = "2026-06-07T08:00:00+00:00"
+DEFAULT_PRODUCT_ID = "FG-OPS-A100"
+DEFAULT_ORDER_ID = "SO-2026-OPS-001"
+DEFAULT_LINE_ID = "LINE-UNIVERSAL-A"
+DEFAULT_ORDER_QTY = 1200
+NOTICE_TEMPLATE_VERSION = "ops-production-notice/v2"
 
 
 def _load_json(name: str) -> list[dict[str, Any]]:
@@ -61,7 +66,7 @@ def _index(items: list[dict[str, Any]], key: str) -> dict[str, dict[str, Any]]:
 
 def _now_id(prefix: str) -> str:
     stable_ids = {
-        "PN": "PN-DEMO-6205-2RS",
+        "PN": "PN-DEMO-OPS-A100",
         "SIM": "SIM-DEMO-LINE-A",
     }
     return stable_ids.get(prefix, f"{prefix}-DEMO")
@@ -322,7 +327,7 @@ def generate_production_notice(product_id: str, quantity: float, order_id: str |
     material_gate = "blocked" if blocked else "release_with_follow_up" if watch else "release"
     html = (
         "<section class='notice-sheet'>"
-        f"<h1>Production Notice {notice_id}</h1>"
+        f"<h1>Release Notice {notice_id}</h1>"
         f"<p><strong>Product:</strong> {bom['product_name']} ({product_id})</p>"
         f"<p><strong>Quantity:</strong> {quantity:,.0f} pcs</p>"
         f"<p><strong>Customer order:</strong> {order['order_id']} / due {order['due_date']}</p>"
@@ -346,7 +351,7 @@ def generate_production_notice(product_id: str, quantity: float, order_id: str |
         "blocked_materials": blocked,
         "watch_materials": watch,
         "html_preview": html,
-        "template_version": "bearing-production-notice/v1",
+        "template_version": NOTICE_TEMPLATE_VERSION,
         "source_trace": {
             "bom_components": len(bom["components"]),
             "inventory_rows": len(data.inventory),
@@ -364,14 +369,18 @@ def run_line_simulation(line_id: str, hours: float = 24, data: FactoryData | Non
         raise ValueError(f"Unknown line_id: {line_id}")
     seconds = float(hours) * 3600
     machine_reports = []
+    cycle_times = [float(machine["cycle_time_sec"]) for machine in line["machines"]]
+    median_cycle = sorted(cycle_times)[len(cycle_times) // 2]
     for machine in line["machines"]:
-        theoretical = seconds / float(machine["cycle_time_sec"])
+        cycle_time = float(machine["cycle_time_sec"])
+        theoretical = seconds / cycle_time
         available_output = theoretical * float(machine["availability"])
         good_output = available_output * float(machine["yield_rate"])
         scrap_output = max(available_output - good_output, 0)
         utilization = min(float(machine["availability"]) * 0.96, 0.99)
         waiting_time = round(seconds * max(0.02, 1 - utilization) * 0.18 / 3600, 2)
-        blocking_time = round(seconds * max(0.01, (3.5 - float(machine["cycle_time_sec"])) / 20) / 3600, 2)
+        cycle_pressure = max(0.0, cycle_time - median_cycle)
+        blocking_time = round(seconds * max(0.01, cycle_pressure / max(median_cycle * 4, 1)) / 3600, 2)
         machine_reports.append(
             {
                 "machine_id": machine["machine_id"],
@@ -430,7 +439,7 @@ def detect_bottleneck(report: dict[str, Any]) -> dict[str, Any]:
 
 
 def get_simulation_report(run_id: str = "latest", data: FactoryData | None = None) -> dict[str, Any]:
-    report = run_line_simulation("LINE-BRG-6205-A", 24, data)
+    report = run_line_simulation(DEFAULT_LINE_ID, 24, data)
     return {**report, "run_id": report["run_id"] if run_id == "latest" else run_id}
 
 
@@ -491,19 +500,19 @@ def agent_tools() -> list[dict[str, Any]]:
 
 def generate_daily_report(data: FactoryData | None = None) -> dict[str, Any]:
     data = data or load_factory_data()
-    risk = calculate_inventory_risk("FG-6205-2RS", 12000, data)
-    simulation = run_line_simulation("LINE-BRG-6205-A", 24, data)
+    risk = calculate_inventory_risk(DEFAULT_PRODUCT_ID, DEFAULT_ORDER_QTY, data)
+    simulation = run_line_simulation(DEFAULT_LINE_ID, 24, data)
     bottleneck = detect_bottleneck(simulation)
     adapters = integration_status(data)
     exceptions = []
     if risk["overall_status"] != "covered":
-        exceptions.append(f"Material gate is {risk['overall_status']} for FG-6205-2RS.")
+        exceptions.append(f"Material gate is {risk['overall_status']} for {DEFAULT_PRODUCT_ID}.")
     exceptions.append(f"Bottleneck review required at {bottleneck['bottleneck_machine']}.")
     exceptions.extend([f"{item['adapter']} adapter is {item['mode']}." for item in adapters if item["mode"] in {"stub", "sample", "ready-schema"}])
     return {
-        "summary": "FG-6205-2RS can proceed with material follow-up and bottleneck review.",
+        "summary": f"{DEFAULT_PRODUCT_ID} can proceed with material follow-up and bottleneck review.",
         "exceptions": exceptions,
-        "follow_up_list": ["Confirm GreenChem grease QA release.", "Review OP-40 buffer rule.", "Keep MES and PLC adapters in sample mode."],
+        "follow_up_list": ["Confirm sensor module dock date.", "Review OP-40 buffer rule.", "Keep MES and PLC adapters in sample mode."],
         "source_refs": risk["source_refs"],
         "simulation_run_id": simulation["run_id"],
     }
@@ -526,12 +535,12 @@ def answer_factory_question(question: str, data: FactoryData | None = None) -> d
     data = data or load_factory_data()
     q = question.lower()
     tool_calls: list[dict[str, Any]] = []
-    if "bottleneck" in q or "瓶颈" in question or "line" in q or "simulation" in q:
+    if "bottleneck" in q or "瓶颈" in question or "line" in q or "simulation" in q or "产线" in question:
         workflow = "line_simulation_to_report"
         intent = "simulation_bottleneck"
-        simulation = run_line_simulation("LINE-BRG-6205-A", 24, data)
+        simulation = run_line_simulation(DEFAULT_LINE_ID, 24, data)
         bottleneck = detect_bottleneck(simulation)
-        tool_calls.append(_trace_call("run_line_simulation", {"line_id": "LINE-BRG-6205-A", "hours": 24}, simulation))
+        tool_calls.append(_trace_call("run_line_simulation", {"line_id": DEFAULT_LINE_ID, "hours": 24}, simulation))
         tool_calls.append(_trace_call("detect_bottleneck", {"run_id": simulation["run_id"]}, bottleneck))
         final_answer = (
             f"Result: bottleneck detected at {bottleneck['bottleneck_machine']}. "
@@ -540,13 +549,13 @@ def answer_factory_question(question: str, data: FactoryData | None = None) -> d
             f"Next check: {bottleneck['next_check']}"
         )
         payload = {"simulation": simulation, "bottleneck": bottleneck}
-    elif "notice" in q or "通知单" in question or "release" in q:
+    elif "notice" in q or "通知单" in question or "release" in q or "放行" in question:
         workflow = "order_to_production_notice"
         intent = "production_notice"
-        coverage = check_order_material_coverage("SO-2026-0607-01", data)
-        notice = generate_production_notice("FG-6205-2RS", 12000, "SO-2026-0607-01", data)
-        tool_calls.append(_trace_call("check_order_material_coverage", {"order_id": "SO-2026-0607-01"}, coverage))
-        tool_calls.append(_trace_call("generate_production_notice", {"product_id": "FG-6205-2RS", "quantity": 12000}, notice))
+        coverage = check_order_material_coverage(DEFAULT_ORDER_ID, data)
+        notice = generate_production_notice(DEFAULT_PRODUCT_ID, DEFAULT_ORDER_QTY, DEFAULT_ORDER_ID, data)
+        tool_calls.append(_trace_call("check_order_material_coverage", {"order_id": DEFAULT_ORDER_ID}, coverage))
+        tool_calls.append(_trace_call("generate_production_notice", {"product_id": DEFAULT_PRODUCT_ID, "quantity": DEFAULT_ORDER_QTY}, notice))
         final_answer = (
             f"Result: production notice {notice['notice_id']} is ready for preview. "
             f"Evidence: material gate is {notice['material_gate']} with {len(notice['watch_materials'])} watch items. "
@@ -557,12 +566,12 @@ def answer_factory_question(question: str, data: FactoryData | None = None) -> d
     else:
         workflow = "order_to_material_risk"
         intent = "material_readiness"
-        bom = get_product_bom("FG-6205-2RS", data)
-        exploded = explode_bom("FG-6205-2RS", 12000, data)
-        risk = calculate_inventory_risk("FG-6205-2RS", 12000, data)
-        tool_calls.append(_trace_call("get_product_bom", {"product_id": "FG-6205-2RS"}, bom))
-        tool_calls.append(_trace_call("explode_bom", {"product_id": "FG-6205-2RS", "quantity": 12000}, exploded))
-        tool_calls.append(_trace_call("calculate_inventory_risk", {"product_id": "FG-6205-2RS", "quantity": 12000}, risk))
+        bom = get_product_bom(DEFAULT_PRODUCT_ID, data)
+        exploded = explode_bom(DEFAULT_PRODUCT_ID, DEFAULT_ORDER_QTY, data)
+        risk = calculate_inventory_risk(DEFAULT_PRODUCT_ID, DEFAULT_ORDER_QTY, data)
+        tool_calls.append(_trace_call("get_product_bom", {"product_id": DEFAULT_PRODUCT_ID}, bom))
+        tool_calls.append(_trace_call("explode_bom", {"product_id": DEFAULT_PRODUCT_ID, "quantity": DEFAULT_ORDER_QTY}, exploded))
+        tool_calls.append(_trace_call("calculate_inventory_risk", {"product_id": DEFAULT_PRODUCT_ID, "quantity": DEFAULT_ORDER_QTY}, risk))
         watch = [row["material_id"] for row in risk["materials"] if row["status"] == "watch"]
         final_answer = (
             f"Result: material coverage status is {risk['overall_status']}. "
@@ -592,11 +601,11 @@ def answer_factory_question(question: str, data: FactoryData | None = None) -> d
 
 def demo_snapshot(data: FactoryData | None = None) -> dict[str, Any]:
     data = data or load_factory_data()
-    risk = calculate_inventory_risk("FG-6205-2RS", 12000, data)
-    trace = product_material_trace("FG-6205-2RS", 12000, data)
-    notice = generate_production_notice("FG-6205-2RS", 12000, "SO-2026-0607-01", data)
-    simulation = run_line_simulation("LINE-BRG-6205-A", 24, data)
-    agent_answer = answer_factory_question("Can FG-6205-2RS be released for production?", data)
+    risk = calculate_inventory_risk(DEFAULT_PRODUCT_ID, DEFAULT_ORDER_QTY, data)
+    trace = product_material_trace(DEFAULT_PRODUCT_ID, DEFAULT_ORDER_QTY, data)
+    notice = generate_production_notice(DEFAULT_PRODUCT_ID, DEFAULT_ORDER_QTY, DEFAULT_ORDER_ID, data)
+    simulation = run_line_simulation(DEFAULT_LINE_ID, 24, data)
+    agent_answer = answer_factory_question(f"Can {DEFAULT_PRODUCT_ID} be released for production?", data)
     return {
         "health": {"mode": "demo", "products": len(list_products(data)), "materials": len(data.materials), "adapters": "mock/stub"},
         "products": list_products(data),

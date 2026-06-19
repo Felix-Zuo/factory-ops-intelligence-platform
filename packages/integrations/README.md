@@ -1,4 +1,3 @@
 # integrations
 
-Adapter boundary for ERP, WMS, MES, PLC, WeChat, MCP, and future scheduling connectors. Public demo mode stays mock/stub by default.
-
+Adapter boundary for ERP, WMS, MES, PLC, scheduling, messaging, MCP, and future connectors. Public demo mode stays mock/stub by default.

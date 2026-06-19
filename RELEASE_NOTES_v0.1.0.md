@@ -25,7 +25,7 @@ Release type: open-source demo release
 
 ## Adapter Scope
 
-The demo uses synthetic records. ERP, WMS, MES, PLC, scheduling, WeChat, and MCP integrations are represented through mock, stub, or sample adapters with explicit status labels.
+The demo uses synthetic records. ERP, WMS, MES, PLC, scheduling, messaging, and MCP integrations are represented through mock, stub, or sample adapters with explicit status labels.
 
 ## Validation Commands
 
@@ -40,4 +40,3 @@ python scripts/check_ai_tone.py
 - Not a production ERP, WMS, MES, IoT, or scheduling platform.
 - Scheduling is adapter-shaped only; no optimization solver is shipped in this release.
 - External system integrations are public-demo contracts, not live factory connections.
-

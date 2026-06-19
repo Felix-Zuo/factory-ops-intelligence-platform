@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AI Factory Operations Intelligence Platform</title>
+    <title>Operations Intelligence Platform</title>
     <style>
       :root {
-        color: #202622;
-        background: #e4e0d6;
+        color: #1e2528;
+        background: #eef1f4;
         font-family: Inter, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
       }
 
@@ -18,9 +18,9 @@
       body {
         margin: 0;
         background:
-          linear-gradient(90deg, rgba(39, 44, 39, 0.05) 1px, transparent 1px),
-          linear-gradient(0deg, rgba(39, 44, 39, 0.05) 1px, transparent 1px),
-          #e4e0d6;
+          linear-gradient(90deg, rgba(27, 39, 51, 0.04) 1px, transparent 1px),
+          linear-gradient(0deg, rgba(27, 39, 51, 0.035) 1px, transparent 1px),
+          #eef1f4;
         background-size: 34px 34px;
       }
 
@@ -43,14 +43,14 @@
 
       h1 {
         max-width: 920px;
-        font-size: clamp(34px, 5vw, 64px);
+        font-size: clamp(34px, 5vw, 62px);
         line-height: 1;
         letter-spacing: 0;
         margin-bottom: 16px;
       }
 
       h2 {
-        font-size: clamp(24px, 3vw, 36px);
+        font-size: clamp(24px, 3vw, 34px);
         line-height: 1.1;
         margin-bottom: 14px;
       }
@@ -62,7 +62,7 @@
 
       p,
       li {
-        color: #535d55;
+        color: #51606d;
         line-height: 1.62;
       }
 
@@ -70,8 +70,8 @@
         display: block;
         width: 100%;
         height: auto;
-        border: 1px solid #b5b1a4;
-        background: #f8f3e8;
+        border: 1px solid #d0d7de;
+        background: #ffffff;
       }
 
       .kicker,
@@ -83,8 +83,8 @@
 
       .kicker {
         display: inline-flex;
-        background: #202622;
-        color: #f4ead5;
+        background: #1f2933;
+        color: #ffffff;
         padding: 6px 9px;
         font-size: 12px;
         font-weight: 800;
@@ -92,7 +92,7 @@
       }
 
       .hero {
-        border-bottom: 3px solid #202622;
+        border-bottom: 3px solid #1f2933;
         padding-bottom: 28px;
       }
 
@@ -114,8 +114,8 @@
       .module,
       .architecture,
       .scope-box {
-        background: #f7f2e8;
-        border: 1px solid #b5b1a4;
+        background: #ffffff;
+        border: 1px solid #d0d7de;
       }
 
       .status-board {
@@ -133,11 +133,11 @@
         grid-template-columns: 124px 1fr;
         gap: 12px;
         padding-bottom: 9px;
-        border-bottom: 1px solid #d7d1c2;
+        border-bottom: 1px solid #d8dee4;
       }
 
       .status-board dt {
-        color: #616860;
+        color: #64748b;
         font-size: 12px;
       }
 
@@ -156,13 +156,13 @@
       .node {
         min-height: 96px;
         padding: 12px;
-        border: 1px solid #a9a38f;
-        background: #fffaf0;
+        border: 1px solid #d0d7de;
+        background: #f8fafc;
       }
 
       .node span {
         display: block;
-        color: #8a743e;
+        color: #1f6f78;
         font-size: 12px;
         font-weight: 800;
         margin-bottom: 10px;
@@ -200,8 +200,8 @@
 
       .module-code {
         display: inline-flex;
-        background: #202622;
-        color: #f4ead5;
+        background: #1f2933;
+        color: #ffffff;
         padding: 4px 7px;
         font-size: 12px;
         font-weight: 800;
@@ -216,8 +216,8 @@
       }
 
       .chip {
-        border: 1px solid #a9a38f;
-        background: #ece6d7;
+        border: 1px solid #cbd5e1;
+        background: #e7edf2;
         padding: 5px 8px;
         font-size: 12px;
         font-weight: 750;
@@ -229,8 +229,8 @@
       }
 
       .chip.watch {
-        background: #efe2bd;
-        border-color: #c2a75d;
+        background: #fff2c2;
+        border-color: #d3a72f;
       }
 
       .architecture pre {
@@ -252,22 +252,22 @@
       .evidence-table {
         width: 100%;
         border-collapse: collapse;
-        background: #f7f2e8;
-        border: 1px solid #b5b1a4;
+        background: #ffffff;
+        border: 1px solid #d0d7de;
         font-size: 14px;
       }
 
       th,
       td {
         text-align: left;
-        border-bottom: 1px solid #d7d1c2;
+        border-bottom: 1px solid #d8dee4;
         padding: 11px 10px;
         vertical-align: top;
       }
 
       th {
-        background: #ece6d7;
-        color: #2e352f;
+        background: #e7edf2;
+        color: #2f3b47;
       }
 
       @media (max-width: 960px) {
@@ -285,15 +285,14 @@
       <section class="hero">
         <div class="hero-grid">
           <div>
-            <span class="kicker">PROJECT SHOWCASE / DEMO WALKTHROUGH</span>
-            <h1>AI Factory Operations Intelligence Platform</h1>
+            <span class="kicker">PUBLIC DEMO / OPERATIONS WALKTHROUGH</span>
+            <h1>Operations Intelligence Platform</h1>
             <p>
-              Operations intelligence layer for fragmented factory data. The demo links BOM records, inventory exports,
-              customer orders, shipment data, production notices, line simulation results, and agent tool calls into one
-              traceable open-source prototype.
+              A generic manufacturing operations layer that links BOM records, stock exports, customer orders, inbound
+              shipments, release notices, line simulation and agent tool calls into one traceable local demo.
             </p>
             <div class="chips">
-              <span class="chip good">demo mode</span>
+              <span class="chip good">synthetic data</span>
               <span class="chip good">source trace</span>
               <span class="chip watch">mock adapters</span>
               <span class="chip good">agent tools</span>
@@ -302,7 +301,7 @@
           </div>
           <aside class="status-board">
             <dl>
-              <div><dt>Products</dt><dd>4 finished products</dd></div>
+              <div><dt>Products</dt><dd>4 synthetic products</dd></div>
               <div><dt>Materials</dt><dd>20 material records</dd></div>
               <div><dt>Orders</dt><dd>8 customer orders</dd></div>
               <div><dt>Adapters</dt><dd>ERP / WMS / MES / PLC / Scheduling / MCP</dd></div>
@@ -323,16 +322,15 @@
         <div class="grid-2">
           <div class="panel">
             <p>
-              Factory operating decisions often sit across ERP records, WMS stock exports, spreadsheet BOM files,
-              shipment notes, supplier updates, and informal message threads. The practical issue is not one missing
-              dashboard; it is the time spent reconciling source rows before a release decision.
+              Operating decisions often sit across ERP records, WMS stock exports, spreadsheet BOM files, shipment
+              notes, supplier updates and message threads. The practical issue is the time spent reconciling source rows
+              before a release decision.
             </p>
           </div>
           <div class="panel">
             <p>
-              Production notices depend on template discipline, material gates, order due dates, and shop-floor
-              assumptions. Line output and bottlenecks are difficult to discuss when takt assumptions and machine states
-              are not connected to the same operating view.
+              Release notices depend on template discipline, material gates, order due dates and line assumptions. Line
+              output and bottlenecks are easier to review when takt assumptions and machine states share the same view.
             </p>
           </div>
         </div>
@@ -345,7 +343,7 @@
           <div class="node"><span>PAR</span><strong>Parse and validate</strong></div>
           <div class="node"><span>BOM</span><strong>BOM explosion</strong></div>
           <div class="node"><span>INV</span><strong>Inventory risk</strong></div>
-          <div class="node"><span>PN</span><strong>Production notice</strong></div>
+          <div class="node"><span>PN</span><strong>Release notice</strong></div>
           <div class="node"><span>SIM</span><strong>Line simulation</strong></div>
           <div class="node"><span>REP</span><strong>Bottleneck report</strong></div>
           <div class="node"><span>AGT</span><strong>Agent Q&A trace</strong></div>
@@ -357,12 +355,12 @@
           <span class="module-code">MODULE 01</span>
           <h2>BOM & Inventory Intelligence</h2>
           <p>
-            Finished-product demand is exploded into component demand, stock coverage, inbound quantity, supplier
-            context, and source references. The dashboard keeps product, material, order, shipment, supplier, and WMS
-            rows visible.
+            Product demand is exploded into component demand, stock coverage, inbound quantity, supplier context and
+            source references. The default scenario follows `FG-OPS-A100`, while the data pack includes several product
+            families.
           </p>
           <div class="chips">
-            <span class="chip">FG-6205-2RS</span>
+            <span class="chip">FG-OPS-A100</span>
             <span class="chip">BOM tree</span>
             <span class="chip">material trace</span>
             <span class="chip">inventory risk</span>
@@ -377,21 +375,20 @@
 
       <section class="grid-2">
         <article class="shot">
-          <img src="assets/screenshots/notice-page.png" alt="Production notice generator screenshot" />
-          <h3>Production notice preview with template version</h3>
+          <img src="assets/screenshots/notice-page.png" alt="Release notice generator screenshot" />
+          <h3>Release notice preview with template version</h3>
         </article>
         <article class="module">
           <span class="module-code">MODULE 02</span>
-          <h2>Production Notice Generator</h2>
+          <h2>Release Notice Generator</h2>
           <p>
-            The notice preview is built from model selection, order quantity, BOM rows, material gate status, source
-            references, and template version. The public demo exports HTML/JSON previews and keeps material watch items
-            visible.
+            The notice preview is built from product selection, order quantity, BOM rows, material gate status, source
+            references and template version. The public demo exports HTML/JSON previews and keeps watch items visible.
           </p>
           <div class="chips">
-            <span class="chip">model selection</span>
+            <span class="chip">product selection</span>
             <span class="chip">template preview</span>
-            <span class="chip">editable fields</span>
+            <span class="chip">material gate</span>
             <span class="chip">export flow</span>
           </div>
         </article>
@@ -402,9 +399,9 @@
           <span class="module-code">MODULE 03</span>
           <h2>Production Takt & Bottleneck Simulation</h2>
           <p>
-            The simulation represents machine nodes, conveyors, robot links, buffers, running and blocked states, 24h
-            output, utilization, waiting time, blocking time, scrap output, and bottleneck detection. Scheduling remains
-            a stub boundary rather than a full optimizer.
+            The simulation represents machine nodes, transport links, buffers, running and blocked states, 24h output,
+            utilization, waiting time, blocking time, scrap output and bottleneck detection. Scheduling remains an
+            adapter boundary rather than a shipped optimizer.
           </p>
           <div class="chips">
             <span class="chip">machine nodes</span>
@@ -421,16 +418,15 @@
 
       <section class="grid-2">
         <article class="shot">
-          <img src="assets/screenshots/ai-factory-qa.png" alt="Factory Q&A tool trace screenshot" />
+          <img src="assets/screenshots/ai-factory-qa.png" alt="Operations Q&A tool trace screenshot" />
           <h3>Question, selected intent, workflow, tool calls, answer</h3>
         </article>
         <article class="module">
           <span class="module-code">MODULE 04</span>
-          <h2>AI Agent Q&A</h2>
+          <h2>Agent Q&A With Tool Evidence</h2>
           <p>
-            Questions are routed through registered factory tools. The Q&A panel shows user question, selected intent,
-            workflow, tool calls, tool result, source/demo record references, and final answer. The agent is a caller and
-            narrator, not the source of business truth.
+            Questions are routed through registered operations tools. The Q&A panel shows the user question, selected
+            intent, workflow, tool calls, result, source/demo record references and final answer.
           </p>
           <div class="chips">
             <span class="chip">tool registry</span>
@@ -452,7 +448,7 @@
             <tr><td>WMS</td><td>mock</td><td>Material stock, locations, inbound shipment records</td><td>No live barcode stream</td></tr>
             <tr><td>MES</td><td>stub/sample</td><td>Work order state, output, scrap, downtime</td><td>No live shop-floor execution</td></tr>
             <tr><td>PLC</td><td>sample telemetry</td><td>Machine state, cycle count, buffer events</td><td>No OPC UA connection</td></tr>
-            <tr><td>WeChat</td><td>webhook mock</td><td>Message-in and operations-answer-out concept</td><td>No live account binding</td></tr>
+            <tr><td>Scheduling</td><td>stub</td><td>Planning windows and constraints</td><td>No optimization runtime in this release</td></tr>
             <tr><td>MCP</td><td>ready-schema</td><td>Tool schemas, resources, prompts</td><td>No standalone MCP server yet</td></tr>
           </tbody>
         </table>
@@ -461,7 +457,7 @@
       <section>
         <h2>Technical Architecture</h2>
         <div class="architecture">
-          <pre>apps/web-dashboard      React engineering console
+          <pre>apps/web-dashboard      React operations console
 apps/api-server         FastAPI operations API
 packages/core-domain    Shared domain boundary
 packages/parsers        Import parser boundary
@@ -476,53 +472,17 @@ scripts                 Seed, smoke, tone scan, snapshot and validation</pre>
       </section>
 
       <section>
-        <h2>Project Capabilities</h2>
+        <h2>Project Evidence</h2>
         <table class="evidence-table">
           <tbody>
-            <tr><th>Manufacturing operations understanding</th><td>BOM, WMS stock, customer orders, supplier delivery, notice release, takt simulation.</td></tr>
-            <tr><th>Data modeling</th><td>Materials, finished products, BOM components, inventory snapshots, stock locations, shipments, machine events.</td></tr>
+            <tr><th>Operations modeling</th><td>BOM, stock, customer orders, supplier delivery, release notice, takt simulation.</td></tr>
+            <tr><th>Data modeling</th><td>Materials, products, BOM components, inventory snapshots, stock locations, shipments, machine events.</td></tr>
             <tr><th>Deterministic calculation</th><td>BOM explosion, inventory risk, material gate, 24h output, bottleneck detection.</td></tr>
             <tr><th>Agent orchestration</th><td>Tool registry, selected workflow, tool calls, source refs, final answer.</td></tr>
-            <tr><th>Adapter-ready architecture</th><td>ERP/WMS/MES/PLC/Scheduling/MCP boundaries with explicit mock/stub/sample states.</td></tr>
-            <tr><th>Open-source packaging</th><td>Seed script, snapshot generation, smoke demo, pytest, tone scan, frontend build.</td></tr>
+            <tr><th>Adapter-ready architecture</th><td>ERP/WMS/MES/PLC/scheduling/MCP boundaries with explicit mock/stub/sample states.</td></tr>
+            <tr><th>Validation</th><td>Seed script, snapshot generation, smoke demo, pytest, tone scan, frontend build and dependency audit.</td></tr>
           </tbody>
         </table>
-      </section>
-
-      <section>
-        <h2>Current Scope</h2>
-        <div class="grid-3">
-          <div class="scope-box">
-            <h3>Prototype / demo-ready</h3>
-            <p>Designed for local reproduction, technical inspection, and extension.</p>
-          </div>
-          <div class="scope-box">
-            <h3>Demo data</h3>
-            <p>Uses synthetic manufacturing records and static adapter payloads.</p>
-          </div>
-          <div class="scope-box">
-            <h3>Not a full ERP/MES</h3>
-            <p>Does not manage accounting, purchasing, shop-floor execution, live PLCs, or production deployment.</p>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2>Roadmap</h2>
-        <div class="grid-3">
-          <div class="scope-box">
-            <h3>Parser profiles</h3>
-            <p>Add more import profiles for production notice, BOM, inventory and shipment files.</p>
-          </div>
-          <div class="scope-box">
-            <h3>Adapter examples</h3>
-            <p>Expand ERP, WMS, MES, PLC and MCP examples while keeping mock/stub boundaries explicit.</p>
-          </div>
-          <div class="scope-box">
-            <h3>Visual checks</h3>
-            <p>Add visual regression checks for the dashboard and static showcase page.</p>
-          </div>
-        </div>
       </section>
 
       <section>
@@ -530,7 +490,7 @@ scripts                 Seed, smoke, tone scan, snapshot and validation</pre>
         <div class="grid-2">
           <article class="shot"><img src="assets/screenshots/overview.png" alt="Overview screenshot" /><h3>Operations console</h3></article>
           <article class="shot"><img src="assets/screenshots/product-material-trace.png" alt="Product material trace screenshot" /><h3>Product material trace</h3></article>
-          <article class="shot"><img src="assets/screenshots/notice-page.png" alt="Notice generator screenshot" /><h3>Production notice</h3></article>
+          <article class="shot"><img src="assets/screenshots/notice-page.png" alt="Release notice screenshot" /><h3>Release notice</h3></article>
           <article class="shot"><img src="assets/screenshots/simulation-report.png" alt="Simulation report screenshot" /><h3>Simulation report</h3></article>
           <article class="shot"><img src="assets/screenshots/agent-trace-page.png" alt="Agent trace screenshot" /><h3>Agent trace</h3></article>
           <article class="shot"><img src="assets/screenshots/integration-status.png" alt="Integration status screenshot" /><h3>Integration status</h3></article>

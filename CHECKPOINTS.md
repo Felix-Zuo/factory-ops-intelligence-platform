@@ -3,7 +3,7 @@
 ## 2026-06-07 - Project Start
 
 - Repository initialized at `D:\0A OpenClaw\projects\展示项目\factory-ops-intelligence-platform`.
-- Demo data uses synthetic bearing-manufacturing records only.
+- Initial demo data used a single synthetic product category.
 - Main business loop is defined: order quantity -> BOM demand -> inventory and inbound coverage -> production notice -> line simulation -> agent trace.
 
 ## 2026-06-07 - Main Demo Verified
@@ -83,3 +83,23 @@
   - `python scripts/generate_frontend_snapshot.py`
   - `npm run test:all`
   - `npm --prefix apps/web-dashboard run build`
+
+## 2026-06-19 - Generic Productization Pass
+
+- Replaced the single-category demo with a generic multi-product data pack:
+  - modular control kit;
+  - sensor pack;
+  - fluid service kit;
+  - inspection fixture.
+- Updated backend defaults, API routes, tests, smoke demo and frontend snapshot generation to use shared scenario constants.
+- Reworked the dashboard with readable bilingual copy and a neutral operations-console palette.
+- Restricted demo CORS origins to local dashboard hosts.
+- Upgraded Vite and the React plugin; dependency audit now reports zero vulnerabilities.
+- Added `PROJECT_HISTORY.md`, `CHANGELOG.md` and `RELEASE_NOTES_v0.2.0.md`.
+- Regenerated dashboard and static showcase screenshots.
+- Validation passed:
+  - `npm run test:all`
+  - `npm --prefix apps/web-dashboard audit --audit-level=moderate --json`
+  - local dashboard returned HTTP 200 at `http://127.0.0.1:5178/`
+  - local static docs returned HTTP 200 at `http://127.0.0.1:8098/showcase.html`
+  - browser check found no Vite overlay, no console errors and no old scenario terms
