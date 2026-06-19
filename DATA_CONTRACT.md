@@ -35,6 +35,37 @@
 | `source_file` | Source export name |
 | `source_row` | Source row for traceability |
 
+## Demand History
+
+| Field | Meaning |
+|---|---|
+| `week_start` | ISO week-start date |
+| `product_id` | Finished product code |
+| `booked_qty` | Weekly booked demand |
+| `shipped_qty` | Weekly shipped quantity |
+| `backlog_qty` | Ending backlog |
+| `market_signal_index` | Normalized exogenous signal for forecasting demos |
+
+## Product Economics and Finished Goods
+
+| Field | Meaning |
+|---|---|
+| `unit_price` / `unit_cost` | Synthetic commercial assumptions |
+| `target_days_of_cover` | Planning target for finished-goods coverage |
+| `preferred_line_id` | Default capacity model for the product |
+| `on_hand_qty` / `reserved_qty` | Finished-goods stock position |
+
+## Policy Signals
+
+| Field | Meaning |
+|---|---|
+| `signal_id` | Stable external-signal identifier |
+| `source_name` / `source_url` | Official-source provenance |
+| `published_at` / `effective_at` | Policy timing |
+| `risk_level` | `info`, `watch`, `medium`, `high`, or `critical` |
+| `relevance_tags` | Search and matching tags |
+| `affected_materials` | Materials used to map the signal to products and orders |
+
 ## Adapter Contract
 
 | Field | Meaning |

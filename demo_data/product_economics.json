@@ -1,0 +1,38 @@
+[
+  {
+    "product_id": "FG-OPS-A100",
+    "forecast_family": "modular_controls",
+    "unit_price": 860,
+    "unit_cost": 545,
+    "target_days_of_cover": 18,
+    "criticality": "tier_1_revenue",
+    "preferred_line_id": "LINE-UNIVERSAL-A"
+  },
+  {
+    "product_id": "FG-OPS-B200",
+    "forecast_family": "sensor_packs",
+    "unit_price": 420,
+    "unit_cost": 250,
+    "target_days_of_cover": 16,
+    "criticality": "standard_revenue",
+    "preferred_line_id": "LINE-UNIVERSAL-A"
+  },
+  {
+    "product_id": "FG-OPS-C300",
+    "forecast_family": "service_kits",
+    "unit_price": 310,
+    "unit_cost": 178,
+    "target_days_of_cover": 22,
+    "criticality": "service_commitment",
+    "preferred_line_id": "LINE-FLEX-CELL-B"
+  },
+  {
+    "product_id": "FG-OPS-D400",
+    "forecast_family": "inspection_fixtures",
+    "unit_price": 1280,
+    "unit_cost": 790,
+    "target_days_of_cover": 30,
+    "criticality": "engineer_to_order",
+    "preferred_line_id": "LINE-FLEX-CELL-B"
+  }
+]

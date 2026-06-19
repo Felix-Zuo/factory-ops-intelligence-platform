@@ -19,6 +19,36 @@ CREATE TABLE IF NOT EXISTS finished_products (
   planning_policy TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS product_economics (
+  product_id TEXT PRIMARY KEY,
+  forecast_family TEXT NOT NULL,
+  unit_price REAL NOT NULL,
+  unit_cost REAL NOT NULL,
+  target_days_of_cover REAL NOT NULL,
+  criticality TEXT NOT NULL,
+  preferred_line_id TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS finished_goods_inventory (
+  product_id TEXT PRIMARY KEY,
+  on_hand_qty REAL NOT NULL,
+  reserved_qty REAL NOT NULL,
+  location TEXT NOT NULL,
+  status TEXT NOT NULL,
+  cycle_count_accuracy REAL NOT NULL,
+  last_counted_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS demand_history (
+  week_start TEXT NOT NULL,
+  product_id TEXT NOT NULL,
+  booked_qty REAL NOT NULL,
+  shipped_qty REAL NOT NULL,
+  backlog_qty REAL NOT NULL,
+  market_signal_index REAL NOT NULL,
+  PRIMARY KEY (week_start, product_id)
+);
+
 CREATE TABLE IF NOT EXISTS bom_components (
   bom_id TEXT NOT NULL,
   product_id TEXT NOT NULL,
@@ -158,4 +188,35 @@ CREATE TABLE IF NOT EXISTS file_import_logs (
   quality TEXT NOT NULL,
   parser TEXT NOT NULL,
   source_system TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS policy_signals (
+  signal_id TEXT PRIMARY KEY,
+  source_name TEXT NOT NULL,
+  source_type TEXT NOT NULL,
+  region TEXT NOT NULL,
+  jurisdiction TEXT NOT NULL,
+  title TEXT NOT NULL,
+  published_at TEXT NOT NULL,
+  effective_at TEXT NOT NULL,
+  risk_level TEXT NOT NULL,
+  relevance_tags TEXT NOT NULL,
+  affected_materials TEXT NOT NULL,
+  summary TEXT NOT NULL,
+  recommended_action TEXT NOT NULL,
+  source_url TEXT NOT NULL,
+  adapter_mode TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS internal_issues (
+  issue_id TEXT PRIMARY KEY,
+  area TEXT NOT NULL,
+  severity TEXT NOT NULL,
+  title TEXT NOT NULL,
+  symptom TEXT NOT NULL,
+  linked_entity TEXT NOT NULL,
+  owner TEXT NOT NULL,
+  status TEXT NOT NULL,
+  source TEXT NOT NULL,
+  created_at TEXT NOT NULL
 );

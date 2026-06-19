@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any
 import hashlib
@@ -40,6 +41,11 @@ class FactoryData:
     adapters: list[dict[str, Any]]
     workflow_runs: list[dict[str, Any]]
     file_imports: list[dict[str, Any]]
+    demand_history: list[dict[str, Any]]
+    finished_goods_inventory: list[dict[str, Any]]
+    product_economics: list[dict[str, Any]]
+    policy_signals: list[dict[str, Any]]
+    internal_issues: list[dict[str, Any]]
 
 
 def load_factory_data() -> FactoryData:
@@ -57,6 +63,11 @@ def load_factory_data() -> FactoryData:
         adapters=_load_json("adapters.json"),
         workflow_runs=_load_json("workflow_runs.json"),
         file_imports=_load_json("file_imports.json"),
+        demand_history=_load_json("demand_history.json"),
+        finished_goods_inventory=_load_json("finished_goods_inventory.json"),
+        product_economics=_load_json("product_economics.json"),
+        policy_signals=_load_json("policy_signals.json"),
+        internal_issues=_load_json("internal_issues.json"),
     )
 
 
@@ -315,6 +326,365 @@ def product_material_trace(product_id: str, order_qty: float, data: FactoryData 
     }
 
 
+def _parse_day(value: str) -> date:
+    return datetime.fromisoformat(value).date()
+
+
+def _average(values: list[float]) -> float:
+    return sum(values) / len(values) if values else 0.0
+
+
+def _clamp(value: float, low: float, high: float) -> float:
+    return max(low, min(high, value))
+
+
+def forecast_demand(product_id: str | None = None, horizon_weeks: int = 4, data: FactoryData | None = None) -> dict[str, Any]:
+    """Deterministic demand forecast with a TimesFM-ready interface boundary."""
+    data = data or load_factory_data()
+    horizon = int(_clamp(float(horizon_weeks), 1, 26))
+    products = _index(list_products(data), "product_id")
+    economics = _index(data.product_economics, "product_id") if data.product_economics else {}
+    selected_ids = [product_id] if product_id else sorted(products)
+    unknown = [item for item in selected_ids if item not in products]
+    if unknown:
+        raise ValueError(f"Unknown product_id: {unknown[0]}")
+
+    rows: list[dict[str, Any]] = []
+    total_forecast_qty = 0.0
+    total_forecast_revenue = 0.0
+    for item_id in selected_ids:
+        history = sorted(
+            [row for row in data.demand_history if row["product_id"] == item_id],
+            key=lambda row: row["week_start"],
+        )
+        if not history:
+            continue
+        booked = [float(row["booked_qty"]) for row in history]
+        last_window = booked[-4:] if len(booked) >= 4 else booked
+        previous_window = booked[-8:-4] if len(booked) >= 8 else booked[: max(len(booked) - len(last_window), 0)]
+        recent_average = _average(last_window)
+        previous_average = _average(previous_window) if previous_window else recent_average
+        trend_per_week = (recent_average - previous_average) / max(len(last_window), 1)
+        signal_index = float(history[-1].get("market_signal_index", 1))
+        base = recent_average * (0.86 + 0.14 * signal_index)
+        unit_price = float(economics.get(item_id, {}).get("unit_price", 0))
+        start = _parse_day(history[-1]["week_start"]) + timedelta(days=7)
+        points: list[dict[str, Any]] = []
+        for offset in range(horizon):
+            forecast_qty = max(0, round(base + trend_per_week * (offset + 1)))
+            lower = max(0, round(forecast_qty * 0.88))
+            upper = round(forecast_qty * 1.15)
+            total_forecast_qty += forecast_qty
+            total_forecast_revenue += forecast_qty * unit_price
+            points.append(
+                {
+                    "week_start": (start + timedelta(days=7 * offset)).isoformat(),
+                    "forecast_qty": forecast_qty,
+                    "p10_qty": lower,
+                    "p90_qty": upper,
+                    "forecast_revenue": round(forecast_qty * unit_price, 2),
+                }
+            )
+        rows.append(
+            {
+                "product_id": item_id,
+                "product_name": products[item_id]["product_name"],
+                "forecast_family": economics.get(item_id, {}).get("forecast_family", "generic"),
+                "model": "seasonal_naive_with_trend",
+                "recent_average_qty": round(recent_average, 2),
+                "trend_per_week": round(trend_per_week, 2),
+                "market_signal_index": signal_index,
+                "history": history[-8:],
+                "forecast": points,
+                "horizon_weeks": horizon,
+                "timesfm_ready": {
+                    "interface": "univariate_or_xreg_time_series",
+                    "context_column": "booked_qty",
+                    "timestamp_column": "week_start",
+                    "entity_column": "product_id",
+                    "future_covariates": ["market_signal_index", "calendar_week", "policy_risk_score"],
+                    "status": "adapter_stub",
+                    "note": "The public demo keeps a deterministic model but exposes the same series shape needed by TimesFM or BigQuery AI.FORECAST.",
+                },
+            }
+        )
+    return {
+        "generated_at": DEMO_TIMESTAMP,
+        "horizon_weeks": horizon,
+        "model_registry": [
+            {
+                "model_id": "baseline-seasonal-trend-v1",
+                "status": "active",
+                "explainability": "moving average, trend and bounded interval",
+            },
+            {
+                "model_id": "timesfm-adapter",
+                "status": "planned_adapter",
+                "explainability": "requires holdout evaluation and quantile calibration before production use",
+            },
+        ],
+        "series": rows,
+        "summary": {
+            "series_count": len(rows),
+            "total_forecast_qty": round(total_forecast_qty),
+            "total_forecast_revenue": round(total_forecast_revenue, 2),
+        },
+    }
+
+
+def search_policy_signals(query: str = "", tags: list[str] | None = None, data: FactoryData | None = None) -> dict[str, Any]:
+    data = data or load_factory_data()
+    q = query.lower().strip()
+    tag_set = {tag.lower() for tag in tags or []}
+    products_by_material: dict[str, set[str]] = {}
+    for row in data.bom:
+        products_by_material.setdefault(row["material_id"], set()).add(row["product_id"])
+    signals = []
+    for signal in data.policy_signals:
+        signal_tags = {str(tag).lower() for tag in signal.get("relevance_tags", [])}
+        searchable = " ".join(
+            [
+                signal.get("title", ""),
+                signal.get("summary", ""),
+                signal.get("jurisdiction", ""),
+                " ".join(signal.get("affected_materials", [])),
+                " ".join(signal.get("relevance_tags", [])),
+            ]
+        ).lower()
+        if q and q not in searchable:
+            continue
+        if tag_set and not tag_set.intersection(signal_tags):
+            continue
+        affected_products = sorted(
+            {
+                product_id
+                for material_id in signal.get("affected_materials", [])
+                for product_id in products_by_material.get(material_id, set())
+            }
+        )
+        signals.append(
+            {
+                **signal,
+                "affected_products": affected_products,
+                "matched_open_orders": [
+                    order["order_id"]
+                    for order in data.customer_orders
+                    if order["product_id"] in affected_products
+                ],
+            }
+        )
+    severity_order = {"critical": 0, "high": 1, "medium": 2, "watch": 3, "info": 4, "low": 5}
+    signals.sort(key=lambda row: (severity_order.get(row.get("risk_level", "info"), 9), row.get("effective_at", "")))
+    return {
+        "generated_at": DEMO_TIMESTAMP,
+        "adapter_contract": {
+            "mode": "official-source-index-demo",
+            "allowed_sources": ["customs.gov.cn", "cbp.gov"],
+            "production_rule": "Fetch official feeds through a reviewed adapter, cache source metadata, and keep model summaries separate from source text.",
+        },
+        "signals": signals,
+        "summary": {
+            "signal_count": len(signals),
+            "actionable_count": sum(1 for signal in signals if signal.get("risk_level") != "info"),
+            "jurisdictions": sorted({signal["jurisdiction"] for signal in signals}),
+        },
+    }
+
+
+def build_control_tower_overview(data: FactoryData | None = None) -> dict[str, Any]:
+    data = data or load_factory_data()
+    products = _index(list_products(data), "product_id")
+    economics = _index(data.product_economics, "product_id") if data.product_economics else {}
+    finished_goods = _index(data.finished_goods_inventory, "product_id") if data.finished_goods_inventory else {}
+    forecast = forecast_demand(horizon_weeks=4, data=data)
+    forecast_by_product = {
+        row["product_id"]: sum(point["forecast_qty"] for point in row["forecast"])
+        for row in forecast["series"]
+    }
+    today = _parse_day(DEMO_TIMESTAMP[:10])
+    orders_by_product: dict[str, list[dict[str, Any]]] = {}
+    for order in data.customer_orders:
+        orders_by_product.setdefault(order["product_id"], []).append(order)
+
+    product_rows = []
+    total_backlog_value = 0.0
+    total_margin_value = 0.0
+    material_watch = 0
+    material_critical = 0
+    for product_id, product in products.items():
+        product_orders = orders_by_product.get(product_id, [])
+        open_qty = sum(float(order["qty"]) for order in product_orders)
+        unit_price = float(economics.get(product_id, {}).get("unit_price", 0))
+        unit_cost = float(economics.get(product_id, {}).get("unit_cost", 0))
+        backlog_value = open_qty * unit_price
+        margin_value = open_qty * max(unit_price - unit_cost, 0)
+        total_backlog_value += backlog_value
+        total_margin_value += margin_value
+        fg = finished_goods.get(product_id, {})
+        available_fg = float(fg.get("on_hand_qty", 0)) - float(fg.get("reserved_qty", 0))
+        forecast_qty = forecast_by_product.get(product_id, 0)
+        daily_demand = forecast_qty / 28 if forecast_qty else 0
+        coverage_days = available_fg / daily_demand if daily_demand else 999
+        target_cover = float(economics.get(product_id, {}).get("target_days_of_cover", 14))
+        risk = calculate_inventory_risk(product_id, max(open_qty, 1), data)
+        material_watch += risk["summary"]["watch_items"]
+        material_critical += risk["summary"]["critical_items"]
+        line_id = economics.get(product_id, {}).get("preferred_line_id", DEFAULT_LINE_ID)
+        simulation = run_line_simulation(line_id, 24, data)
+        weekly_capacity = simulation["good_output"] * 5
+        capacity_gap_qty = max(open_qty + forecast_qty - weekly_capacity, 0)
+        due_soon = [
+            order for order in product_orders
+            if (_parse_day(order["due_date"]) - today).days <= 21
+        ]
+        if risk["overall_status"] == "critical" or coverage_days < target_cover * 0.45 or capacity_gap_qty > 0:
+            status = "critical"
+        elif risk["overall_status"] == "watch" or coverage_days < target_cover:
+            status = "watch"
+        else:
+            status = "healthy"
+        product_rows.append(
+            {
+                "product_id": product_id,
+                "product_name": product["product_name"],
+                "planning_policy": product.get("planning_policy", ""),
+                "open_order_qty": round(open_qty),
+                "open_order_count": len(product_orders),
+                "due_soon_count": len(due_soon),
+                "backlog_value": round(backlog_value, 2),
+                "gross_margin_value": round(margin_value, 2),
+                "forecast_4w_qty": round(forecast_qty),
+                "finished_goods_available": round(available_fg),
+                "coverage_days": round(coverage_days, 1) if coverage_days < 999 else 999,
+                "target_days_of_cover": target_cover,
+                "material_status": risk["overall_status"],
+                "capacity_line_id": line_id,
+                "weekly_capacity_qty": round(weekly_capacity),
+                "capacity_gap_qty": round(capacity_gap_qty),
+                "status": status,
+                "recommended_action": (
+                    "Hold release and resolve material shortage" if risk["overall_status"] == "critical"
+                    else "Review supply and frozen schedule" if status == "watch"
+                    else "Release through normal S&OP gate"
+                ),
+            }
+        )
+
+    policy = search_policy_signals(data=data)
+    issue_counts: dict[str, int] = {}
+    for issue in data.internal_issues:
+        issue_counts[issue["severity"]] = issue_counts.get(issue["severity"], 0) + 1
+    score = 100
+    score -= min(material_critical * 10, 35)
+    score -= min(material_watch * 2, 28)
+    score -= min(policy["summary"]["actionable_count"] * 4, 18)
+    score -= min(issue_counts.get("high", 0) * 8, 16)
+    score -= min(issue_counts.get("medium", 0) * 3, 18)
+    score = int(_clamp(score, 0, 100))
+    risk_products = [row for row in product_rows if row["status"] != "healthy"]
+    return {
+        "generated_at": DEMO_TIMESTAMP,
+        "operating_score": score,
+        "kpis": {
+            "open_order_qty": round(sum(row["open_order_qty"] for row in product_rows)),
+            "open_order_value": round(total_backlog_value, 2),
+            "gross_margin_value": round(total_margin_value, 2),
+            "forecast_4w_qty": forecast["summary"]["total_forecast_qty"],
+            "material_watch_items": material_watch,
+            "material_critical_items": material_critical,
+            "external_actionable_signals": policy["summary"]["actionable_count"],
+            "open_internal_issues": len([issue for issue in data.internal_issues if issue["status"] == "open"]),
+        },
+        "product_health": product_rows,
+        "operating_loop": [
+            {"stage": "Sales", "status": "active", "evidence": f"{len(data.customer_orders)} open demo orders", "action": "Confirm priority and due-date risk."},
+            {"stage": "Planning", "status": "watch" if risk_products else "healthy", "evidence": f"{forecast['summary']['series_count']} forecast series", "action": "Reconcile demand, frozen plan and line capacity weekly."},
+            {"stage": "Procurement", "status": "watch" if material_watch else "healthy", "evidence": f"{material_watch} watch components", "action": "Focus on supplier ETAs that change release gates."},
+            {"stage": "Warehouse", "status": "active", "evidence": f"{len(data.inventory)} material stock rows", "action": "Keep source-row trace for every coverage decision."},
+            {"stage": "Production", "status": "watch", "evidence": "24h deterministic line simulations", "action": "Use bottleneck report before increasing release quantity."},
+            {"stage": "Compliance", "status": "watch" if policy["summary"]["actionable_count"] else "healthy", "evidence": f"{policy['summary']['signal_count']} external signals", "action": "Review official-source policy matches before shipment release."},
+            {"stage": "Intelligence", "status": "active", "evidence": f"{len(agent_tools())} registered tools", "action": "Route questions to deterministic tools before model summarization."},
+        ],
+        "alerts": [
+            {
+                "id": issue["issue_id"],
+                "severity": issue["severity"],
+                "area": issue["area"],
+                "title": issue["title"],
+                "action": issue["owner"],
+                "source": issue["source"],
+            }
+            for issue in data.internal_issues
+        ][:8],
+        "forecast_summary": forecast["summary"],
+        "policy_summary": policy["summary"],
+    }
+
+
+def generate_decision_brief(question: str = "What should operations review today?", data: FactoryData | None = None) -> dict[str, Any]:
+    data = data or load_factory_data()
+    overview = build_control_tower_overview(data)
+    forecast = forecast_demand(horizon_weeks=4, data=data)
+    policy = search_policy_signals(data=data)
+    risk_products = [row for row in overview["product_health"] if row["status"] != "healthy"]
+    top_product = risk_products[0] if risk_products else overview["product_health"][0]
+    actions = [
+        {
+            "priority": "P0" if top_product["status"] == "critical" else "P1",
+            "owner": "Planning",
+            "action": f"Run S&OP exception review for {top_product['product_id']}.",
+            "evidence": f"{top_product['forecast_4w_qty']} forecast units, {top_product['material_status']} material status, {top_product['coverage_days']} coverage days.",
+        },
+        {
+            "priority": "P1",
+            "owner": "Procurement",
+            "action": "Confirm ETA and alternate supply for watch components before release.",
+            "evidence": f"{overview['kpis']['material_watch_items']} watch items and {overview['kpis']['material_critical_items']} critical items across the demo portfolio.",
+        },
+        {
+            "priority": "P1",
+            "owner": "Trade Compliance",
+            "action": "Screen affected export orders against current customs-policy signals.",
+            "evidence": f"{policy['summary']['actionable_count']} actionable official-source signals are linked to product/material context.",
+        },
+        {
+            "priority": "P2",
+            "owner": "Manufacturing Engineering",
+            "action": "Review bottleneck buffer settings before approving demand upside.",
+            "evidence": "Line simulation links throughput, waiting and blocking metrics to the release decision.",
+        },
+    ]
+    return {
+        "generated_at": DEMO_TIMESTAMP,
+        "question": question[:500],
+        "executive_answer": (
+            f"Operating score is {overview['operating_score']}/100. "
+            f"Review {top_product['product_id']} first, keep supplier ETA and policy checks in the release gate, "
+            "and use the deterministic forecast as the baseline before any external model summary."
+        ),
+        "actions": actions,
+        "analysis_lanes": [
+            {"lane": "Demand", "signal": f"{forecast['summary']['total_forecast_qty']} units forecast over 4 weeks", "risk": "trend drift" if risk_products else "normal"},
+            {"lane": "Supply", "signal": f"{overview['kpis']['material_watch_items']} watch items", "risk": "release delay"},
+            {"lane": "Capacity", "signal": "24h line simulation available", "risk": "buffer and bottleneck pressure"},
+            {"lane": "Compliance", "signal": f"{policy['summary']['signal_count']} policy signals", "risk": "declaration or inspection change"},
+            {"lane": "Cash", "signal": f"${overview['kpis']['open_order_value']:,.0f} open order value", "risk": "inventory and backlog tradeoff"},
+        ],
+        "source_evidence": {
+            "orders": len(data.customer_orders),
+            "demand_history_rows": len(data.demand_history),
+            "inventory_rows": len(data.inventory),
+            "policy_signals": len(data.policy_signals),
+            "internal_issues": len(data.internal_issues),
+        },
+        "model_boundary": {
+            "llm_status": "optional_adapter",
+            "safe_default": "deterministic_tools_first",
+            "contract": "A model may summarize retrieved evidence and propose next questions, but source-linked calculations remain owned by domain functions.",
+        },
+    }
+
+
 def generate_production_notice(product_id: str, quantity: float, order_id: str | None = None, data: FactoryData | None = None) -> dict[str, Any]:
     data = data or load_factory_data()
     bom = get_product_bom(product_id, data)
@@ -493,6 +863,10 @@ def agent_tools() -> list[dict[str, Any]]:
         tool_schema("run_line_simulation", "Run a deterministic line simulation.", {"type": "object", "required": ["line_id", "hours"], "properties": {"line_id": {"type": "string"}, "hours": {"type": "number"}}}, ["run_id", "machine_reports"], "run_line_simulation"),
         tool_schema("get_simulation_report", "Return the latest or named simulation report.", {"type": "object", "properties": {"run_id": {"type": "string"}}}, ["run_id", "bottleneck_machine"], "get_simulation_report"),
         tool_schema("detect_bottleneck", "Identify throughput and quality bottlenecks.", {"type": "object", "required": ["report"], "properties": {"report": {"type": "object"}}}, ["bottleneck_machine", "evidence"], "detect_bottleneck"),
+        tool_schema("build_control_tower_overview", "Build a cross-functional S&OP, inventory, capacity, compliance and cash view.", {"type": "object", "properties": {}}, ["operating_score", "kpis", "product_health"], "build_control_tower_overview"),
+        tool_schema("forecast_demand", "Forecast demand with a deterministic baseline and TimesFM-ready series contract.", {"type": "object", "properties": {"product_id": {"type": "string"}, "horizon_weeks": {"type": "integer"}}}, ["series", "summary", "model_registry"], "forecast_demand"),
+        tool_schema("search_policy_signals", "Search official-source policy and customs signals linked to products and materials.", {"type": "object", "properties": {"query": {"type": "string"}, "tags": {"type": "array", "items": {"type": "string"}}}}, ["signals", "summary"], "search_policy_signals"),
+        tool_schema("generate_decision_brief", "Generate a source-backed operations decision brief.", {"type": "object", "properties": {"question": {"type": "string"}}}, ["executive_answer", "actions", "analysis_lanes"], "generate_decision_brief"),
         tool_schema("generate_daily_report", "Compose an operations summary from tool outputs.", {"type": "object", "properties": {"day": {"type": "string"}}}, ["summary", "exceptions", "source_refs"], "generate_daily_report"),
         tool_schema("answer_factory_question", "Route a factory question to the correct workflow and tools.", {"type": "object", "required": ["question"], "properties": {"question": {"type": "string"}}}, ["answer", "trace", "data"], "answer_factory_question"),
     ]
@@ -535,7 +909,46 @@ def answer_factory_question(question: str, data: FactoryData | None = None) -> d
     data = data or load_factory_data()
     q = question.lower()
     tool_calls: list[dict[str, Any]] = []
-    if "bottleneck" in q or "瓶颈" in question or "line" in q or "simulation" in q or "产线" in question:
+    if "policy" in q or "customs" in q or "tariff" in q or "海关" in question or "政策" in question:
+        workflow = "external_policy_review"
+        intent = "policy_signal_review"
+        policy = search_policy_signals(question, data=data)
+        brief = generate_decision_brief(question, data)
+        tool_calls.append(_trace_call("search_policy_signals", {"query": question}, policy))
+        tool_calls.append(_trace_call("generate_decision_brief", {"question": question}, brief))
+        final_answer = (
+            f"Result: {policy['summary']['actionable_count']} actionable policy signals are linked to operations context. "
+            f"Evidence: {policy['summary']['signal_count']} official-source signals cover {', '.join(policy['summary']['jurisdictions'])}. "
+            "Next check: screen affected export orders before shipment release."
+        )
+        payload = {"policy": policy, "brief": brief}
+    elif "forecast" in q or "demand" in q or "timesfm" in q or "预测" in question or "需求" in question:
+        workflow = "demand_forecast_review"
+        intent = "demand_forecast"
+        forecast = forecast_demand(horizon_weeks=4, data=data)
+        overview = build_control_tower_overview(data)
+        tool_calls.append(_trace_call("forecast_demand", {"horizon_weeks": 4}, forecast))
+        tool_calls.append(_trace_call("build_control_tower_overview", {}, overview))
+        final_answer = (
+            f"Result: 4-week forecast is {forecast['summary']['total_forecast_qty']:,} units across {forecast['summary']['series_count']} series. "
+            f"Evidence: baseline model is active and TimesFM adapter is {forecast['model_registry'][1]['status']}. "
+            "Next check: compare forecast upside with material gates and line capacity."
+        )
+        payload = {"forecast": forecast, "overview": overview}
+    elif "s&op" in q or "control tower" in q or "control" in q or "decision" in q or "产销存" in question or "决策" in question or "总控" in question:
+        workflow = "control_tower_review"
+        intent = "operations_control_tower"
+        overview = build_control_tower_overview(data)
+        brief = generate_decision_brief(question, data)
+        tool_calls.append(_trace_call("build_control_tower_overview", {}, overview))
+        tool_calls.append(_trace_call("generate_decision_brief", {"question": question}, brief))
+        final_answer = (
+            f"Result: operating score is {overview['operating_score']}/100. "
+            f"Evidence: ${overview['kpis']['open_order_value']:,.0f} open order value, {overview['kpis']['material_watch_items']} material watch items and {overview['kpis']['external_actionable_signals']} policy signals. "
+            "Next check: execute the decision brief actions in priority order."
+        )
+        payload = {"overview": overview, "brief": brief}
+    elif "bottleneck" in q or "瓶颈" in question or "line" in q or "simulation" in q or "产线" in question:
         workflow = "line_simulation_to_report"
         intent = "simulation_bottleneck"
         simulation = run_line_simulation(DEFAULT_LINE_ID, 24, data)
@@ -605,12 +1018,23 @@ def demo_snapshot(data: FactoryData | None = None) -> dict[str, Any]:
     trace = product_material_trace(DEFAULT_PRODUCT_ID, DEFAULT_ORDER_QTY, data)
     notice = generate_production_notice(DEFAULT_PRODUCT_ID, DEFAULT_ORDER_QTY, DEFAULT_ORDER_ID, data)
     simulation = run_line_simulation(DEFAULT_LINE_ID, 24, data)
-    agent_answer = answer_factory_question(f"Can {DEFAULT_PRODUCT_ID} be released for production?", data)
+    overview = build_control_tower_overview(data)
+    demand = forecast_demand(horizon_weeks=4, data=data)
+    policy = search_policy_signals(data=data)
+    decision = generate_decision_brief("What should operations review before the next release?", data)
+    agent_answer = answer_factory_question("Give me a control tower decision brief for demand, supply and capacity.", data)
     return {
         "health": {"mode": "demo", "products": len(list_products(data)), "materials": len(data.materials), "adapters": "mock/stub"},
         "products": list_products(data),
         "imports": data.file_imports,
         "orders": data.customer_orders,
+        "finishedGoods": data.finished_goods_inventory,
+        "demandHistory": data.demand_history,
+        "controlTower": overview,
+        "demandForecast": demand,
+        "policySignals": policy,
+        "decisionBrief": decision,
+        "internalIssues": data.internal_issues,
         "inventoryRisk": risk,
         "materialTrace": trace,
         "notice": notice,

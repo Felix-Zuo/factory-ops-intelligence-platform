@@ -6,22 +6,31 @@ export const snapshot = demoSnapshot;
 
 export const copy = {
   en: {
-    title: 'Operations Intelligence Control Board',
-    subtitle: 'Multi-product BOM, stock, order, shipment, release notice, line simulation and tool traces in one operating view.',
+    title: 'Operations Intelligence Control Tower',
+    subtitle: 'S&OP, demand forecast, BOM coverage, finished goods, capacity, customs policy signals and decision traces in one operating view.',
     sourceTrace: 'Source trace',
     adapterStatus: 'Adapter status',
     statusLoaded: 'Demo data loaded',
-    mode: 'Mock ERP / WMS / MES / PLC',
+    mode: 'ERP / WMS / MES / policy adapters',
   },
   zh: {
-    title: '运营智能控制台',
-    subtitle: '把多产品 BOM、库存、订单、在途、放行通知、产线仿真和工具调用轨迹放在同一个运营视图里。',
+    title: '运营智能总控台',
+    subtitle: '把产销存、需求预测、BOM 覆盖、成品库存、产能、海关政策信号和决策轨迹放在同一个运营视图里。',
     sourceTrace: '来源追溯',
     adapterStatus: '接口状态',
     statusLoaded: '演示数据已加载',
-    mode: 'ERP / WMS / MES / PLC 模拟接口',
+    mode: 'ERP / WMS / MES / 政策源模拟接口',
   },
 };
+
+export const controlTower = demoSnapshot.controlTower;
+export const productHealth = demoSnapshot.controlTower.product_health;
+export const operatingLoop = demoSnapshot.controlTower.operating_loop;
+export const demandSeries = demoSnapshot.demandForecast.series;
+export const policySignals = demoSnapshot.policySignals.signals;
+export const decisionBrief = demoSnapshot.decisionBrief;
+export const decisionActions = demoSnapshot.decisionBrief.actions;
+export const internalIssues = demoSnapshot.internalIssues;
 
 export const imports = demoSnapshot.imports.map((row) => ({
   file: row.file_name,
@@ -72,7 +81,12 @@ export const traces = demoSnapshot.agentAnswer.trace.tool_calls.map((row, index)
   input: JSON.stringify(row.input_json),
 }));
 
-export const topSources = demoSnapshot.agentAnswer.trace.source_refs.slice(0, 6).map((row) => ({
+const evidenceRefs = [
+  ...demoSnapshot.agentAnswer.trace.source_refs,
+  ...demoSnapshot.inventoryRisk.source_refs,
+].slice(0, 6);
+
+export const topSources = evidenceRefs.map((row) => ({
   label: row.source_file,
   value: `${row.source_row}${row.source_column ? ` / ${row.source_column}` : ''}`,
 }));

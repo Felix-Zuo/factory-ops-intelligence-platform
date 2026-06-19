@@ -14,6 +14,9 @@ DEMO_PATH = ROOT / "demo_data"
 TABLE_FILES = {
     "materials": "materials.json",
     "finished_products": "finished_products.json",
+    "product_economics": "product_economics.json",
+    "finished_goods_inventory": "finished_goods_inventory.json",
+    "demand_history": "demand_history.json",
     "bom_components": "bom.json",
     "stock_locations": "stock_locations.json",
     "inventory_snapshots": "inventory.json",
@@ -25,6 +28,8 @@ TABLE_FILES = {
     "adapter_contracts": "adapters.json",
     "workflow_runs": "workflow_runs.json",
     "file_import_logs": "file_imports.json",
+    "policy_signals": "policy_signals.json",
+    "internal_issues": "internal_issues.json",
 }
 
 

@@ -1,0 +1,23 @@
+workflow: policy_signal_to_release_gate
+version: 0.3.0
+goal: Bind external customs and policy signals to shipment release checks.
+inputs:
+  - policy_signals
+  - bom_components
+  - customer_orders
+  - shipment_records
+steps:
+  - tool: search_policy_signals
+    purpose: Retrieve relevant official-source signals by query or tag.
+  - tool: product_material_trace
+    purpose: Map affected materials back to products and orders.
+  - tool: generate_decision_brief
+    purpose: Produce compliance owner/action/evidence lanes.
+outputs:
+  - affected_products
+  - matched_open_orders
+  - release_gate_actions
+guardrails:
+  - Use official-source allowlists in production.
+  - Keep compliance review human-owned.
+  - Cache source metadata and effective dates.

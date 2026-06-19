@@ -1,0 +1,37 @@
+[
+  {"week_start": "2026-04-13", "product_id": "FG-OPS-A100", "booked_qty": 720, "shipped_qty": 690, "backlog_qty": 260, "market_signal_index": 0.78},
+  {"week_start": "2026-04-20", "product_id": "FG-OPS-A100", "booked_qty": 760, "shipped_qty": 700, "backlog_qty": 320, "market_signal_index": 0.81},
+  {"week_start": "2026-04-27", "product_id": "FG-OPS-A100", "booked_qty": 810, "shipped_qty": 740, "backlog_qty": 390, "market_signal_index": 0.86},
+  {"week_start": "2026-05-04", "product_id": "FG-OPS-A100", "booked_qty": 840, "shipped_qty": 790, "backlog_qty": 440, "market_signal_index": 0.9},
+  {"week_start": "2026-05-11", "product_id": "FG-OPS-A100", "booked_qty": 920, "shipped_qty": 835, "backlog_qty": 525, "market_signal_index": 0.94},
+  {"week_start": "2026-05-18", "product_id": "FG-OPS-A100", "booked_qty": 960, "shipped_qty": 870, "backlog_qty": 615, "market_signal_index": 0.96},
+  {"week_start": "2026-05-25", "product_id": "FG-OPS-A100", "booked_qty": 1010, "shipped_qty": 900, "backlog_qty": 725, "market_signal_index": 0.98},
+  {"week_start": "2026-06-01", "product_id": "FG-OPS-A100", "booked_qty": 1040, "shipped_qty": 930, "backlog_qty": 835, "market_signal_index": 1.0},
+
+  {"week_start": "2026-04-13", "product_id": "FG-OPS-B200", "booked_qty": 610, "shipped_qty": 620, "backlog_qty": 180, "market_signal_index": 0.72},
+  {"week_start": "2026-04-20", "product_id": "FG-OPS-B200", "booked_qty": 650, "shipped_qty": 635, "backlog_qty": 195, "market_signal_index": 0.74},
+  {"week_start": "2026-04-27", "product_id": "FG-OPS-B200", "booked_qty": 640, "shipped_qty": 645, "backlog_qty": 190, "market_signal_index": 0.73},
+  {"week_start": "2026-05-04", "product_id": "FG-OPS-B200", "booked_qty": 700, "shipped_qty": 660, "backlog_qty": 230, "market_signal_index": 0.78},
+  {"week_start": "2026-05-11", "product_id": "FG-OPS-B200", "booked_qty": 735, "shipped_qty": 690, "backlog_qty": 275, "market_signal_index": 0.82},
+  {"week_start": "2026-05-18", "product_id": "FG-OPS-B200", "booked_qty": 710, "shipped_qty": 700, "backlog_qty": 285, "market_signal_index": 0.8},
+  {"week_start": "2026-05-25", "product_id": "FG-OPS-B200", "booked_qty": 760, "shipped_qty": 720, "backlog_qty": 325, "market_signal_index": 0.84},
+  {"week_start": "2026-06-01", "product_id": "FG-OPS-B200", "booked_qty": 790, "shipped_qty": 735, "backlog_qty": 380, "market_signal_index": 0.87},
+
+  {"week_start": "2026-04-13", "product_id": "FG-OPS-C300", "booked_qty": 430, "shipped_qty": 420, "backlog_qty": 150, "market_signal_index": 0.66},
+  {"week_start": "2026-04-20", "product_id": "FG-OPS-C300", "booked_qty": 455, "shipped_qty": 440, "backlog_qty": 165, "market_signal_index": 0.69},
+  {"week_start": "2026-04-27", "product_id": "FG-OPS-C300", "booked_qty": 470, "shipped_qty": 450, "backlog_qty": 185, "market_signal_index": 0.71},
+  {"week_start": "2026-05-04", "product_id": "FG-OPS-C300", "booked_qty": 520, "shipped_qty": 470, "backlog_qty": 235, "market_signal_index": 0.79},
+  {"week_start": "2026-05-11", "product_id": "FG-OPS-C300", "booked_qty": 560, "shipped_qty": 500, "backlog_qty": 295, "market_signal_index": 0.84},
+  {"week_start": "2026-05-18", "product_id": "FG-OPS-C300", "booked_qty": 590, "shipped_qty": 520, "backlog_qty": 365, "market_signal_index": 0.88},
+  {"week_start": "2026-05-25", "product_id": "FG-OPS-C300", "booked_qty": 610, "shipped_qty": 535, "backlog_qty": 440, "market_signal_index": 0.9},
+  {"week_start": "2026-06-01", "product_id": "FG-OPS-C300", "booked_qty": 635, "shipped_qty": 550, "backlog_qty": 525, "market_signal_index": 0.93},
+
+  {"week_start": "2026-04-13", "product_id": "FG-OPS-D400", "booked_qty": 65, "shipped_qty": 58, "backlog_qty": 34, "market_signal_index": 0.55},
+  {"week_start": "2026-04-20", "product_id": "FG-OPS-D400", "booked_qty": 70, "shipped_qty": 62, "backlog_qty": 42, "market_signal_index": 0.58},
+  {"week_start": "2026-04-27", "product_id": "FG-OPS-D400", "booked_qty": 72, "shipped_qty": 66, "backlog_qty": 48, "market_signal_index": 0.59},
+  {"week_start": "2026-05-04", "product_id": "FG-OPS-D400", "booked_qty": 82, "shipped_qty": 70, "backlog_qty": 60, "market_signal_index": 0.64},
+  {"week_start": "2026-05-11", "product_id": "FG-OPS-D400", "booked_qty": 95, "shipped_qty": 75, "backlog_qty": 80, "market_signal_index": 0.7},
+  {"week_start": "2026-05-18", "product_id": "FG-OPS-D400", "booked_qty": 88, "shipped_qty": 82, "backlog_qty": 86, "market_signal_index": 0.68},
+  {"week_start": "2026-05-25", "product_id": "FG-OPS-D400", "booked_qty": 105, "shipped_qty": 86, "backlog_qty": 105, "market_signal_index": 0.74},
+  {"week_start": "2026-06-01", "product_id": "FG-OPS-D400", "booked_qty": 112, "shipped_qty": 90, "backlog_qty": 127, "market_signal_index": 0.77}
+]

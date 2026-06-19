@@ -21,6 +21,10 @@ demo_data
 
 | Module | Responsibility |
 |---|---|
+| S&OP Control Tower | Join open demand, forecast, finished goods, material gates, capacity, policy signals and cash exposure |
+| Forecast Lab | Produce deterministic demand forecast and expose TimesFM-ready time-series shape |
+| Policy Radar | Match official-source customs/policy signals to materials, products and orders |
+| Decision Brief | Convert deterministic evidence into owner/action/evidence lanes with model boundary |
 | Data Import Center | Classify and parse synthetic operations files |
 | BOM & Inventory | Explode BOM, calculate stock coverage, retain source trace |
 | Product Material Trace | Connect product, components, inventory, inbound records, orders and suppliers |
@@ -31,7 +35,7 @@ demo_data
 
 ## Data Surface
 
-The demo data pack contains materials, finished products, BOM components, stock snapshots, stock locations, customer orders, inbound shipments, supplier delivery records, production lines, machine events, adapter contracts and workflow records. The SQLite seed is rebuilt from these files with `scripts/seed_demo_data.py`.
+The demo data pack contains materials, finished products, BOM components, stock snapshots, stock locations, customer orders, demand history, product economics, finished goods, policy signals, internal issues, inbound shipments, supplier delivery records, production lines, machine events, adapter contracts and workflow records. The SQLite seed is rebuilt from these files with `scripts/seed_demo_data.py`.
 
 ## Frontend Data Boundary
 
@@ -44,3 +48,7 @@ The agent runtime is a caller and narrator, not the source of truth. Business va
 ## Adapter Boundary
 
 Live integrations are not required for the public demo. Adapters expose clear scope and mode so future ERP/WMS/MES/PLC work can connect without changing the business engines.
+
+## Model Boundary
+
+Forecast and decision features are model-ready but deterministic by default. TimesFM, managed forecasting, retrieval search, or LLM analysis should be added through adapters that keep source evidence, model output, evaluation metrics and human approval state separate.

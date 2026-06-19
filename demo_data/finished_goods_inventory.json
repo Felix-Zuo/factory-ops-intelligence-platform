@@ -1,0 +1,38 @@
+[
+  {
+    "product_id": "FG-OPS-A100",
+    "on_hand_qty": 310,
+    "reserved_qty": 180,
+    "location": "FG-A",
+    "status": "available",
+    "cycle_count_accuracy": 0.982,
+    "last_counted_at": "2026-06-06"
+  },
+  {
+    "product_id": "FG-OPS-B200",
+    "on_hand_qty": 460,
+    "reserved_qty": 210,
+    "location": "FG-A",
+    "status": "available",
+    "cycle_count_accuracy": 0.975,
+    "last_counted_at": "2026-06-05"
+  },
+  {
+    "product_id": "FG-OPS-C300",
+    "on_hand_qty": 180,
+    "reserved_qty": 95,
+    "location": "FG-B",
+    "status": "service_buffer",
+    "cycle_count_accuracy": 0.968,
+    "last_counted_at": "2026-06-04"
+  },
+  {
+    "product_id": "FG-OPS-D400",
+    "on_hand_qty": 22,
+    "reserved_qty": 18,
+    "location": "ETO-HOLD",
+    "status": "engineering_hold",
+    "cycle_count_accuracy": 0.991,
+    "last_counted_at": "2026-06-03"
+  }
+]

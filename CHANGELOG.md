@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0
+
+- Added S&OP control-tower overview across demand, stock, material gates, capacity, policy signals and cash exposure.
+- Added demand history, product economics, finished goods inventory, external policy signals and internal issue queue demo data.
+- Added deterministic demand forecasting with a TimesFM-ready adapter contract.
+- Added official-source policy/customs signal matching and decision brief domain functions.
+- Added `/api/control-tower/overview`, `/api/forecast/demand`, `/api/external/signals` and `/api/decision-brief`.
+- Rebuilt the React dashboard into a dense product workbench and fixed badge/top-action wrapping.
+- Expanded pytest coverage for the new operating model and snapshot evidence.
+- Added product requirements, technical analysis, quality standard and v0.3.0 release notes.
+
 ## 0.2.0
 
 - Replaced single-category demo records with a generic multi-product operations data set.

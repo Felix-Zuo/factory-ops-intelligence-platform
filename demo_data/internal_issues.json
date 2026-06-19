@@ -1,0 +1,62 @@
+[
+  {
+    "issue_id": "OPS-RISK-001",
+    "area": "supply",
+    "severity": "high",
+    "title": "Sensor dock-date uncertainty",
+    "symptom": "MAT-SENSOR-IO has only 1.03x coverage for the current high-priority order.",
+    "linked_entity": "MAT-SENSOR-IO",
+    "owner": "Procurement",
+    "status": "open",
+    "source": "supplier_delivery_records",
+    "created_at": "2026-06-07"
+  },
+  {
+    "issue_id": "OPS-RISK-002",
+    "area": "capacity",
+    "severity": "medium",
+    "title": "OP-40 buffer pressure",
+    "symptom": "The line simulation shows OP-40 as the throughput bottleneck with elevated blocking time.",
+    "linked_entity": "OP-40",
+    "owner": "Manufacturing Engineering",
+    "status": "open",
+    "source": "simulation_reports",
+    "created_at": "2026-06-07"
+  },
+  {
+    "issue_id": "OPS-RISK-003",
+    "area": "compliance",
+    "severity": "medium",
+    "title": "Export declaration field readiness",
+    "symptom": "External policy signal requires export declaration fields to be checked before shipment release.",
+    "linked_entity": "POL-GACC-2026-040",
+    "owner": "Trade Compliance",
+    "status": "open",
+    "source": "policy_signals",
+    "created_at": "2026-06-07"
+  },
+  {
+    "issue_id": "OPS-RISK-004",
+    "area": "planning",
+    "severity": "medium",
+    "title": "Demand trend exceeds frozen plan",
+    "symptom": "A100 and C300 booked demand has grown for four consecutive weeks.",
+    "linked_entity": "demand_history",
+    "owner": "Planning",
+    "status": "open",
+    "source": "demand_history",
+    "created_at": "2026-06-07"
+  },
+  {
+    "issue_id": "OPS-RISK-005",
+    "area": "inventory",
+    "severity": "low",
+    "title": "Packaging surplus cash lock",
+    "symptom": "MAT-PACK-STD has surplus coverage and should be excluded from urgent replenishment.",
+    "linked_entity": "MAT-PACK-STD",
+    "owner": "Warehouse",
+    "status": "monitor",
+    "source": "inventory_snapshots",
+    "created_at": "2026-06-07"
+  }
+]

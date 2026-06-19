@@ -24,6 +24,9 @@ def test_demo_data_schema_has_demo_depth() -> None:
     assert len(data.customer_orders) >= 8
     assert len(data.production_lines) >= 2
     assert len(data.machine_events) >= 12
+    assert len(data.demand_history) >= 32
+    assert len(data.policy_signals) >= 4
+    assert len(data.internal_issues) >= 5
 
 
 def test_bom_explosion_uses_order_quantity() -> None:
@@ -65,6 +68,10 @@ def test_agent_tool_registry_has_required_tools() -> None:
         "run_line_simulation",
         "get_simulation_report",
         "detect_bottleneck",
+        "build_control_tower_overview",
+        "forecast_demand",
+        "search_policy_signals",
+        "generate_decision_brief",
         "generate_daily_report",
         "answer_factory_question",
     }.issubset(names)
@@ -77,8 +84,35 @@ def test_product_material_trace_links_chain() -> None:
     assert {"bom", "stock", "inbound", "supplier", "source_refs"}.issubset(trace["material_chains"][0].keys())
 
 
+def test_control_tower_forecast_policy_and_decision_brief() -> None:
+    overview = domain.build_control_tower_overview()
+    assert overview["operating_score"] > 0
+    assert overview["kpis"]["open_order_value"] > 0
+    assert overview["product_health"]
+    assert any(row["status"] in {"watch", "critical", "healthy"} for row in overview["product_health"])
+
+    forecast = domain.forecast_demand(horizon_weeks=4)
+    assert forecast["summary"]["total_forecast_qty"] > 0
+    assert forecast["series"][0]["timesfm_ready"]["status"] == "adapter_stub"
+    assert len(forecast["series"][0]["forecast"]) == 4
+
+    policy = domain.search_policy_signals("customs")
+    assert policy["summary"]["signal_count"] >= 1
+    assert all(row["source_url"].startswith("https://") for row in policy["signals"])
+    assert all("affected_products" in row for row in policy["signals"])
+
+    brief = domain.generate_decision_brief("How should we review demand and policy risk?")
+    assert "Operating score" in brief["executive_answer"]
+    assert brief["actions"]
+    assert brief["model_boundary"]["safe_default"] == "deterministic_tools_first"
+
+
 def test_api_smoke_routes_return_expected_payloads() -> None:
     assert api.health()["status"] == "ok"
+    assert api.control_tower_overview()["kpis"]["open_order_value"] > 0
+    assert api.demand_forecast()["summary"]["total_forecast_qty"] > 0
+    assert api.external_signals()["summary"]["signal_count"] >= 1
+    assert api.decision_brief(api.DecisionBriefRequest(question="Review S&OP risk"))["actions"]
     assert api.products()
     assert api.inventory_risk()["materials"]
     notice = api.generate_notice(api.NoticeRequest(product_id=domain.DEFAULT_PRODUCT_ID, quantity=domain.DEFAULT_ORDER_QTY, order_id=domain.DEFAULT_ORDER_ID))
@@ -93,6 +127,10 @@ def test_api_smoke_routes_return_expected_payloads() -> None:
 def test_frontend_snapshot_contains_demo_evidence() -> None:
     snapshot_path = ROOT / "apps" / "web-dashboard" / "src" / "demoSnapshot.ts"
     text = snapshot_path.read_text(encoding="utf-8")
+    assert "controlTower" in text
+    assert "demandForecast" in text
+    assert "policySignals" in text
+    assert "decisionBrief" in text
     assert "inventoryRisk" in text
     assert "materialTrace" in text
     assert "agentTools" in text

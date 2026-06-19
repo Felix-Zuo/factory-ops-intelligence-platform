@@ -1,38 +1,42 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Annotated, Any
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from . import domain
 
 
 class BomRequest(BaseModel):
-    product_id: str
-    quantity: float = 12000
+    product_id: str = Field(min_length=1, max_length=80)
+    quantity: float = Field(default=12000, gt=0, le=10_000_000)
 
 
 class NoticeRequest(BaseModel):
-    product_id: str = domain.DEFAULT_PRODUCT_ID
-    quantity: float = domain.DEFAULT_ORDER_QTY
-    order_id: str | None = domain.DEFAULT_ORDER_ID
+    product_id: str = Field(default=domain.DEFAULT_PRODUCT_ID, min_length=1, max_length=80)
+    quantity: float = Field(default=domain.DEFAULT_ORDER_QTY, gt=0, le=10_000_000)
+    order_id: str | None = Field(default=domain.DEFAULT_ORDER_ID, max_length=120)
 
 
 class SimulationRequest(BaseModel):
-    line_id: str = domain.DEFAULT_LINE_ID
-    hours: float = 24
+    line_id: str = Field(default=domain.DEFAULT_LINE_ID, min_length=1, max_length=80)
+    hours: float = Field(default=24, gt=0, le=168)
 
 
 class AgentRequest(BaseModel):
-    question: str
+    question: str = Field(min_length=1, max_length=2000)
+
+
+class DecisionBriefRequest(BaseModel):
+    question: str = Field(default="What should operations review today?", min_length=1, max_length=2000)
 
 
 app = FastAPI(
     title="Operations Intelligence API",
-    version="0.2.0",
-    description="Demo-ready operations intelligence API for fragmented manufacturing data.",
+    version="0.3.0",
+    description="Product-grade public demo API for S&OP, inventory, capacity, policy signals and agent-readable manufacturing operations intelligence.",
 )
 
 app.add_middleware(
@@ -61,6 +65,29 @@ def health() -> dict[str, Any]:
 @app.get("/api/demo/snapshot")
 def demo_snapshot() -> dict[str, Any]:
     return domain.demo_snapshot()
+
+
+@app.get("/api/control-tower/overview")
+def control_tower_overview() -> dict[str, Any]:
+    return domain.build_control_tower_overview()
+
+
+@app.get("/api/forecast/demand")
+def demand_forecast(product_id: Annotated[str | None, Query(max_length=80)] = None, horizon_weeks: Annotated[int, Query(ge=1, le=26)] = 4) -> dict[str, Any]:
+    try:
+        return domain.forecast_demand(product_id=product_id, horizon_weeks=horizon_weeks)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@app.get("/api/external/signals")
+def external_signals(query: Annotated[str, Query(max_length=500)] = "") -> dict[str, Any]:
+    return domain.search_policy_signals(query=query)
+
+
+@app.post("/api/decision-brief")
+def decision_brief(request: DecisionBriefRequest) -> dict[str, Any]:
+    return domain.generate_decision_brief(request.question)
 
 
 @app.get("/api/files/imports")

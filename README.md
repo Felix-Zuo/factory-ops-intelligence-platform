@@ -6,11 +6,11 @@
 ![Adapters](https://img.shields.io/badge/adapters-mock%20%2F%20stub-c7a24a)
 ![License](https://img.shields.io/badge/license-MIT-2f3a34)
 
-A reproducible operations intelligence layer for fragmented manufacturing data.
+A reproducible operations intelligence control tower for fragmented manufacturing data.
 
-The project connects BOM records, inventory exports, customer orders, inbound shipment data, release notices, line simulation results and agent tool calls into one local demo. The public version uses only synthetic data and generic product families, so it can be inspected without private factory systems.
+The project connects S&OP demand, BOM records, inventory exports, finished goods, customer orders, inbound shipment data, customs/policy signals, release notices, line simulation results and agent tool calls into one local demo. The public version uses only synthetic data and generic product families, so it can be inspected without private factory systems.
 
-中文摘要：这是一个面向制造运营的通用演示项目。它把多产品 BOM、库存、订单、在途、供应商状态、放行通知、产线仿真和 Agent 工具轨迹放进同一套可复现的数据链路里，所有公开数据均为合成样例。
+中文摘要：这是一个面向制造运营的通用智能总控项目。它把产销存、需求预测、BOM 覆盖、成品库存、供应商状态、海关政策信号、放行通知、产线仿真和 Agent 工具轨迹放进同一套可复现的数据链路里，所有公开数据均为合成样例。
 
 Showcase page: [docs/showcase.html](docs/showcase.html)
 
@@ -20,6 +20,10 @@ Showcase page: [docs/showcase.html](docs/showcase.html)
 
 | Capability | Evidence in this repo |
 |---|---|
+| S&OP control tower | `build_control_tower_overview`, `demo_data/demand_history.json`, `demo_data/product_economics.json` |
+| Forecast and model adapter boundary | `forecast_demand`, TimesFM-ready time-series contract, `GET /api/forecast/demand` |
+| External policy radar | `demo_data/policy_signals.json`, `search_policy_signals`, official-source adapter contract |
+| Decision brief | `generate_decision_brief`, owner/action/evidence lanes, deterministic-tool-first model boundary |
 | Spreadsheet and export intake | `demo_data/file_imports.json`, parser labels, import dashboard |
 | BOM and material readiness | BOM explosion, inventory coverage, source-row trace |
 | Release notice generation | HTML/JSON notice preview from order, product and material gate |
@@ -103,6 +107,10 @@ The full check seeds demo data, regenerates the frontend snapshot, runs self-che
 
 | Module | Current behavior |
 |---|---|
+| S&OP Control Tower | Open demand, 4-week forecast, finished-goods cover, material gate, capacity, value and action status |
+| Forecast Lab | Deterministic demand forecast with TimesFM-ready interface shape |
+| Policy Radar | Official-source customs/policy signals linked to materials, products and orders |
+| Decision Brief | Source-backed actions, evidence lanes and model safety boundary |
 | Data Import Center | Classifies demo files, parser status, source rows and quality flags |
 | BOM & Inventory | Explodes BOM demand into material coverage, inbound records, supplier notes and shortage watch |
 | Product Material Trace | Links product, BOM, stock, inbound, order, supplier and source refs |
@@ -139,6 +147,9 @@ This repository is an independent public demo that consolidates several operatio
 - release notice generation from a structured order payload;
 - line takt simulation and bottleneck reporting;
 - manufacturing data-model examples for BOM, stock, supplier and traceability;
+- S&OP control-tower modeling for demand, stock, capacity, policy and cash;
+- forecast interface design compatible with TimesFM-style time-series models;
+- official-source external signal adapters for customs and policy changes;
 - source-backed agent workflows with tool-call evidence.
 
 See [PROJECT_HISTORY.md](PROJECT_HISTORY.md) for the detailed capability map and release trail.
@@ -156,6 +167,10 @@ Live integrations are represented by mock/stub/sample adapters. Credentials and 
 - [Data contract](DATA_CONTRACT.md)
 - [Demo script](DEMO_SCRIPT.md)
 - [Roadmap](ROADMAP.md)
+- [Product requirements](PRODUCT_REQUIREMENTS.md)
+- [Technical analysis](TECHNICAL_ANALYSIS.md)
+- [Quality standard](QUALITY_STANDARD.md)
+- [Release notes v0.3.0](RELEASE_NOTES_v0.3.0.md)
 - [Changelog](CHANGELOG.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security](SECURITY.md)

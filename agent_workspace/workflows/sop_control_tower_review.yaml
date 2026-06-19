@@ -1,0 +1,28 @@
+workflow: sop_control_tower_review
+version: 0.3.0
+goal: Review demand, stock, material, capacity, policy and cash exposure before release decisions.
+inputs:
+  - customer_orders
+  - demand_history
+  - finished_goods_inventory
+  - inventory_snapshots
+  - production_lines
+  - policy_signals
+steps:
+  - tool: build_control_tower_overview
+    purpose: Join product health, KPIs, operating loop and alert queue.
+  - tool: forecast_demand
+    purpose: Produce a 4-week demand baseline and TimesFM-ready series contract.
+  - tool: search_policy_signals
+    purpose: Link official-source customs and policy signals to materials, products and orders.
+  - tool: generate_decision_brief
+    purpose: Create owner/action/evidence lanes for daily operations review.
+outputs:
+  - operating_score
+  - product_health
+  - policy_summary
+  - decision_actions
+guardrails:
+  - Keep calculations deterministic unless a reviewed model adapter is configured.
+  - Keep official-source facts separate from model summaries.
+  - Require human review before shipment or compliance release.

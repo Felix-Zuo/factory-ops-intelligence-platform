@@ -1,0 +1,25 @@
+workflow: demand_forecast_to_capacity_review
+version: 0.3.0
+goal: Convert demand trend into material and capacity review actions.
+inputs:
+  - demand_history
+  - product_economics
+  - customer_orders
+  - production_lines
+steps:
+  - tool: forecast_demand
+    purpose: Generate baseline demand, forecast intervals and TimesFM-ready shape.
+  - tool: calculate_inventory_risk
+    purpose: Check whether forecast demand changes material release risk.
+  - tool: run_line_simulation
+    purpose: Compare demand upside with bottleneck and weekly capacity.
+  - tool: generate_decision_brief
+    purpose: Summarize planning and engineering actions.
+outputs:
+  - forecast_series
+  - material_gate
+  - capacity_gap
+  - planning_actions
+guardrails:
+  - Do not use model output without holdout evaluation and fallback.
+  - Do not auto-release orders from forecast alone.
