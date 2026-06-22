@@ -1,0 +1,46 @@
+[
+  {
+    "profile_id": "manufacturing-assembly",
+    "name": "Manufacturing Assembly",
+    "domain": "discrete_manufacturing",
+    "primary_users": ["Planner", "Production Manager", "Warehouse Lead", "Procurement"],
+    "decision_loop": ["Demand", "Material gate", "Capacity", "Release", "Trace"],
+    "required_sources": ["ERP orders", "BOM export", "WMS stock", "MES output", "Supplier ETA"],
+    "release_controls": ["material_coverage", "capacity_fit", "quality_hold", "policy_signal", "human_approval"],
+    "sample_products": ["Modular control kit", "Sensor pack", "Service kit"],
+    "status": "active_demo"
+  },
+  {
+    "profile_id": "warehouse-fulfillment",
+    "name": "Warehouse Fulfillment",
+    "domain": "fulfillment_operations",
+    "primary_users": ["Fulfillment Lead", "Inventory Analyst", "Customer Service", "Compliance"],
+    "decision_loop": ["Order promise", "Pick readiness", "Carrier plan", "Exception queue", "Shipment release"],
+    "required_sources": ["Order queue", "Stock by bin", "Carrier plan", "Exception notes", "Policy signals"],
+    "release_controls": ["stock_available", "allocation_lock", "carrier_cutoff", "policy_signal", "human_approval"],
+    "sample_products": ["Launch kit", "Replacement pack", "Regional bundle"],
+    "status": "config_ready"
+  },
+  {
+    "profile_id": "maintenance-kit",
+    "name": "Maintenance Kit Operations",
+    "domain": "service_parts",
+    "primary_users": ["Service Planner", "Parts Coordinator", "Field Supervisor", "Supplier Manager"],
+    "decision_loop": ["Service demand", "Kit completeness", "Vendor ETA", "Field date", "Dispatch gate"],
+    "required_sources": ["Service tickets", "Kit BOM", "Parts stock", "Vendor ETA", "Technician calendar"],
+    "release_controls": ["kit_complete", "substitution_review", "field_date_fit", "policy_signal", "human_approval"],
+    "sample_products": ["Preventive maintenance kit", "Emergency repair kit", "Inspection kit"],
+    "status": "config_ready"
+  },
+  {
+    "profile_id": "quality-lab",
+    "name": "Quality Lab And Compliance Review",
+    "domain": "quality_operations",
+    "primary_users": ["Quality Engineer", "Lab Coordinator", "Compliance Owner", "Operations Lead"],
+    "decision_loop": ["Sample intake", "Test capacity", "Hold decision", "Certificate review", "Release evidence"],
+    "required_sources": ["Sample log", "Test method", "Lab capacity", "Hold list", "Certificate template"],
+    "release_controls": ["test_complete", "hold_clear", "certificate_ready", "policy_signal", "human_approval"],
+    "sample_products": ["Inspection fixture", "Calibration bundle", "Serialized sample"],
+    "status": "planned_demo"
+  }
+]

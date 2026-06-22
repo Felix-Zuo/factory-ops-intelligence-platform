@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Annotated, Any
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Path, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -35,7 +35,7 @@ class DecisionBriefRequest(BaseModel):
 
 app = FastAPI(
     title="Operations Intelligence API",
-    version="0.3.0",
+    version="0.3.1",
     description="Product-grade public demo API for S&OP, inventory, capacity, policy signals and agent-readable manufacturing operations intelligence.",
 )
 
@@ -83,6 +83,19 @@ def demand_forecast(product_id: Annotated[str | None, Query(max_length=80)] = No
 @app.get("/api/external/signals")
 def external_signals(query: Annotated[str, Query(max_length=500)] = "") -> dict[str, Any]:
     return domain.search_policy_signals(query=query)
+
+
+@app.get("/api/release-gates/{order_id}")
+def release_gate(order_id: Annotated[str, Path(min_length=1, max_length=120)]) -> dict[str, Any]:
+    try:
+        return domain.build_release_gate(order_id=order_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@app.get("/api/scenario-profiles")
+def scenario_profiles() -> list[dict[str, Any]]:
+    return domain.list_scenario_profiles()
 
 
 @app.post("/api/decision-brief")

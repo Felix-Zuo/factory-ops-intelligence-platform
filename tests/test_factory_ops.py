@@ -27,6 +27,7 @@ def test_demo_data_schema_has_demo_depth() -> None:
     assert len(data.demand_history) >= 32
     assert len(data.policy_signals) >= 4
     assert len(data.internal_issues) >= 5
+    assert len(data.scenario_profiles) >= 4
 
 
 def test_bom_explosion_uses_order_quantity() -> None:
@@ -106,12 +107,22 @@ def test_control_tower_forecast_policy_and_decision_brief() -> None:
     assert brief["actions"]
     assert brief["model_boundary"]["safe_default"] == "deterministic_tools_first"
 
+    release_gate = domain.build_release_gate(domain.DEFAULT_ORDER_ID)
+    assert release_gate["decision"] in {"blocked", "release_with_controls", "release"}
+    assert len(release_gate["checks"]) >= 6
+    assert release_gate["summary"]["pending"] >= 1
+
+    profiles = domain.list_scenario_profiles()
+    assert any(profile["profile_id"] == "warehouse-fulfillment" for profile in profiles)
+
 
 def test_api_smoke_routes_return_expected_payloads() -> None:
     assert api.health()["status"] == "ok"
     assert api.control_tower_overview()["kpis"]["open_order_value"] > 0
     assert api.demand_forecast()["summary"]["total_forecast_qty"] > 0
     assert api.external_signals()["summary"]["signal_count"] >= 1
+    assert api.release_gate(domain.DEFAULT_ORDER_ID)["checks"]
+    assert api.scenario_profiles()
     assert api.decision_brief(api.DecisionBriefRequest(question="Review S&OP risk"))["actions"]
     assert api.products()
     assert api.inventory_risk()["materials"]
@@ -131,6 +142,8 @@ def test_frontend_snapshot_contains_demo_evidence() -> None:
     assert "demandForecast" in text
     assert "policySignals" in text
     assert "decisionBrief" in text
+    assert "releaseGate" in text
+    assert "scenarioProfiles" in text
     assert "inventoryRisk" in text
     assert "materialTrace" in text
     assert "agentTools" in text

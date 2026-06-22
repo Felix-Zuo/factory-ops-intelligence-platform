@@ -46,6 +46,7 @@ class FactoryData:
     product_economics: list[dict[str, Any]]
     policy_signals: list[dict[str, Any]]
     internal_issues: list[dict[str, Any]]
+    scenario_profiles: list[dict[str, Any]]
 
 
 def load_factory_data() -> FactoryData:
@@ -68,6 +69,7 @@ def load_factory_data() -> FactoryData:
         product_economics=_load_json("product_economics.json"),
         policy_signals=_load_json("policy_signals.json"),
         internal_issues=_load_json("internal_issues.json"),
+        scenario_profiles=_load_json("scenario_profiles.json"),
     )
 
 
@@ -621,6 +623,116 @@ def build_control_tower_overview(data: FactoryData | None = None) -> dict[str, A
     }
 
 
+def list_scenario_profiles(data: FactoryData | None = None) -> list[dict[str, Any]]:
+    data = data or load_factory_data()
+    return [
+        {
+            **profile,
+            "source_trace": source_ref("scenario_profiles.json", index + 1, "profile_id"),
+        }
+        for index, profile in enumerate(data.scenario_profiles)
+    ]
+
+
+def build_release_gate(order_id: str = DEFAULT_ORDER_ID, data: FactoryData | None = None) -> dict[str, Any]:
+    data = data or load_factory_data()
+    order = next((item for item in data.customer_orders if item["order_id"] == order_id), None)
+    if not order:
+        raise ValueError(f"Unknown order_id: {order_id}")
+
+    product_id = order["product_id"]
+    quantity = float(order["qty"])
+    coverage = check_order_material_coverage(order_id, data)
+    simulation = run_line_simulation(DEFAULT_LINE_ID, 24, data)
+    policy = search_policy_signals(query=product_id, data=data)
+    if not policy["signals"]:
+        policy = search_policy_signals(data=data)
+    trace = product_material_trace(product_id, quantity, data)
+
+    weekly_capacity = simulation["good_output"] * 5
+    due_in_days = (_parse_day(order["due_date"]) - _parse_day(DEMO_TIMESTAMP[:10])).days
+    capacity_required = quantity
+    capacity_status = "pass" if weekly_capacity >= capacity_required else "review"
+    material_status = coverage["material_gate_status"]
+    policy_status = "review" if policy["summary"]["actionable_count"] else "pass"
+    quality_status = "review" if simulation["quality_bottleneck"] else "pass"
+    trace_status = "pass" if trace["source_refs"] else "blocked"
+    approval_status = "pending"
+
+    checks = [
+        {
+            "check_id": "material_coverage",
+            "name": "Material coverage",
+            "status": "blocked" if material_status == "critical" else "review" if material_status == "watch" else "pass",
+            "owner": "Planning",
+            "evidence": f"{coverage['risk']['summary']['covered_items']} covered, {coverage['risk']['summary']['watch_items']} watch, {coverage['risk']['summary']['critical_items']} critical.",
+            "action": coverage["release_recommendation"],
+        },
+        {
+            "check_id": "capacity_fit",
+            "name": "Capacity fit",
+            "status": capacity_status,
+            "owner": "Manufacturing Engineering",
+            "evidence": f"{weekly_capacity:,.0f} weekly simulated capacity vs {capacity_required:,.0f} order units due in {due_in_days} days.",
+            "action": "Release through normal capacity window" if capacity_status == "pass" else "Review line loading and bottleneck buffer before release.",
+        },
+        {
+            "check_id": "policy_signal",
+            "name": "Policy and customs signal",
+            "status": policy_status,
+            "owner": "Trade Compliance",
+            "evidence": f"{policy['summary']['actionable_count']} actionable official-source signals linked to the portfolio.",
+            "action": "Screen affected materials before shipment release." if policy_status == "review" else "No policy exception in demo signal set.",
+        },
+        {
+            "check_id": "quality_hold",
+            "name": "Quality hold",
+            "status": quality_status,
+            "owner": "Quality",
+            "evidence": f"Quality bottleneck signal at {simulation['quality_bottleneck']}.",
+            "action": "Confirm first-piece and serialized label controls before export." if quality_status == "review" else "No quality hold detected.",
+        },
+        {
+            "check_id": "source_trace",
+            "name": "Source trace completeness",
+            "status": trace_status,
+            "owner": "Data Steward",
+            "evidence": f"{len(trace['source_refs'])} BOM, stock, inbound and supplier refs linked.",
+            "action": "Keep source-row evidence attached to the notice package.",
+        },
+        {
+            "check_id": "human_approval",
+            "name": "Human approval",
+            "status": approval_status,
+            "owner": "Operations Manager",
+            "evidence": "Public demo does not auto-approve production or shipment release.",
+            "action": "Approve after material, policy and quality review notes are closed.",
+        },
+    ]
+    if any(check["status"] == "blocked" for check in checks):
+        decision = "blocked"
+    elif any(check["status"] in {"review", "pending"} for check in checks):
+        decision = "release_with_controls"
+    else:
+        decision = "release"
+    return {
+        "generated_at": DEMO_TIMESTAMP,
+        "order": order,
+        "product_id": product_id,
+        "quantity": quantity,
+        "decision": decision,
+        "checks": checks,
+        "summary": {
+            "pass": sum(1 for check in checks if check["status"] == "pass"),
+            "review": sum(1 for check in checks if check["status"] == "review"),
+            "pending": sum(1 for check in checks if check["status"] == "pending"),
+            "blocked": sum(1 for check in checks if check["status"] == "blocked"),
+        },
+        "recommended_next_step": "Close review and approval checks before exporting the final notice package.",
+        "source_refs": coverage["source_refs"] + trace["source_refs"],
+    }
+
+
 def generate_decision_brief(question: str = "What should operations review today?", data: FactoryData | None = None) -> dict[str, Any]:
     data = data or load_factory_data()
     overview = build_control_tower_overview(data)
@@ -1022,6 +1134,7 @@ def demo_snapshot(data: FactoryData | None = None) -> dict[str, Any]:
     demand = forecast_demand(horizon_weeks=4, data=data)
     policy = search_policy_signals(data=data)
     decision = generate_decision_brief("What should operations review before the next release?", data)
+    release_gate = build_release_gate(DEFAULT_ORDER_ID, data)
     agent_answer = answer_factory_question("Give me a control tower decision brief for demand, supply and capacity.", data)
     return {
         "health": {"mode": "demo", "products": len(list_products(data)), "materials": len(data.materials), "adapters": "mock/stub"},
@@ -1034,6 +1147,8 @@ def demo_snapshot(data: FactoryData | None = None) -> dict[str, Any]:
         "demandForecast": demand,
         "policySignals": policy,
         "decisionBrief": decision,
+        "releaseGate": release_gate,
+        "scenarioProfiles": list_scenario_profiles(data),
         "internalIssues": data.internal_issues,
         "inventoryRisk": risk,
         "materialTrace": trace,

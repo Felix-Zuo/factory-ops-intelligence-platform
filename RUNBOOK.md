@@ -3,7 +3,8 @@
 ## Install
 
 ```powershell
-cd "D:\0A OpenClaw\projects\展示项目\factory-ops-intelligence-platform"
+git clone https://github.com/Felix-Zuo/factory-ops-intelligence-platform.git
+cd factory-ops-intelligence-platform
 python -m pip install -r apps/api-server/requirements.txt
 npm --prefix apps/web-dashboard install
 ```
@@ -24,7 +25,7 @@ python -m uvicorn factory_ops_api.main:app --host 127.0.0.1 --port 8017
 ## Start Web Dashboard
 
 ```powershell
-npm --prefix apps/web-dashboard run dev -- --host 127.0.0.1 --port 5177
+npm --prefix apps/web-dashboard run dev -- --host 127.0.0.1 --port 5178
 ```
 
 ## Validate
@@ -36,4 +37,3 @@ python scripts/smoke_demo.py
 python scripts/check_ai_tone.py
 npm --prefix apps/web-dashboard run build
 ```
-

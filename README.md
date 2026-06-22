@@ -24,6 +24,8 @@ Showcase page: [docs/showcase.html](docs/showcase.html)
 | Forecast and model adapter boundary | `forecast_demand`, TimesFM-ready time-series contract, `GET /api/forecast/demand` |
 | External policy radar | `demo_data/policy_signals.json`, `search_policy_signals`, official-source adapter contract |
 | Decision brief | `generate_decision_brief`, owner/action/evidence lanes, deterministic-tool-first model boundary |
+| Release gate workbench | `build_release_gate`, material/capacity/policy/quality/source/approval checks, `GET /api/release-gates/{order_id}` |
+| Scenario profile library | `demo_data/scenario_profiles.json`, reusable assembly, fulfillment, service-kit and quality-lab operating profiles |
 | Spreadsheet and export intake | `demo_data/file_imports.json`, parser labels, import dashboard |
 | BOM and material readiness | BOM explosion, inventory coverage, source-row trace |
 | Release notice generation | HTML/JSON notice preview from order, product and material gate |
@@ -34,6 +36,13 @@ Showcase page: [docs/showcase.html](docs/showcase.html)
 ## Default Scenario
 
 The main scenario follows `FG-OPS-A100`, a synthetic modular control kit. The wider data pack also includes a sensor pack, fluid service kit and inspection fixture so the model is not tied to one product category.
+
+Reusable scenario profiles live in `demo_data/scenario_profiles.json`:
+
+- `manufacturing-assembly`: demand to material gate, capacity, release and trace.
+- `warehouse-fulfillment`: order promise, pick readiness, carrier plan and shipment release.
+- `maintenance-kit`: service demand, kit completeness, vendor ETA and dispatch gate.
+- `quality-lab`: sample intake, test capacity, hold decision and release evidence.
 
 ```text
 demo_data
@@ -91,9 +100,9 @@ The full check seeds demo data, regenerates the frontend snapshot, runs self-che
 
 ## Screenshots
 
-| BOM and inventory | Release notice |
+| BOM and inventory | Release gate |
 |---|---|
-| ![BOM and inventory](docs/assets/screenshots/material-risk.png) | ![Release notice](docs/assets/screenshots/notice-page.png) |
+| ![BOM and inventory](docs/assets/screenshots/material-risk.png) | ![Release gate](docs/assets/screenshots/notice-page.png) |
 
 | Material trace | Line simulation |
 |---|---|
@@ -111,6 +120,8 @@ The full check seeds demo data, regenerates the frontend snapshot, runs self-che
 | Forecast Lab | Deterministic demand forecast with TimesFM-ready interface shape |
 | Policy Radar | Official-source customs/policy signals linked to materials, products and orders |
 | Decision Brief | Source-backed actions, evidence lanes and model safety boundary |
+| Release Gate | Combines material, capacity, policy, quality, source-trace and human approval controls before notice export |
+| Scenario Profiles | Shows reusable operating profiles for manufacturing, fulfillment, service parts and quality review |
 | Data Import Center | Classifies demo files, parser status, source rows and quality flags |
 | BOM & Inventory | Explodes BOM demand into material coverage, inbound records, supplier notes and shortage watch |
 | Product Material Trace | Links product, BOM, stock, inbound, order, supplier and source refs |
@@ -150,6 +161,8 @@ This repository is an independent public demo that consolidates several operatio
 - S&OP control-tower modeling for demand, stock, capacity, policy and cash;
 - forecast interface design compatible with TimesFM-style time-series models;
 - official-source external signal adapters for customs and policy changes;
+- release-gate governance across material, capacity, quality, policy, traceability and approval;
+- reusable scenario profiles for non-single-category operations demos;
 - source-backed agent workflows with tool-call evidence.
 
 See [PROJECT_HISTORY.md](PROJECT_HISTORY.md) for the detailed capability map and release trail.
@@ -170,6 +183,7 @@ Live integrations are represented by mock/stub/sample adapters. Credentials and 
 - [Product requirements](PRODUCT_REQUIREMENTS.md)
 - [Technical analysis](TECHNICAL_ANALYSIS.md)
 - [Quality standard](QUALITY_STANDARD.md)
+- [Release notes v0.3.1](RELEASE_NOTES_v0.3.1.md)
 - [Release notes v0.3.0](RELEASE_NOTES_v0.3.0.md)
 - [Changelog](CHANGELOG.md)
 - [Contributing](CONTRIBUTING.md)

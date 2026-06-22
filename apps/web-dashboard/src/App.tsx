@@ -37,6 +37,9 @@ import {
   operatingLoop,
   policySignals,
   productHealth,
+  releaseChecks,
+  releaseGate,
+  scenarioProfiles,
   snapshot,
   topSources,
   traces,
@@ -310,7 +313,24 @@ function TracePage({ lang }: { lang: Lang }) {
 function Notice({ lang }: { lang: Lang }) {
   return (
     <section>
-      <SectionHeader code="REL-05" title={t(lang, 'Release Gate', '放行关口')} subtitle={t(lang, 'A work package is generated only after material, policy and capacity gates are visible.', '只有物料、政策和产能门禁可见后，才生成工作包。')} />
+      <SectionHeader code="REL-05" title={t(lang, 'Release Gate', '放行关口')} subtitle={t(lang, 'Material, capacity, quality, policy, traceability and human approval are reviewed before notice export.', '通知单导出前同时检查物料、产能、质量、政策、追溯和人工审批。')} />
+      <div className="gate-summary">
+        <MetricCard label="Decision" value={releaseGate.decision} note={releaseGate.recommended_next_step} tone="warn" />
+        <MetricCard label="Checks" value={`${releaseGate.summary.pass} pass / ${releaseGate.summary.review} review`} note={`${releaseGate.summary.pending} pending / ${releaseGate.summary.blocked} blocked`} />
+        <MetricCard label="Source refs" value={number(releaseGate.source_refs.length)} note="attached to release evidence package" />
+      </div>
+      <div className="gate-grid">
+        {releaseChecks.map((check) => (
+          <div className="gate-card" key={check.check_id}>
+            <header>
+              <strong>{check.name}</strong>
+              <StatusChip value={check.status} />
+            </header>
+            <p>{check.evidence}</p>
+            <small>{check.owner}: {check.action}</small>
+          </div>
+        ))}
+      </div>
       <div className="notice-layout">
         <aside className="form-stack">
           <label>Product <strong>{snapshot.notice.product_id}</strong></label>
@@ -322,7 +342,7 @@ function Notice({ lang }: { lang: Lang }) {
           <h1>Release Notice {snapshot.notice.notice_id}</h1>
           <p><b>Product:</b> {snapshot.notice.product_name}</p>
           <p><b>Material gate:</b> {snapshot.notice.material_gate}</p>
-          <p><b>Policy gate:</b> {controlTower.policy_summary.actionable_count} actionable external signals linked.</p>
+          <p><b>Release gate:</b> {releaseGate.decision}</p>
           <table>
             <tbody>
               {materials.slice(0, 5).map((row) => (
@@ -334,6 +354,7 @@ function Notice({ lang }: { lang: Lang }) {
         <aside className="form-stack">
           <label>Field status <strong>{snapshot.notice.material_status}</strong></label>
           <label>Source rows <strong>{snapshot.notice.source_refs.length} linked</strong></label>
+          <label>Gate checks <strong>{releaseChecks.length} controls</strong></label>
           <label>Export <strong>HTML / JSON / agent context</strong></label>
         </aside>
       </div>
@@ -474,6 +495,7 @@ function Integrations({ lang }: { lang: Lang }) {
 }
 
 function ProjectNotes({ lang }: { lang: Lang }) {
+  const formatValue = (value: string) => value.replace(/_/g, ' ');
   const modules = [
     ['Control Tower', 'portfolio KPI, S&OP status, issue queue'],
     ['Forecast Lab', 'baseline model, TimesFM-ready contract, quantile shape'],
@@ -485,6 +507,42 @@ function ProjectNotes({ lang }: { lang: Lang }) {
   return (
     <section>
       <SectionHeader code="DOC-12" title={t(lang, 'Product Plan and Engineering Standard', '产品计划与工程标准')} subtitle={t(lang, 'The public repo is shaped as a reusable product shell with synthetic data, clear boundaries and verification gates.', '公开仓库按可复用产品骨架建设：合成数据、清晰边界、验证门禁。')} />
+      <div className="subsection-heading">
+        <span>Scenario Library</span>
+        <strong>Reusable configuration profiles</strong>
+        <p>Each profile maps source systems, release controls and operating roles so the product can be retargeted beyond one factory or product category.</p>
+      </div>
+      <div className="scenario-grid">
+        {scenarioProfiles.map((profile) => (
+          <article className="scenario-card" key={profile.profile_id}>
+            <header>
+              <span>{profile.profile_id}</span>
+              <StatusChip value={profile.status} />
+            </header>
+            <h3>{profile.name}</h3>
+            <p>{profile.decision_loop.join(' -> ')}</p>
+            <dl>
+              <div>
+                <dt>Domain</dt>
+                <dd>{formatValue(profile.domain)}</dd>
+              </div>
+              <div>
+                <dt>Sources</dt>
+                <dd>{profile.required_sources.slice(0, 4).join(', ')}</dd>
+              </div>
+              <div>
+                <dt>Controls</dt>
+                <dd>{profile.release_controls.slice(0, 4).map(formatValue).join(', ')}</dd>
+              </div>
+            </dl>
+            <small>{profile.primary_users.join(', ')}</small>
+          </article>
+        ))}
+      </div>
+      <div className="subsection-heading compact">
+        <span>Engineering Surface</span>
+        <strong>Modules that stay reusable in every profile</strong>
+      </div>
       <div className="case-columns">
         {modules.map(([title, body]) => (
           <div key={title}>

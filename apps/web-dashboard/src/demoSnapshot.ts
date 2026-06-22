@@ -1418,6 +1418,430 @@ const demoSnapshot = {
       "contract": "A model may summarize retrieved evidence and propose next questions, but source-linked calculations remain owned by domain functions."
     }
   },
+  "releaseGate": {
+    "generated_at": "2026-06-07T08:00:00+00:00",
+    "order": {
+      "order_id": "SO-2026-OPS-001",
+      "customer": "Demo Operations North",
+      "product_id": "FG-OPS-A100",
+      "qty": 1200,
+      "due_date": "2026-06-18",
+      "priority": "high",
+      "source_file": "sales_orders_demo.csv",
+      "source_row": 2
+    },
+    "product_id": "FG-OPS-A100",
+    "quantity": 1200.0,
+    "decision": "release_with_controls",
+    "checks": [
+      {
+        "check_id": "material_coverage",
+        "name": "Material coverage",
+        "status": "review",
+        "owner": "Planning",
+        "evidence": "4 covered, 2 watch, 0 critical.",
+        "action": "release with follow-up"
+      },
+      {
+        "check_id": "capacity_fit",
+        "name": "Capacity fit",
+        "status": "pass",
+        "owner": "Manufacturing Engineering",
+        "evidence": "9,975 weekly simulated capacity vs 1,200 order units due in 11 days.",
+        "action": "Release through normal capacity window"
+      },
+      {
+        "check_id": "policy_signal",
+        "name": "Policy and customs signal",
+        "status": "review",
+        "owner": "Trade Compliance",
+        "evidence": "3 actionable official-source signals linked to the portfolio.",
+        "action": "Screen affected materials before shipment release."
+      },
+      {
+        "check_id": "quality_hold",
+        "name": "Quality hold",
+        "status": "review",
+        "owner": "Quality",
+        "evidence": "Quality bottleneck signal at OP-40.",
+        "action": "Confirm first-piece and serialized label controls before export."
+      },
+      {
+        "check_id": "source_trace",
+        "name": "Source trace completeness",
+        "status": "pass",
+        "owner": "Data Steward",
+        "evidence": "17 BOM, stock, inbound and supplier refs linked.",
+        "action": "Keep source-row evidence attached to the notice package."
+      },
+      {
+        "check_id": "human_approval",
+        "name": "Human approval",
+        "status": "pending",
+        "owner": "Operations Manager",
+        "evidence": "Public demo does not auto-approve production or shipment release.",
+        "action": "Approve after material, policy and quality review notes are closed."
+      }
+    ],
+    "summary": {
+      "pass": 2,
+      "review": 3,
+      "pending": 1,
+      "blocked": 0
+    },
+    "recommended_next_step": "Close review and approval checks before exporting the final notice package.",
+    "source_refs": [
+      {
+        "source_file": "sales_orders_demo.csv",
+        "source_row": 2,
+        "source_column": "qty"
+      },
+      {
+        "source_file": "bom_control_kit_demo.xlsx",
+        "source_row": 2,
+        "source_column": "qty_per_unit"
+      },
+      {
+        "source_file": "wms_inventory_demo.csv",
+        "source_row": 2,
+        "source_column": "available_qty"
+      },
+      {
+        "source_file": "bom_control_kit_demo.xlsx",
+        "source_row": 3,
+        "source_column": "qty_per_unit"
+      },
+      {
+        "source_file": "wms_inventory_demo.csv",
+        "source_row": 3,
+        "source_column": "available_qty"
+      },
+      {
+        "source_file": "shipment_in_transit_demo.csv",
+        "source_row": 3,
+        "source_column": "qty"
+      },
+      {
+        "source_file": "bom_control_kit_demo.xlsx",
+        "source_row": 4,
+        "source_column": "qty_per_unit"
+      },
+      {
+        "source_file": "wms_inventory_demo.csv",
+        "source_row": 4,
+        "source_column": "available_qty"
+      },
+      {
+        "source_file": "shipment_in_transit_demo.csv",
+        "source_row": 2,
+        "source_column": "qty"
+      },
+      {
+        "source_file": "bom_control_kit_demo.xlsx",
+        "source_row": 5,
+        "source_column": "qty_per_unit"
+      },
+      {
+        "source_file": "wms_inventory_demo.csv",
+        "source_row": 5,
+        "source_column": "available_qty"
+      },
+      {
+        "source_file": "bom_control_kit_demo.xlsx",
+        "source_row": 6,
+        "source_column": "qty_per_unit"
+      },
+      {
+        "source_file": "wms_inventory_demo.csv",
+        "source_row": 6,
+        "source_column": "available_qty"
+      },
+      {
+        "source_file": "bom_control_kit_demo.xlsx",
+        "source_row": 7,
+        "source_column": "qty_per_unit"
+      },
+      {
+        "source_file": "wms_inventory_demo.csv",
+        "source_row": 7,
+        "source_column": "available_qty"
+      },
+      {
+        "source_file": "bom_control_kit_demo.xlsx",
+        "source_row": 8,
+        "source_column": "qty_per_unit"
+      },
+      {
+        "source_file": "wms_inventory_demo.csv",
+        "source_row": 8,
+        "source_column": "available_qty"
+      },
+      {
+        "source_file": "shipment_in_transit_demo.csv",
+        "source_row": 9,
+        "source_column": "qty"
+      },
+      {
+        "source_file": "bom_control_kit_demo.xlsx",
+        "source_row": 2,
+        "source_column": "qty_per_unit"
+      },
+      {
+        "source_file": "wms_inventory_demo.csv",
+        "source_row": 2,
+        "source_column": "available_qty"
+      },
+      {
+        "source_file": "bom_control_kit_demo.xlsx",
+        "source_row": 3,
+        "source_column": "qty_per_unit"
+      },
+      {
+        "source_file": "wms_inventory_demo.csv",
+        "source_row": 3,
+        "source_column": "available_qty"
+      },
+      {
+        "source_file": "shipment_in_transit_demo.csv",
+        "source_row": 3,
+        "source_column": "qty"
+      },
+      {
+        "source_file": "bom_control_kit_demo.xlsx",
+        "source_row": 4,
+        "source_column": "qty_per_unit"
+      },
+      {
+        "source_file": "wms_inventory_demo.csv",
+        "source_row": 4,
+        "source_column": "available_qty"
+      },
+      {
+        "source_file": "shipment_in_transit_demo.csv",
+        "source_row": 2,
+        "source_column": "qty"
+      },
+      {
+        "source_file": "bom_control_kit_demo.xlsx",
+        "source_row": 5,
+        "source_column": "qty_per_unit"
+      },
+      {
+        "source_file": "wms_inventory_demo.csv",
+        "source_row": 5,
+        "source_column": "available_qty"
+      },
+      {
+        "source_file": "bom_control_kit_demo.xlsx",
+        "source_row": 6,
+        "source_column": "qty_per_unit"
+      },
+      {
+        "source_file": "wms_inventory_demo.csv",
+        "source_row": 6,
+        "source_column": "available_qty"
+      },
+      {
+        "source_file": "bom_control_kit_demo.xlsx",
+        "source_row": 7,
+        "source_column": "qty_per_unit"
+      },
+      {
+        "source_file": "wms_inventory_demo.csv",
+        "source_row": 7,
+        "source_column": "available_qty"
+      },
+      {
+        "source_file": "bom_control_kit_demo.xlsx",
+        "source_row": 8,
+        "source_column": "qty_per_unit"
+      },
+      {
+        "source_file": "wms_inventory_demo.csv",
+        "source_row": 8,
+        "source_column": "available_qty"
+      },
+      {
+        "source_file": "shipment_in_transit_demo.csv",
+        "source_row": 9,
+        "source_column": "qty"
+      }
+    ]
+  },
+  "scenarioProfiles": [
+    {
+      "profile_id": "manufacturing-assembly",
+      "name": "Manufacturing Assembly",
+      "domain": "discrete_manufacturing",
+      "primary_users": [
+        "Planner",
+        "Production Manager",
+        "Warehouse Lead",
+        "Procurement"
+      ],
+      "decision_loop": [
+        "Demand",
+        "Material gate",
+        "Capacity",
+        "Release",
+        "Trace"
+      ],
+      "required_sources": [
+        "ERP orders",
+        "BOM export",
+        "WMS stock",
+        "MES output",
+        "Supplier ETA"
+      ],
+      "release_controls": [
+        "material_coverage",
+        "capacity_fit",
+        "quality_hold",
+        "policy_signal",
+        "human_approval"
+      ],
+      "sample_products": [
+        "Modular control kit",
+        "Sensor pack",
+        "Service kit"
+      ],
+      "status": "active_demo",
+      "source_trace": {
+        "source_file": "scenario_profiles.json",
+        "source_row": 1,
+        "source_column": "profile_id"
+      }
+    },
+    {
+      "profile_id": "warehouse-fulfillment",
+      "name": "Warehouse Fulfillment",
+      "domain": "fulfillment_operations",
+      "primary_users": [
+        "Fulfillment Lead",
+        "Inventory Analyst",
+        "Customer Service",
+        "Compliance"
+      ],
+      "decision_loop": [
+        "Order promise",
+        "Pick readiness",
+        "Carrier plan",
+        "Exception queue",
+        "Shipment release"
+      ],
+      "required_sources": [
+        "Order queue",
+        "Stock by bin",
+        "Carrier plan",
+        "Exception notes",
+        "Policy signals"
+      ],
+      "release_controls": [
+        "stock_available",
+        "allocation_lock",
+        "carrier_cutoff",
+        "policy_signal",
+        "human_approval"
+      ],
+      "sample_products": [
+        "Launch kit",
+        "Replacement pack",
+        "Regional bundle"
+      ],
+      "status": "config_ready",
+      "source_trace": {
+        "source_file": "scenario_profiles.json",
+        "source_row": 2,
+        "source_column": "profile_id"
+      }
+    },
+    {
+      "profile_id": "maintenance-kit",
+      "name": "Maintenance Kit Operations",
+      "domain": "service_parts",
+      "primary_users": [
+        "Service Planner",
+        "Parts Coordinator",
+        "Field Supervisor",
+        "Supplier Manager"
+      ],
+      "decision_loop": [
+        "Service demand",
+        "Kit completeness",
+        "Vendor ETA",
+        "Field date",
+        "Dispatch gate"
+      ],
+      "required_sources": [
+        "Service tickets",
+        "Kit BOM",
+        "Parts stock",
+        "Vendor ETA",
+        "Technician calendar"
+      ],
+      "release_controls": [
+        "kit_complete",
+        "substitution_review",
+        "field_date_fit",
+        "policy_signal",
+        "human_approval"
+      ],
+      "sample_products": [
+        "Preventive maintenance kit",
+        "Emergency repair kit",
+        "Inspection kit"
+      ],
+      "status": "config_ready",
+      "source_trace": {
+        "source_file": "scenario_profiles.json",
+        "source_row": 3,
+        "source_column": "profile_id"
+      }
+    },
+    {
+      "profile_id": "quality-lab",
+      "name": "Quality Lab And Compliance Review",
+      "domain": "quality_operations",
+      "primary_users": [
+        "Quality Engineer",
+        "Lab Coordinator",
+        "Compliance Owner",
+        "Operations Lead"
+      ],
+      "decision_loop": [
+        "Sample intake",
+        "Test capacity",
+        "Hold decision",
+        "Certificate review",
+        "Release evidence"
+      ],
+      "required_sources": [
+        "Sample log",
+        "Test method",
+        "Lab capacity",
+        "Hold list",
+        "Certificate template"
+      ],
+      "release_controls": [
+        "test_complete",
+        "hold_clear",
+        "certificate_ready",
+        "policy_signal",
+        "human_approval"
+      ],
+      "sample_products": [
+        "Inspection fixture",
+        "Calibration bundle",
+        "Serialized sample"
+      ],
+      "status": "planned_demo",
+      "source_trace": {
+        "source_file": "scenario_profiles.json",
+        "source_row": 4,
+        "source_column": "profile_id"
+      }
+    }
+  ],
   "internalIssues": [
     {
       "issue_id": "OPS-RISK-001",

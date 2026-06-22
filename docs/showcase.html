@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Operations Intelligence Platform</title>
+    <title>Operations Intelligence Platform Showcase</title>
     <style>
       :root {
-        color: #1e2528;
-        background: #eef1f4;
+        color: #1f2930;
+        background: #f2f5f3;
         font-family: Inter, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
       }
 
@@ -17,21 +17,56 @@
 
       body {
         margin: 0;
+        background: #f2f5f3;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .hero {
+        min-height: 86vh;
+        display: grid;
+        align-items: end;
+        color: #ffffff;
         background:
-          linear-gradient(90deg, rgba(27, 39, 51, 0.04) 1px, transparent 1px),
-          linear-gradient(0deg, rgba(27, 39, 51, 0.035) 1px, transparent 1px),
-          #eef1f4;
-        background-size: 34px 34px;
+          linear-gradient(90deg, rgba(9, 18, 24, 0.88), rgba(9, 18, 24, 0.52), rgba(9, 18, 24, 0.12)),
+          url("assets/screenshots/overview.png") center / cover no-repeat;
+        border-bottom: 4px solid #17212a;
       }
 
-      main {
-        max-width: 1220px;
+      .hero-inner,
+      .section-inner {
+        width: min(1180px, calc(100% - 40px));
         margin: 0 auto;
-        padding: 30px 20px 56px;
       }
 
-      section {
-        margin-top: 22px;
+      .hero-inner {
+        padding: 80px 0 44px;
+      }
+
+      .kicker,
+      .code,
+      .chip,
+      .metric span,
+      .step span {
+        font-family: Consolas, "SFMono-Regular", monospace;
+      }
+
+      .kicker {
+        display: inline-flex;
+        padding: 6px 9px;
+        background: #1f6f78;
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 800;
+        margin-bottom: 18px;
       }
 
       h1,
@@ -42,460 +77,531 @@
       }
 
       h1 {
-        max-width: 920px;
-        font-size: clamp(34px, 5vw, 62px);
-        line-height: 1;
-        letter-spacing: 0;
+        max-width: 820px;
         margin-bottom: 16px;
+        font-size: clamp(40px, 6vw, 76px);
+        line-height: 0.96;
+        letter-spacing: 0;
       }
 
       h2 {
-        font-size: clamp(24px, 3vw, 34px);
-        line-height: 1.1;
         margin-bottom: 14px;
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.05;
+        letter-spacing: 0;
       }
 
       h3 {
-        font-size: 17px;
         margin-bottom: 10px;
+        font-size: 18px;
       }
 
       p,
       li {
-        color: #51606d;
+        color: #5c665f;
         line-height: 1.62;
       }
 
-      img {
-        display: block;
-        width: 100%;
-        height: auto;
-        border: 1px solid #d0d7de;
-        background: #ffffff;
-      }
-
-      .kicker,
-      .chip,
-      .node span,
-      .module-code {
-        font-family: Consolas, "SFMono-Regular", monospace;
-      }
-
-      .kicker {
-        display: inline-flex;
-        background: #1f2933;
-        color: #ffffff;
-        padding: 6px 9px;
-        font-size: 12px;
-        font-weight: 800;
-        margin-bottom: 18px;
-      }
-
-      .hero {
-        border-bottom: 3px solid #1f2933;
-        padding-bottom: 28px;
-      }
-
-      .hero-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) 360px;
-        gap: 22px;
-        align-items: end;
-      }
-
       .hero p {
-        max-width: 780px;
-        font-size: 18px;
+        max-width: 760px;
+        color: #e6edf0;
+        font-size: 19px;
       }
 
-      .status-board,
-      .panel,
-      .shot,
-      .module,
-      .architecture,
-      .scope-box {
-        background: #ffffff;
-        border: 1px solid #d0d7de;
-      }
-
-      .status-board {
-        padding: 16px;
-      }
-
-      .status-board dl {
-        display: grid;
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
         gap: 10px;
-        margin: 0;
+        margin-top: 24px;
       }
 
-      .status-board div {
-        display: grid;
-        grid-template-columns: 124px 1fr;
-        gap: 12px;
-        padding-bottom: 9px;
-        border-bottom: 1px solid #d8dee4;
-      }
-
-      .status-board dt {
-        color: #64748b;
-        font-size: 12px;
-      }
-
-      .status-board dd {
-        margin: 0;
+      .hero-actions a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 38px;
+        padding: 0 14px;
+        border: 1px solid rgba(255, 255, 255, 0.58);
+        background: rgba(255, 255, 255, 0.12);
+        text-decoration: none;
         font-weight: 750;
       }
 
-      .flow {
+      .hero-actions a.primary {
+        background: #ffffff;
+        color: #18242d;
+      }
+
+      .metric-band {
+        background: #ffffff;
+        border-bottom: 1px solid #d5ddd7;
+      }
+
+      .metrics {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 10px;
-        margin-top: 20px;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 1px;
+        padding: 0;
+        background: #d5ddd7;
       }
 
-      .node {
-        min-height: 96px;
-        padding: 12px;
-        border: 1px solid #d0d7de;
-        background: #f8fafc;
+      .metric {
+        min-height: 112px;
+        padding: 16px;
+        background: #ffffff;
       }
 
-      .node span {
+      .metric span {
         display: block;
-        color: #1f6f78;
+        color: #60716a;
         font-size: 12px;
         font-weight: 800;
-        margin-bottom: 10px;
       }
 
-      .node strong {
+      .metric strong {
         display: block;
-        line-height: 1.28;
+        margin-top: 10px;
+        color: #1f2930;
+        font-size: 25px;
       }
 
-      .grid-2,
-      .grid-3 {
+      section {
+        padding: 56px 0;
+      }
+
+      .section-head {
         display: grid;
-        gap: 14px;
+        grid-template-columns: minmax(0, 0.85fr) minmax(280px, 0.55fr);
+        gap: 34px;
+        align-items: end;
+        margin-bottom: 24px;
       }
 
-      .grid-2 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      .section-head p {
+        margin-bottom: 0;
+        font-size: 17px;
       }
 
-      .grid-3 {
+      .module-grid,
+      .gate-grid,
+      .scenario-grid,
+      .shot-grid,
+      .evidence-grid {
+        display: grid;
+        gap: 12px;
+      }
+
+      .module-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
-      .panel,
+      .gate-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .scenario-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .shot-grid,
+      .evidence-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .module,
-      .scope-box,
+      .gate,
+      .scenario,
+      .shot,
+      .evidence,
+      .architecture {
+        background: #ffffff;
+        border: 1px solid #d5ddd7;
+        border-radius: 6px;
+      }
+
+      .module,
+      .gate,
+      .scenario,
+      .evidence,
       .architecture {
         padding: 18px;
       }
 
       .module {
-        min-height: 230px;
+        min-height: 252px;
       }
 
-      .module-code {
+      .code {
         display: inline-flex;
-        background: #1f2933;
+        padding: 5px 8px;
+        background: #2e3833;
         color: #ffffff;
-        padding: 4px 7px;
         font-size: 12px;
         font-weight: 800;
-        margin-bottom: 12px;
+        margin-bottom: 14px;
       }
 
       .chips {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
-        margin: 14px 0 0;
+        margin-top: 16px;
       }
 
       .chip {
-        border: 1px solid #cbd5e1;
-        background: #e7edf2;
+        border: 1px solid #c6d0cb;
+        background: #eef2ef;
+        color: #2f3b35;
         padding: 5px 8px;
         font-size: 12px;
-        font-weight: 750;
+        font-weight: 760;
       }
 
       .chip.good {
-        background: #dce9d5;
-        border-color: #8bac7c;
+        background: #dcebdc;
+        border-color: #80aa7b;
       }
 
       .chip.watch {
-        background: #fff2c2;
-        border-color: #d3a72f;
+        background: #fff1c7;
+        border-color: #c99422;
+      }
+
+      .chip.model {
+        background: #dce9f7;
+        border-color: #7aa3d0;
+      }
+
+      .gate header,
+      .scenario header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .gate strong,
+      .scenario strong {
+        color: #1f2930;
+      }
+
+      .status {
+        display: inline-flex;
+        min-height: 24px;
+        align-items: center;
+        padding: 0 9px;
+        border-radius: 999px;
+        background: #edf2ef;
+        border: 1px solid #c6d0cb;
+        color: #25322c;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .status.pass,
+      .status.active {
+        background: #dcebdc;
+        border-color: #80aa7b;
+      }
+
+      .status.review,
+      .status.pending {
+        background: #fff1c7;
+        border-color: #c99422;
+      }
+
+      .status.planned {
+        background: #e8ddf3;
+        border-color: #9d7cc3;
+      }
+
+      .shot {
+        overflow: hidden;
+      }
+
+      .shot img {
+        border-bottom: 1px solid #d5ddd7;
+      }
+
+      .shot h3,
+      .shot p {
+        padding: 0 14px;
+      }
+
+      .shot h3 {
+        margin-top: 13px;
       }
 
       .architecture pre {
         margin: 0;
         white-space: pre-wrap;
         overflow-wrap: anywhere;
+        color: #23302a;
         font: 13px/1.55 Consolas, "SFMono-Regular", monospace;
       }
 
-      .shot {
-        padding: 12px;
-      }
-
-      .shot h3 {
-        margin: 10px 0 0;
-      }
-
-      .adapter-table,
-      .evidence-table {
+      table {
         width: 100%;
         border-collapse: collapse;
         background: #ffffff;
-        border: 1px solid #d0d7de;
+        border: 1px solid #d5ddd7;
         font-size: 14px;
       }
 
       th,
       td {
+        padding: 12px 10px;
         text-align: left;
-        border-bottom: 1px solid #d8dee4;
-        padding: 11px 10px;
         vertical-align: top;
+        border-bottom: 1px solid #dce3de;
       }
 
       th {
-        background: #e7edf2;
-        color: #2f3b47;
+        background: #e8eef0;
+        color: #314039;
+      }
+
+      .dark-band {
+        background: #16212a;
+        color: #ffffff;
+      }
+
+      .dark-band p {
+        color: #cfdae0;
+      }
+
+      .dark-band .module,
+      .dark-band .evidence {
+        background: #1f2d38;
+        border-color: #40515d;
+      }
+
+      .dark-band .module h3,
+      .dark-band .evidence h3 {
+        color: #ffffff;
+      }
+
+      .dark-band .module p,
+      .dark-band .evidence p {
+        color: #cbd7dd;
       }
 
       @media (max-width: 960px) {
-        .hero-grid,
-        .grid-2,
-        .grid-3,
-        .flow {
+        .hero {
+          min-height: 78vh;
+          background:
+            linear-gradient(180deg, rgba(9, 18, 24, 0.88), rgba(9, 18, 24, 0.62)),
+            url("assets/screenshots/overview.png") center top / cover no-repeat;
+        }
+
+        .section-head,
+        .metrics,
+        .module-grid,
+        .gate-grid,
+        .scenario-grid,
+        .shot-grid,
+        .evidence-grid {
           grid-template-columns: 1fr;
+        }
+
+        .hero-inner,
+        .section-inner {
+          width: min(100% - 28px, 1180px);
         }
       }
     </style>
   </head>
   <body>
-    <main>
-      <section class="hero">
-        <div class="hero-grid">
+    <header class="hero">
+      <div class="hero-inner">
+        <span class="kicker">PUBLIC PRODUCT DEMO / v0.3.1 CONTROL TOWER</span>
+        <h1>Operations Intelligence Platform</h1>
+        <p>
+          A mature, local-first operations control tower for sales demand, BOM coverage, stock, capacity,
+          policy signals, release gates and agent-readable decision evidence.
+        </p>
+        <div class="hero-actions">
+          <a class="primary" href="../README.md">Read repository</a>
+          <a href="assets/screenshots/overview.png">Open product screenshot</a>
+          <a href="../PRODUCT_REQUIREMENTS.md">Product requirements</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="metric-band">
+      <div class="section-inner metrics">
+        <div class="metric"><span>PRODUCTS</span><strong>4</strong><p>synthetic product families</p></div>
+        <div class="metric"><span>MATERIALS</span><strong>20</strong><p>BOM and stock records</p></div>
+        <div class="metric"><span>FORECAST</span><strong>10,769</strong><p>4-week demand baseline</p></div>
+        <div class="metric"><span>RELEASE</span><strong>6</strong><p>gate controls</p></div>
+        <div class="metric"><span>POLICY</span><strong>4</strong><p>official-source signals</p></div>
+        <div class="metric"><span>QUALITY</span><strong>11</strong><p>pytest checks plus full CI</p></div>
+      </div>
+    </div>
+
+    <section>
+      <div class="section-inner">
+        <div class="section-head">
           <div>
-            <span class="kicker">PUBLIC DEMO / OPERATIONS WALKTHROUGH</span>
-            <h1>Operations Intelligence Platform</h1>
-            <p>
-              A generic manufacturing operations layer that links BOM records, stock exports, customer orders, inbound
-              shipments, release notices, line simulation and agent tool calls into one traceable local demo.
-            </p>
-            <div class="chips">
-              <span class="chip good">synthetic data</span>
-              <span class="chip good">source trace</span>
-              <span class="chip watch">mock adapters</span>
-              <span class="chip good">agent tools</span>
-              <span class="chip good">24h simulation</span>
-            </div>
+            <span class="kicker">PRODUCT SYSTEM</span>
+            <h2>Not a report page. A repeatable operating loop.</h2>
           </div>
-          <aside class="status-board">
-            <dl>
-              <div><dt>Products</dt><dd>4 synthetic products</dd></div>
-              <div><dt>Materials</dt><dd>20 material records</dd></div>
-              <div><dt>Orders</dt><dd>8 customer orders</dd></div>
-              <div><dt>Adapters</dt><dd>ERP / WMS / MES / PLC / Scheduling / MCP</dd></div>
-              <div><dt>Validation</dt><dd>seed, tests, smoke, tone scan, build</dd></div>
-            </dl>
-          </aside>
-        </div>
-        <div class="flow" aria-label="System flow">
-          <div class="node"><span>01</span><strong>ERP / WMS / Excel exports</strong></div>
-          <div class="node"><span>02</span><strong>Operations intelligence layer</strong></div>
-          <div class="node"><span>03</span><strong>Dashboard / Notice / Simulation</strong></div>
-          <div class="node"><span>04</span><strong>Agent tools and trace</strong></div>
-        </div>
-      </section>
-
-      <section>
-        <h2>Problem</h2>
-        <div class="grid-2">
-          <div class="panel">
-            <p>
-              Operating decisions often sit across ERP records, WMS stock exports, spreadsheet BOM files, shipment
-              notes, supplier updates and message threads. The practical issue is the time spent reconciling source rows
-              before a release decision.
-            </p>
-          </div>
-          <div class="panel">
-            <p>
-              Release notices depend on template discipline, material gates, order due dates and line assumptions. Line
-              output and bottlenecks are easier to review when takt assumptions and machine states share the same view.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2>System Flow</h2>
-        <div class="flow">
-          <div class="node"><span>IMP</span><strong>File import</strong></div>
-          <div class="node"><span>PAR</span><strong>Parse and validate</strong></div>
-          <div class="node"><span>BOM</span><strong>BOM explosion</strong></div>
-          <div class="node"><span>INV</span><strong>Inventory risk</strong></div>
-          <div class="node"><span>PN</span><strong>Release notice</strong></div>
-          <div class="node"><span>SIM</span><strong>Line simulation</strong></div>
-          <div class="node"><span>REP</span><strong>Bottleneck report</strong></div>
-          <div class="node"><span>AGT</span><strong>Agent Q&A trace</strong></div>
-        </div>
-      </section>
-
-      <section class="grid-2">
-        <article class="module">
-          <span class="module-code">MODULE 01</span>
-          <h2>BOM & Inventory Intelligence</h2>
           <p>
-            Product demand is exploded into component demand, stock coverage, inbound quantity, supplier context and
-            source references. The default scenario follows `FG-OPS-A100`, while the data pack includes several product
-            families.
+            The product links operational evidence into decisions: demand to material coverage, coverage to release,
+            release to capacity, capacity to policy risk, and every answer back to source rows.
           </p>
-          <div class="chips">
-            <span class="chip">FG-OPS-A100</span>
-            <span class="chip">BOM tree</span>
-            <span class="chip">material trace</span>
-            <span class="chip">inventory risk</span>
-            <span class="chip">source rows</span>
-          </div>
-        </article>
-        <article class="shot">
-          <img src="assets/screenshots/material-risk.png" alt="BOM and inventory dashboard screenshot" />
-          <h3>BOM demand, stock coverage, supplier and source trace</h3>
-        </article>
-      </section>
+        </div>
+        <div class="module-grid">
+          <article class="module">
+            <span class="code">OPS-00</span>
+            <h3>Control Tower</h3>
+            <p>Portfolio health, open order value, demand forecast, material risk, policy signals and issue queue.</p>
+            <div class="chips"><span class="chip good">S&OP</span><span class="chip">KPI</span><span class="chip">actions</span></div>
+          </article>
+          <article class="module">
+            <span class="code">FCST-02</span>
+            <h3>Forecast Lab</h3>
+            <p>Deterministic baseline today, TimesFM-ready series contract for future model adapters.</p>
+            <div class="chips"><span class="chip model">TimesFM-ready</span><span class="chip">history</span><span class="chip">intervals</span></div>
+          </article>
+          <article class="module">
+            <span class="code">REL-05</span>
+            <h3>Release Gate</h3>
+            <p>Material, capacity, policy, quality, source trace and human approval checks before notice export.</p>
+            <div class="chips"><span class="chip watch">review</span><span class="chip">controls</span><span class="chip">evidence</span></div>
+          </article>
+          <article class="module">
+            <span class="code">POL-07</span>
+            <h3>Policy Radar</h3>
+            <p>Official-source customs and policy signals linked to materials, products and open orders.</p>
+            <div class="chips"><span class="chip">customs</span><span class="chip">allowlist</span><span class="chip">source URL</span></div>
+          </article>
+          <article class="module">
+            <span class="code">CAP-06</span>
+            <h3>Capacity Model</h3>
+            <p>24h deterministic line simulation with bottleneck, utilization, waiting and blocking metrics.</p>
+            <div class="chips"><span class="chip">takt</span><span class="chip">buffers</span><span class="chip">bottleneck</span></div>
+          </article>
+          <article class="module">
+            <span class="code">AGT-10</span>
+            <h3>Agent Trace</h3>
+            <p>Natural-language questions route through deterministic tools before model-ready summaries.</p>
+            <div class="chips"><span class="chip good">tool calls</span><span class="chip">source refs</span><span class="chip">workflow</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
 
-      <section class="grid-2">
-        <article class="shot">
-          <img src="assets/screenshots/notice-page.png" alt="Release notice generator screenshot" />
-          <h3>Release notice preview with template version</h3>
-        </article>
-        <article class="module">
-          <span class="module-code">MODULE 02</span>
-          <h2>Release Notice Generator</h2>
+    <section class="dark-band">
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <span class="kicker">RELEASE GATE</span>
+            <h2>Release decisions are gated, not guessed.</h2>
+          </div>
           <p>
-            The notice preview is built from product selection, order quantity, BOM rows, material gate status, source
-            references and template version. The public demo exports HTML/JSON previews and keeps watch items visible.
+            The public demo does not auto-approve production or shipment release. It makes the gate visible,
+            assigns owners and preserves evidence for review.
           </p>
-          <div class="chips">
-            <span class="chip">product selection</span>
-            <span class="chip">template preview</span>
-            <span class="chip">material gate</span>
-            <span class="chip">export flow</span>
-          </div>
-        </article>
-      </section>
+        </div>
+        <div class="gate-grid">
+          <article class="gate"><header><strong>Material coverage</strong><span class="status review">review</span></header><p>BOM demand and WMS stock coverage with source rows.</p></article>
+          <article class="gate"><header><strong>Capacity fit</strong><span class="status pass">pass</span></header><p>Order quantity checked against 24h simulation output.</p></article>
+          <article class="gate"><header><strong>Policy signal</strong><span class="status review">review</span></header><p>Customs and policy signals linked to affected materials.</p></article>
+          <article class="gate"><header><strong>Quality hold</strong><span class="status review">review</span></header><p>Quality bottleneck and serialized controls stay visible.</p></article>
+          <article class="gate"><header><strong>Source trace</strong><span class="status pass">pass</span></header><p>BOM, stock, inbound and supplier evidence attached.</p></article>
+          <article class="gate"><header><strong>Human approval</strong><span class="status pending">pending</span></header><p>Final export remains behind an operations owner.</p></article>
+        </div>
+      </div>
+    </section>
 
-      <section class="grid-2">
-        <article class="module">
-          <span class="module-code">MODULE 03</span>
-          <h2>Production Takt & Bottleneck Simulation</h2>
+    <section>
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <span class="kicker">SCENARIO PROFILES</span>
+            <h2>Reusable profiles beyond one factory or product category.</h2>
+          </div>
           <p>
-            The simulation represents machine nodes, transport links, buffers, running and blocked states, 24h output,
-            utilization, waiting time, blocking time, scrap output and bottleneck detection. Scheduling remains an
-            adapter boundary rather than a shipped optimizer.
+            The same data spine supports assembly, warehouse fulfillment, service parts and quality-lab review.
+            Scenario profiles define the user roles, sources, controls and decision loop.
           </p>
-          <div class="chips">
-            <span class="chip">machine nodes</span>
-            <span class="chip">buffers</span>
-            <span class="chip">24h simulation</span>
-            <span class="chip">bottleneck detection</span>
-          </div>
-        </article>
-        <article class="shot">
-          <img src="assets/screenshots/simulation-page.png" alt="Production line simulation screenshot" />
-          <h3>Machine-state simulation and transport links</h3>
-        </article>
-      </section>
+        </div>
+        <div class="scenario-grid">
+          <article class="scenario"><header><strong>Manufacturing Assembly</strong><span class="status active">active</span></header><p>Demand -> material gate -> capacity -> release -> trace.</p></article>
+          <article class="scenario"><header><strong>Warehouse Fulfillment</strong><span class="status review">config</span></header><p>Order promise -> pick readiness -> carrier plan -> shipment release.</p></article>
+          <article class="scenario"><header><strong>Maintenance Kit Ops</strong><span class="status review">config</span></header><p>Service demand -> kit completeness -> vendor ETA -> dispatch gate.</p></article>
+          <article class="scenario"><header><strong>Quality Lab Review</strong><span class="status planned">planned</span></header><p>Sample intake -> test capacity -> hold decision -> release evidence.</p></article>
+        </div>
+      </div>
+    </section>
 
-      <section class="grid-2">
-        <article class="shot">
-          <img src="assets/screenshots/ai-factory-qa.png" alt="Operations Q&A tool trace screenshot" />
-          <h3>Question, selected intent, workflow, tool calls, answer</h3>
-        </article>
-        <article class="module">
-          <span class="module-code">MODULE 04</span>
-          <h2>Agent Q&A With Tool Evidence</h2>
+    <section>
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <span class="kicker">PRODUCT EVIDENCE</span>
+            <h2>Real screens, generated from deterministic demo data.</h2>
+          </div>
           <p>
-            Questions are routed through registered operations tools. The Q&A panel shows the user question, selected
-            intent, workflow, tool calls, result, source/demo record references and final answer.
+            The React app renders from a generated snapshot produced by backend domain functions.
+            Reviewers can inspect the UI without a live factory connection.
           </p>
-          <div class="chips">
-            <span class="chip">tool registry</span>
-            <span class="chip">workflow route</span>
-            <span class="chip">source refs</span>
-            <span class="chip">agent trace</span>
+        </div>
+        <div class="shot-grid">
+          <article class="shot"><img src="assets/screenshots/overview.png" alt="Operations control tower screenshot" /><h3>Control tower</h3><p>S&OP KPIs, decision queue, source trace and adapter status.</p></article>
+          <article class="shot"><img src="assets/screenshots/material-risk.png" alt="BOM and inventory screenshot" /><h3>BOM and inventory</h3><p>Component demand, stock coverage, supplier and source refs.</p></article>
+          <article class="shot"><img src="assets/screenshots/notice-page.png" alt="Release notice screenshot" /><h3>Release notice</h3><p>Template preview, material gate and export-ready package.</p></article>
+          <article class="shot"><img src="assets/screenshots/simulation-page.png" alt="Capacity model screenshot" /><h3>Capacity model</h3><p>Machine states, output, utilization, blocking and bottleneck.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <span class="kicker">ARCHITECTURE</span>
+            <h2>Local-first, adapter-ready, source-backed.</h2>
           </div>
-        </article>
-      </section>
-
-      <section>
-        <h2>Integration Design</h2>
-        <table class="adapter-table">
-          <thead>
-            <tr><th>Adapter</th><th>Mode</th><th>Purpose</th><th>Boundary</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>ERP</td><td>mock</td><td>Sales orders, product master, BOM headers</td><td>No accounting or live authentication</td></tr>
-            <tr><td>WMS</td><td>mock</td><td>Material stock, locations, inbound shipment records</td><td>No live barcode stream</td></tr>
-            <tr><td>MES</td><td>stub/sample</td><td>Work order state, output, scrap, downtime</td><td>No live shop-floor execution</td></tr>
-            <tr><td>PLC</td><td>sample telemetry</td><td>Machine state, cycle count, buffer events</td><td>No OPC UA connection</td></tr>
-            <tr><td>Scheduling</td><td>stub</td><td>Planning windows and constraints</td><td>No optimization runtime in this release</td></tr>
-            <tr><td>MCP</td><td>ready-schema</td><td>Tool schemas, resources, prompts</td><td>No standalone MCP server yet</td></tr>
-          </tbody>
-        </table>
-      </section>
-
-      <section>
-        <h2>Technical Architecture</h2>
+          <p>
+            The repository keeps calculations deterministic and public data synthetic.
+            Live ERP, WMS, MES, PLC, policy feeds and model adapters remain explicit boundaries.
+          </p>
+        </div>
         <div class="architecture">
-          <pre>apps/web-dashboard      React operations console
-apps/api-server         FastAPI operations API
-packages/core-domain    Shared domain boundary
-packages/parsers        Import parser boundary
-packages/engines        Deterministic calculation boundary
-packages/integrations   Adapter contracts
-packages/agent-runtime  Tool registry and trace boundary
-demo_data               Synthetic manufacturing records
-database                SQLite schema and seed target
-tests                   Domain, API, trace and snapshot checks
-scripts                 Seed, smoke, tone scan, snapshot and validation</pre>
-        </div>
-      </section>
+          <pre>demo_data
+  -> SQLite seed
+  -> deterministic domain engines
+  -> FastAPI operations API
+  -> generated frontend snapshot
+  -> React control tower
+  -> agent tool registry and workflow trace
 
-      <section>
-        <h2>Project Evidence</h2>
-        <table class="evidence-table">
-          <tbody>
-            <tr><th>Operations modeling</th><td>BOM, stock, customer orders, supplier delivery, release notice, takt simulation.</td></tr>
-            <tr><th>Data modeling</th><td>Materials, products, BOM components, inventory snapshots, stock locations, shipments, machine events.</td></tr>
-            <tr><th>Deterministic calculation</th><td>BOM explosion, inventory risk, material gate, 24h output, bottleneck detection.</td></tr>
-            <tr><th>Agent orchestration</th><td>Tool registry, selected workflow, tool calls, source refs, final answer.</td></tr>
-            <tr><th>Adapter-ready architecture</th><td>ERP/WMS/MES/PLC/scheduling/MCP boundaries with explicit mock/stub/sample states.</td></tr>
-            <tr><th>Validation</th><td>Seed script, snapshot generation, smoke demo, pytest, tone scan, frontend build and dependency audit.</td></tr>
-          </tbody>
-        </table>
-      </section>
-
-      <section>
-        <h2>Screenshots</h2>
-        <div class="grid-2">
-          <article class="shot"><img src="assets/screenshots/overview.png" alt="Overview screenshot" /><h3>Operations console</h3></article>
-          <article class="shot"><img src="assets/screenshots/product-material-trace.png" alt="Product material trace screenshot" /><h3>Product material trace</h3></article>
-          <article class="shot"><img src="assets/screenshots/notice-page.png" alt="Release notice screenshot" /><h3>Release notice</h3></article>
-          <article class="shot"><img src="assets/screenshots/simulation-report.png" alt="Simulation report screenshot" /><h3>Simulation report</h3></article>
-          <article class="shot"><img src="assets/screenshots/agent-trace-page.png" alt="Agent trace screenshot" /><h3>Agent trace</h3></article>
-          <article class="shot"><img src="assets/screenshots/integration-status.png" alt="Integration status screenshot" /><h3>Integration status</h3></article>
+adapter boundaries
+  ERP / WMS / MES / PLC / scheduling / official policy sources / model adapters</pre>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
+
+    <section class="dark-band">
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <span class="kicker">QUALITY GATES</span>
+            <h2>Maintained like a product, not a throwaway demo.</h2>
+          </div>
+          <p>
+            The repo is designed for public review: synthetic data, bounded API inputs, explicit adapter modes,
+            CI validation, dependency audit and documented product standards.
+          </p>
+        </div>
+        <div class="evidence-grid">
+          <article class="evidence"><h3>Validation</h3><p>Seed, snapshot, self-check, pytest, smoke demo, tone scan and frontend build.</p></article>
+          <article class="evidence"><h3>Security</h3><p>No credentials or private factory files. API payloads are bounded and CORS is local-only.</p></article>
+          <article class="evidence"><h3>Model Boundary</h3><p>Forecasting is deterministic by default. TimesFM and LLMs are optional adapters, not hidden truth sources.</p></article>
+          <article class="evidence"><h3>Roadmap</h3><p>GitHub milestone tracks scenario profiles, forecast backtesting, policy adapters, visual regression and security posture.</p></article>
+        </div>
+      </div>
+    </section>
   </body>
 </html>

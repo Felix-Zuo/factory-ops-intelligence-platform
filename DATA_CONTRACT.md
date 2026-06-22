@@ -66,6 +66,35 @@
 | `relevance_tags` | Search and matching tags |
 | `affected_materials` | Materials used to map the signal to products and orders |
 
+## Scenario Profiles
+
+| Field | Meaning |
+|---|---|
+| `profile_id` | Stable reusable scenario identifier |
+| `name` | Reader-facing scenario name |
+| `domain` | Operating domain, such as manufacturing, fulfillment, service parts or quality operations |
+| `primary_users` | Roles expected to use the scenario |
+| `decision_loop` | Ordered operating loop displayed in the product plan |
+| `required_sources` | Source systems or files needed to operate the profile |
+| `release_controls` | Controls that must be checked before release or dispatch |
+| `sample_products` | Synthetic products that demonstrate the profile without private data |
+| `status` | `active_demo`, `config_ready`, or `planned_demo` |
+
+## Release Gate
+
+`build_release_gate(order_id)` returns the release decision used by the dashboard and API.
+
+| Field | Meaning |
+|---|---|
+| `decision` | `release`, `release_with_controls`, or `blocked` |
+| `checks` | Ordered material, capacity, policy, quality, source-trace and approval checks |
+| `checks[].status` | `pass`, `review`, `pending`, or `blocked` |
+| `checks[].owner` | Role responsible for closing the check |
+| `checks[].evidence` | Deterministic evidence attached to the check |
+| `checks[].action` | Next action for the owner |
+| `summary` | Counts by check status |
+| `source_refs` | Source rows from material coverage and product trace |
+
 ## Adapter Contract
 
 | Field | Meaning |

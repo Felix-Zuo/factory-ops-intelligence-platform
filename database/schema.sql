@@ -220,3 +220,15 @@ CREATE TABLE IF NOT EXISTS internal_issues (
   source TEXT NOT NULL,
   created_at TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS scenario_profiles (
+  profile_id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  domain TEXT NOT NULL,
+  primary_users TEXT NOT NULL,
+  decision_loop TEXT NOT NULL,
+  required_sources TEXT NOT NULL,
+  release_controls TEXT NOT NULL,
+  sample_products TEXT NOT NULL,
+  status TEXT NOT NULL
+);

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.1
+
+- Added a release-gate domain function and API route across material, capacity, policy, quality, source-trace and approval checks.
+- Added reusable scenario profiles for assembly, warehouse fulfillment, maintenance-kit operations and quality-lab review.
+- Expanded the React dashboard release workbench and product-plan configuration surface.
+- Rebuilt the static showcase page into a mature product overview backed by existing screenshots and quality evidence.
+- Updated data contract, product requirements, roadmap, quality standard and release notes for the new product surface.
+- Added tests and smoke checks for release gates, scenario profiles and generated frontend snapshot coverage.
+
 ## 0.3.0
 
 - Added S&OP control-tower overview across demand, stock, material gates, capacity, policy signals and cash exposure.

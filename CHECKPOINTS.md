@@ -2,7 +2,7 @@
 
 ## 2026-06-07 - Project Start
 
-- Repository initialized at `D:\0A OpenClaw\projects\展示项目\factory-ops-intelligence-platform`.
+- Repository initialized as the public `factory-ops-intelligence-platform` showcase repo.
 - Initial demo data used a single synthetic product category.
 - Main business loop is defined: order quantity -> BOM demand -> inventory and inbound coverage -> production notice -> line simulation -> agent trace.
 

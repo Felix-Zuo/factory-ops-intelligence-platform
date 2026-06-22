@@ -30,6 +30,9 @@ export const demandSeries = demoSnapshot.demandForecast.series;
 export const policySignals = demoSnapshot.policySignals.signals;
 export const decisionBrief = demoSnapshot.decisionBrief;
 export const decisionActions = demoSnapshot.decisionBrief.actions;
+export const releaseGate = demoSnapshot.releaseGate;
+export const releaseChecks = demoSnapshot.releaseGate.checks;
+export const scenarioProfiles = demoSnapshot.scenarioProfiles;
 export const internalIssues = demoSnapshot.internalIssues;
 
 export const imports = demoSnapshot.imports.map((row) => ({

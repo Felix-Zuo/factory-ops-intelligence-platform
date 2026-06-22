@@ -30,6 +30,7 @@ TABLE_FILES = {
     "file_import_logs": "file_imports.json",
     "policy_signals": "policy_signals.json",
     "internal_issues": "internal_issues.json",
+    "scenario_profiles": "scenario_profiles.json",
 }
 
 

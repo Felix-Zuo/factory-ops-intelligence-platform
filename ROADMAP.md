@@ -7,6 +7,8 @@
 - Deterministic 4-week demand forecast with TimesFM-ready adapter shape.
 - External customs/policy signal model using official-source links and material/product matching.
 - Source-backed decision brief with deterministic-tool-first model boundary.
+- Release-gate checklist across material, capacity, policy, quality, source trace and human approval.
+- Scenario profile library for assembly, fulfillment, maintenance-kit and quality-lab operating loops.
 - BOM-based material coverage and source trace.
 - Release notice preview from order, product and material gate.
 - 24h line simulation with bottleneck evidence.
@@ -19,7 +21,7 @@
 - Add import-profile samples for sales, stock, forecast, shipment and compliance files.
 - Add forecast holdout evaluation with MAPE/MAE and interval calibration.
 - Add policy-source polling adapter interface with cache, freshness and source-domain allowlist.
-- Add release-gate checklist that combines material, policy, quality and capacity controls.
+- Add release-gate history, approval comments and template-version approval state.
 
 ## Next Adapter Work
 

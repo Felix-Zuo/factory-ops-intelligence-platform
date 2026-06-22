@@ -18,6 +18,8 @@ def main() -> None:
     overview = domain.build_control_tower_overview(data)
     forecast = domain.forecast_demand(horizon_weeks=4, data=data)
     policy = domain.search_policy_signals(data=data)
+    release_gate = domain.build_release_gate(domain.DEFAULT_ORDER_ID, data)
+    scenario_profiles = domain.list_scenario_profiles(data)
     brief = domain.generate_decision_brief("Review S&OP risk", data)
     answer = domain.answer_factory_question(f"Can {domain.DEFAULT_PRODUCT_ID} be released for production?", data)
     checks = {
@@ -28,6 +30,8 @@ def main() -> None:
         "control_tower": overview["kpis"]["open_order_value"] > 0,
         "forecast": forecast["summary"]["total_forecast_qty"] > 0,
         "policy_signals": policy["summary"]["signal_count"] >= 1,
+        "release_gate": bool(release_gate["checks"]),
+        "scenario_profiles": len(scenario_profiles) >= 4,
         "decision_brief": bool(brief["actions"]),
         "notice_html": "<table>" in notice["html_preview"],
         "simulation_bottleneck": bool(simulation["bottleneck_machine"]),
@@ -42,6 +46,8 @@ def main() -> None:
     print(f"Operating score: {overview['operating_score']}/100")
     print(f"4w forecast: {forecast['summary']['total_forecast_qty']} units")
     print(f"Policy signals: {policy['summary']['signal_count']}")
+    print(f"Release gate: {release_gate['decision']}")
+    print(f"Scenario profiles: {len(scenario_profiles)}")
     print(f"Notice: {notice['notice_id']}")
     print(f"Bottleneck: {simulation['bottleneck_machine']}")
     print(f"Agent tools: {', '.join(answer['trace']['tools'])}")
