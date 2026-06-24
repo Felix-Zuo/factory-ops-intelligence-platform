@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Operations Intelligence Hero Background</title>
+    <style>
+      :root {
+        --ink: #18211e;
+        --muted: #627069;
+        --line: #d7ded7;
+        --paper: #ffffff;
+        --wash: #f4f7f1;
+        --teal: #0f766e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        width: 1600px;
+        height: 900px;
+        overflow: hidden;
+        background:
+          linear-gradient(rgba(24, 33, 30, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(24, 33, 30, 0.04) 1px, transparent 1px),
+          var(--wash);
+        background-size: 40px 40px;
+        color: var(--ink);
+        font-family: Inter, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+      }
+
+      main {
+        position: relative;
+        width: 1600px;
+        height: 900px;
+      }
+
+      .frame {
+        position: absolute;
+        left: 520px;
+        top: 118px;
+        width: 940px;
+        border: 1px solid #c9d4ce;
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--paper);
+        box-shadow: 0 34px 90px rgba(24, 33, 30, 0.18);
+      }
+
+      .browser {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 14px;
+        min-height: 44px;
+        padding: 0 16px;
+        border-bottom: 1px solid var(--line);
+        background: #edf2ec;
+      }
+
+      .dots {
+        display: flex;
+        gap: 7px;
+      }
+
+      .dots i {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #9aa8a1;
+      }
+
+      .browser strong,
+      .browser span {
+        font-family: Consolas, "SFMono-Regular", monospace;
+      }
+
+      .browser strong {
+        color: #3a4740;
+        font-size: 14px;
+      }
+
+      .browser span {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .frame img {
+        display: block;
+        width: 100%;
+        height: 562px;
+        object-fit: cover;
+        object-position: left top;
+      }
+
+      .trace {
+        position: absolute;
+        right: 90px;
+        bottom: 90px;
+        width: 430px;
+        border: 1px solid #cbd5cf;
+        border-radius: 8px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 20px 60px rgba(24, 33, 30, 0.12);
+      }
+
+      .trace img {
+        display: block;
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        object-position: left top;
+      }
+
+    </style>
+  </head>
+  <body>
+    <main>
+      <article class="frame">
+        <div class="browser">
+          <div class="dots"><i></i><i></i><i></i></div>
+          <strong>Operations Intelligence Control Tower</strong>
+          <span>snapshot-backed</span>
+        </div>
+        <img src="screenshots/overview.png" alt="Operations control tower dashboard screenshot" />
+      </article>
+      <article class="trace">
+        <img src="screenshots/material-risk.png" alt="Material gate screenshot" />
+      </article>
+    </main>
+  </body>
+</html>

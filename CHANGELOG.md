@@ -4,6 +4,7 @@
 
 - Polished the GitHub README entry with a rendered Pages link, product system map and evidence-first screenshot section.
 - Updated the Pages showcase hero and repository links so the public demo opens as a product page instead of repo-relative source files.
+- Replaced the busy showcase hero background with a cleaner control-tower product asset and stabilized release-card title wrapping.
 
 ## 0.3.1
 

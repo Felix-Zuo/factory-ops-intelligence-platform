@@ -153,8 +153,8 @@
         align-items: end;
         color: #ffffff;
         background:
-          linear-gradient(90deg, rgba(11, 18, 17, 0.92), rgba(11, 18, 17, 0.64), rgba(11, 18, 17, 0.18)),
-          url("assets/product-system-map.png") center / cover no-repeat;
+          linear-gradient(90deg, rgba(11, 18, 17, 0.96) 0%, rgba(11, 18, 17, 0.88) 43%, rgba(11, 18, 17, 0.2) 100%),
+          url("assets/hero-control-tower.png") center / cover no-repeat;
         border-bottom: 1px solid #1e2a26;
       }
 
@@ -492,8 +492,8 @@
 
       .release-grid {
         display: grid;
-        grid-template-columns: minmax(0, 0.68fr) minmax(0, 1fr);
-        gap: 14px;
+        grid-template-columns: minmax(430px, 0.62fr) minmax(0, 1.12fr);
+        gap: 16px;
       }
 
       .release-score {
@@ -506,9 +506,10 @@
 
       .release-score strong {
         display: block;
-        font-size: 40px;
+        font-size: 34px;
         line-height: 1;
         overflow-wrap: anywhere;
+        white-space: nowrap;
       }
 
       .release-score span {
@@ -520,13 +521,13 @@
 
       .control-grid {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 10px;
+        grid-template-columns: repeat(2, minmax(260px, 1fr));
+        gap: 12px;
       }
 
       .control {
-        min-height: 144px;
-        padding: 14px;
+        min-height: 132px;
+        padding: 16px;
         background: #1b2823;
         border-color: #344941;
       }
@@ -534,19 +535,23 @@
       .control header,
       .profile header {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
         gap: 12px;
       }
 
       .control h3 {
+        margin-bottom: 0;
         color: #ffffff;
+        font-size: 17px;
+        white-space: nowrap;
       }
 
       .status {
         display: inline-flex;
         min-height: 24px;
         align-items: center;
+        flex: 0 0 auto;
         padding: 0 8px;
         border-radius: 999px;
         background: #edf2ef;
@@ -554,6 +559,8 @@
         color: #25322c;
         font-size: 12px;
         font-weight: 850;
+        line-height: 1;
+        white-space: nowrap;
       }
 
       .status.pass,
@@ -747,8 +754,8 @@
         .hero {
           min-height: 66vh;
           background:
-            linear-gradient(180deg, rgba(11, 18, 17, 0.88), rgba(11, 18, 17, 0.58)),
-            url("assets/product-system-map.png") center top / cover no-repeat;
+            linear-gradient(180deg, rgba(11, 18, 17, 0.92), rgba(11, 18, 17, 0.64)),
+            url("assets/hero-control-tower.png") center top / cover no-repeat;
         }
 
         .hero-proof,
