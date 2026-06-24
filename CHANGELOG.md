@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Polished the GitHub README entry with a rendered Pages link, product system map and evidence-first screenshot section.
+- Updated the Pages showcase hero and repository links so the public demo opens as a product page instead of repo-relative source files.
+
 ## 0.3.1
 
 - Added a release-gate domain function and API route across material, capacity, policy, quality, source-trace and approval checks.
