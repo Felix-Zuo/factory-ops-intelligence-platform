@@ -11,7 +11,8 @@
     "test": "python -m pytest tests",
     "smoke": "python scripts/smoke_demo.py",
     "check:tone": "python scripts/check_ai_tone.py",
+    "check:showcase": "python scripts/check_showcase_page.py",
     "self-check": "python scripts/self_check.py",
-    "test:all": "python scripts/seed_demo_data.py && python scripts/generate_frontend_snapshot.py && python scripts/self_check.py && python -m pytest tests && python scripts/smoke_demo.py && python scripts/check_ai_tone.py && npm --prefix apps/web-dashboard run build"
+    "test:all": "python scripts/seed_demo_data.py && python scripts/generate_frontend_snapshot.py && python scripts/self_check.py && python -m pytest tests && python scripts/smoke_demo.py && python scripts/check_ai_tone.py && python scripts/check_showcase_page.py && npm --prefix apps/web-dashboard run build"
   }
 }

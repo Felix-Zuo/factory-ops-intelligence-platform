@@ -96,7 +96,7 @@ Run the full validation suite:
 npm run test:all
 ```
 
-The full check seeds demo data, regenerates the frontend snapshot, runs self-checks, runs pytest, runs the smoke demo, scans user-facing copy and builds the web dashboard.
+The full check seeds demo data, regenerates the frontend snapshot, runs self-checks, runs pytest, runs the smoke demo, scans user-facing copy, verifies the static showcase page and builds the web dashboard.
 
 ## Product Evidence
 
