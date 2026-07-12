@@ -38,6 +38,18 @@
         background-size: 32px 32px;
       }
 
+      .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 40;
+        width: 100%;
+        height: 3px;
+        background: #69d2bd;
+        transform: scaleX(0);
+        transform-origin: left center;
+      }
+
       a {
         color: inherit;
       }
@@ -212,6 +224,15 @@
         color: #17211e;
       }
 
+      .hero-actions a:focus-visible,
+      .topbar a:focus-visible,
+      .mode-controls button:focus-visible,
+      .control:focus-visible,
+      .evidence-selector button:focus-visible {
+        outline: 2px solid #69d2bd;
+        outline-offset: 3px;
+      }
+
       .hero-proof {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -368,6 +389,7 @@
         aspect-ratio: 16 / 10;
         object-fit: cover;
         object-position: left top;
+        transition: opacity 180ms ease;
       }
 
       .decision-panel {
@@ -401,6 +423,69 @@
 
       .decision-list p {
         margin-bottom: 0;
+      }
+
+      .mode-console {
+        display: grid;
+        grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+        gap: 1px;
+        margin-top: 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--line);
+      }
+
+      .mode-controls {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1px;
+        background: var(--line);
+      }
+
+      .mode-controls button,
+      .evidence-selector button {
+        min-height: 54px;
+        padding: 12px;
+        border: 0;
+        background: var(--paper);
+        color: #2c3832;
+        font: inherit;
+        font-weight: 800;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .mode-controls button[aria-selected="true"],
+      .evidence-selector button[aria-selected="true"] {
+        background: #dce9e6;
+        color: #0f766e;
+      }
+
+      .mode-copy {
+        min-height: 118px;
+        padding: 18px;
+        background: var(--paper);
+      }
+
+      .mode-copy span,
+      .release-inspector span {
+        display: inline-flex;
+        min-height: 24px;
+        align-items: center;
+        padding: 0 8px;
+        margin-bottom: 10px;
+        border-radius: 999px;
+        background: #e7f0ed;
+        color: #0f766e;
+        font-family: Consolas, "SFMono-Regular", monospace;
+        font-size: 12px;
+        font-weight: 850;
+      }
+
+      .mode-copy h3,
+      .release-inspector h3 {
+        margin-bottom: 6px;
       }
 
       .system-grid {
@@ -525,14 +610,39 @@
         gap: 12px;
       }
 
+      .control-column {
+        display: grid;
+        gap: 12px;
+      }
+
       .control {
+        display: block;
+        width: 100%;
         min-height: 132px;
         padding: 16px;
         background: #1b2823;
         border-color: #344941;
+        color: inherit;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+        transition:
+          border-color 160ms ease,
+          background 160ms ease,
+          transform 160ms ease;
       }
 
-      .control header,
+      .control:hover,
+      .control.active {
+        border-color: #69d2bd;
+        background: #203129;
+      }
+
+      .control:hover {
+        transform: translateY(-1px);
+      }
+
+      .control-head,
       .profile header {
         display: flex;
         align-items: flex-start;
@@ -540,11 +650,18 @@
         gap: 12px;
       }
 
-      .control h3 {
+      .control-title {
         margin-bottom: 0;
         color: #ffffff;
         font-size: 17px;
+        font-weight: 850;
+        line-height: 1.2;
         white-space: nowrap;
+      }
+
+      .control-copy {
+        display: block;
+        color: #d4dfdb;
       }
 
       .status {
@@ -578,6 +695,20 @@
       .status.planned {
         background: #e8ddf3;
         border-color: #9d7cc3;
+      }
+
+      .release-inspector {
+        min-height: 132px;
+        padding: 18px;
+        border: 1px solid #344941;
+        border-radius: 8px;
+        background:
+          linear-gradient(90deg, rgba(105, 210, 189, 0.1), transparent),
+          #17221e;
+      }
+
+      .release-inspector p {
+        margin-bottom: 0;
       }
 
       .profiles {
@@ -626,6 +757,47 @@
         display: grid;
         grid-template-columns: repeat(12, minmax(0, 1fr));
         gap: 12px;
+      }
+
+      .evidence-focus {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.55fr);
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .evidence-preview,
+      .evidence-panel {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--paper);
+        overflow: hidden;
+      }
+
+      .evidence-preview img {
+        aspect-ratio: 16 / 8.3;
+        object-fit: cover;
+        object-position: left top;
+      }
+
+      .evidence-panel {
+        display: grid;
+        align-content: space-between;
+        gap: 16px;
+        padding: 18px;
+      }
+
+      .evidence-panel h3 {
+        font-size: 24px;
+      }
+
+      .evidence-selector {
+        display: grid;
+        gap: 1px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--line);
       }
 
       .shot {
@@ -738,6 +910,8 @@
         .section-head,
         .product-stage,
         .release-grid,
+        .mode-console,
+        .evidence-focus,
         .footer-cta .section-inner {
           grid-template-columns: 1fr;
         }
@@ -836,8 +1010,9 @@
     </style>
   </head>
   <body>
+    <div class="scroll-progress" aria-hidden="true"></div>
     <div class="topbar">
-      <a class="nav-mark" href="#top">OPS INTELLIGENCE / v0.3.1</a>
+      <a class="nav-mark" href="#top">OPS INTELLIGENCE / v0.3.2</a>
       <nav aria-label="Showcase sections">
         <a href="#product">Product</a>
         <a href="#release">Release Gate</a>
@@ -859,7 +1034,7 @@
         <div class="hero-actions">
           <a class="primary" href="https://github.com/Felix-Zuo/factory-ops-intelligence-platform">Read the repository</a>
           <a href="assets/product-system-map.png">Open product map</a>
-          <a href="https://github.com/Felix-Zuo/factory-ops-intelligence-platform/blob/main/RELEASE_NOTES_v0.3.1.md">Release notes</a>
+          <a href="https://github.com/Felix-Zuo/factory-ops-intelligence-platform/blob/main/RELEASE_NOTES_v0.3.2.md">Release notes</a>
         </div>
         <div class="hero-proof" aria-label="Product proof metrics">
           <div><span>DECISION MODEL</span><strong>6 gate controls</strong></div>
@@ -877,7 +1052,7 @@
         <div class="metric"><span>FORECAST</span><strong>10,769</strong><p>4-week demand baseline</p></div>
         <div class="metric"><span>POLICY</span><strong>4</strong><p>official-source signals</p></div>
         <div class="metric"><span>TESTS</span><strong>11</strong><p>domain and API checks</p></div>
-        <div class="metric"><span>RELEASE</span><strong>v0.3.1</strong><p>tagged GitHub release</p></div>
+        <div class="metric"><span>RELEASE</span><strong>v0.3.2</strong><p>tagged GitHub release</p></div>
       </div>
     </div>
 
@@ -897,10 +1072,10 @@
           <article class="product-frame">
             <div class="browser-bar">
               <div class="dots"><i></i><i></i><i></i></div>
-              <strong>Operations Intelligence Control Tower</strong>
-              <span>snapshot-backed</span>
+              <strong id="product-screen-title">Operations Intelligence Control Tower</strong>
+              <span id="product-screen-state">snapshot-backed</span>
             </div>
-            <img src="assets/screenshots/overview.png" alt="Operations control tower screenshot" />
+            <img id="product-screen-image" src="assets/screenshots/overview.png" alt="Operations control tower screenshot" />
           </article>
           <aside class="decision-panel">
             <div>
@@ -916,6 +1091,19 @@
             </div>
             <div class="chips"><span class="chip good">source refs</span><span class="chip model">TimesFM-ready</span><span class="chip watch">human approval</span></div>
           </aside>
+        </div>
+        <div class="mode-console">
+          <div class="mode-controls" role="tablist" aria-label="Product operating modes">
+            <button type="button" data-mode="tower" aria-selected="true">Control tower</button>
+            <button type="button" data-mode="materials" aria-selected="false">Material gate</button>
+            <button type="button" data-mode="trace" aria-selected="false">Trace graph</button>
+            <button type="button" data-mode="capacity" aria-selected="false">Capacity model</button>
+          </div>
+          <article class="mode-copy" aria-live="polite">
+            <span id="mode-code">OPS-00</span>
+            <h3 id="mode-title">Control tower</h3>
+            <p id="mode-copy">Demand, material risk, policy signals, capacity and issue queues stay visible in one operating view.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -980,13 +1168,20 @@
             <strong>release_with_controls</strong>
             <p>2 checks pass, 3 need review, 1 waits for human approval. The package keeps owner action and evidence attached.</p>
           </article>
-          <div class="control-grid">
-            <article class="control"><header><h3>Material coverage</h3><span class="status review">review</span></header><p>BOM demand and WMS stock coverage with source rows.</p></article>
-            <article class="control"><header><h3>Capacity fit</h3><span class="status pass">pass</span></header><p>Order quantity checked against simulated weekly capacity.</p></article>
-            <article class="control"><header><h3>Policy signal</h3><span class="status review">review</span></header><p>Customs and policy signals linked to affected materials.</p></article>
-            <article class="control"><header><h3>Quality hold</h3><span class="status review">review</span></header><p>Quality bottleneck and serialized controls stay visible.</p></article>
-            <article class="control"><header><h3>Source trace</h3><span class="status pass">pass</span></header><p>BOM, stock, inbound and supplier evidence attached.</p></article>
-            <article class="control"><header><h3>Human approval</h3><span class="status pending">pending</span></header><p>Final export remains behind an operations owner.</p></article>
+          <div class="control-column">
+            <div class="control-grid" aria-label="Release gate controls">
+              <button type="button" class="control active" data-control="material" aria-pressed="true"><span class="control-head"><span class="control-title">Material coverage</span><span class="status review">review</span></span><span class="control-copy">BOM demand and WMS stock coverage with source rows.</span></button>
+              <button type="button" class="control" data-control="capacity" aria-pressed="false"><span class="control-head"><span class="control-title">Capacity fit</span><span class="status pass">pass</span></span><span class="control-copy">Order quantity checked against simulated weekly capacity.</span></button>
+              <button type="button" class="control" data-control="policy" aria-pressed="false"><span class="control-head"><span class="control-title">Policy signal</span><span class="status review">review</span></span><span class="control-copy">Customs and policy signals linked to affected materials.</span></button>
+              <button type="button" class="control" data-control="quality" aria-pressed="false"><span class="control-head"><span class="control-title">Quality hold</span><span class="status review">review</span></span><span class="control-copy">Quality bottleneck and serialized controls stay visible.</span></button>
+              <button type="button" class="control" data-control="trace" aria-pressed="false"><span class="control-head"><span class="control-title">Source trace</span><span class="status pass">pass</span></span><span class="control-copy">BOM, stock, inbound and supplier evidence attached.</span></button>
+              <button type="button" class="control" data-control="approval" aria-pressed="false"><span class="control-head"><span class="control-title">Human approval</span><span class="status pending">pending</span></span><span class="control-copy">Final export remains behind an operations owner.</span></button>
+            </div>
+            <aside class="release-inspector" aria-live="polite">
+              <span id="release-inspector-code">INV-03 / review</span>
+              <h3 id="release-inspector-title">Material coverage</h3>
+              <p id="release-inspector-copy">Planner reviews BOM demand, WMS stock and inbound rows before the release package can be exported.</p>
+            </aside>
           </div>
         </div>
       </div>
@@ -1040,6 +1235,24 @@
             The screenshots are not decorative thumbnails. They prove the product has concrete screens for planning,
             material risk, release governance, traceability and capacity analysis.
           </p>
+        </div>
+        <div class="evidence-focus">
+          <article class="evidence-preview">
+            <img id="evidence-image" src="assets/screenshots/material-risk.png" alt="BOM and inventory screenshot" />
+          </article>
+          <aside class="evidence-panel" aria-live="polite">
+            <div>
+              <span id="evidence-code" class="badge good">INV-03</span>
+              <h3 id="evidence-title">BOM and inventory gate</h3>
+              <p id="evidence-copy">Component demand, stock coverage, supplier context and source refs are visible before release.</p>
+            </div>
+            <div class="evidence-selector" role="tablist" aria-label="Evidence screenshot selector">
+              <button type="button" data-evidence="material" aria-selected="true">Material gate</button>
+              <button type="button" data-evidence="release" aria-selected="false">Release package</button>
+              <button type="button" data-evidence="trace" aria-selected="false">Trace graph</button>
+              <button type="button" data-evidence="capacity" aria-selected="false">Capacity model</button>
+            </div>
+          </aside>
         </div>
         <div class="shot-grid">
           <article class="shot feature"><img src="assets/screenshots/material-risk.png" alt="BOM and inventory screenshot" /><div><h3>BOM and inventory gate</h3><p>Component demand, stock coverage, supplier context and source refs.</p></div></article>
@@ -1108,5 +1321,171 @@
         </div>
       </div>
     </footer>
+    <script>
+      const productModes = {
+        tower: {
+          code: "OPS-00",
+          title: "Control tower",
+          copy: "Demand, material risk, policy signals, capacity and issue queues stay visible in one operating view.",
+          image: "assets/screenshots/overview.png",
+          alt: "Operations control tower screenshot",
+          screen: "Operations Intelligence Control Tower",
+          state: "snapshot-backed",
+        },
+        materials: {
+          code: "INV-03",
+          title: "Material gate",
+          copy: "BOM demand, stock coverage, inbound context and supplier notes stay attached to the release decision.",
+          image: "assets/screenshots/material-risk.png",
+          alt: "BOM and inventory screenshot",
+          screen: "BOM and Inventory Gate",
+          state: "source rows visible",
+        },
+        trace: {
+          code: "TRC-04",
+          title: "Trace graph",
+          copy: "Product, order, BOM, stock, inbound and supplier references stay linked for reviewer-grade evidence.",
+          image: "assets/screenshots/product-material-trace.png",
+          alt: "Material trace screenshot",
+          screen: "Product Material Trace",
+          state: "linked evidence",
+        },
+        capacity: {
+          code: "CAP-06",
+          title: "Capacity model",
+          copy: "The 24h model exposes bottleneck, utilization, waiting and blocking signals before operational approval.",
+          image: "assets/screenshots/simulation-page.png",
+          alt: "Line simulation screenshot",
+          screen: "Capacity Model",
+          state: "24h simulation",
+        },
+      };
+
+      const releaseControls = {
+        material: {
+          code: "INV-03 / review",
+          title: "Material coverage",
+          copy: "Planner reviews BOM demand, WMS stock and inbound rows before the release package can be exported.",
+        },
+        capacity: {
+          code: "CAP-06 / pass",
+          title: "Capacity fit",
+          copy: "Order quantity is checked against simulated weekly output so release approval does not ignore bottlenecks.",
+        },
+        policy: {
+          code: "POL-07 / review",
+          title: "Policy signal",
+          copy: "Customs and policy signals stay linked to affected materials, products and open export orders.",
+        },
+        quality: {
+          code: "QLT-08 / review",
+          title: "Quality hold",
+          copy: "Quality bottlenecks and serialized controls remain visible before finished-goods release.",
+        },
+        trace: {
+          code: "TRC-04 / pass",
+          title: "Source trace",
+          copy: "BOM, stock, inbound and supplier evidence are attached as inspectable release references.",
+        },
+        approval: {
+          code: "APP-09 / pending",
+          title: "Human approval",
+          copy: "The final export remains behind an operations owner instead of being silently released by automation.",
+        },
+      };
+
+      const evidenceItems = {
+        material: {
+          code: "INV-03",
+          title: "BOM and inventory gate",
+          copy: "Component demand, stock coverage, supplier context and source refs are visible before release.",
+          image: "assets/screenshots/material-risk.png",
+          alt: "BOM and inventory screenshot",
+        },
+        release: {
+          code: "REL-05",
+          title: "Release package",
+          copy: "Notice export context keeps the release decision, material gate and source evidence attached.",
+          image: "assets/screenshots/notice-page.png",
+          alt: "Release gate screenshot",
+        },
+        trace: {
+          code: "TRC-04",
+          title: "Trace graph",
+          copy: "Product, BOM, stock, inbound and supplier references remain connected across the workflow.",
+          image: "assets/screenshots/product-material-trace.png",
+          alt: "Material trace screenshot",
+        },
+        capacity: {
+          code: "CAP-06",
+          title: "Capacity model",
+          copy: "Machine state, output, utilization, blocking and bottleneck evidence are visible in the same review path.",
+          image: "assets/screenshots/simulation-page.png",
+          alt: "Capacity model screenshot",
+        },
+      };
+
+      const setSelected = (buttons, activeButton) => {
+        buttons.forEach((button) => {
+          button.setAttribute("aria-selected", button === activeButton ? "true" : "false");
+          button.classList.toggle("active", button === activeButton);
+        });
+      };
+
+      document.querySelectorAll("[data-mode]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const mode = productModes[button.dataset.mode];
+          if (!mode) return;
+          setSelected(document.querySelectorAll("[data-mode]"), button);
+          document.getElementById("mode-code").textContent = mode.code;
+          document.getElementById("mode-title").textContent = mode.title;
+          document.getElementById("mode-copy").textContent = mode.copy;
+          document.getElementById("product-screen-title").textContent = mode.screen;
+          document.getElementById("product-screen-state").textContent = mode.state;
+          const image = document.getElementById("product-screen-image");
+          image.src = mode.image;
+          image.alt = mode.alt;
+        });
+      });
+
+      document.querySelectorAll("[data-control]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const control = releaseControls[button.dataset.control];
+          if (!control) return;
+          document.querySelectorAll("[data-control]").forEach((item) => {
+            const active = item === button;
+            item.classList.toggle("active", active);
+            item.setAttribute("aria-pressed", active ? "true" : "false");
+          });
+          document.getElementById("release-inspector-code").textContent = control.code;
+          document.getElementById("release-inspector-title").textContent = control.title;
+          document.getElementById("release-inspector-copy").textContent = control.copy;
+        });
+      });
+
+      document.querySelectorAll("[data-evidence]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const item = evidenceItems[button.dataset.evidence];
+          if (!item) return;
+          setSelected(document.querySelectorAll("[data-evidence]"), button);
+          document.getElementById("evidence-code").textContent = item.code;
+          document.getElementById("evidence-title").textContent = item.title;
+          document.getElementById("evidence-copy").textContent = item.copy;
+          const image = document.getElementById("evidence-image");
+          image.src = item.image;
+          image.alt = item.alt;
+        });
+      });
+
+      const progress = document.querySelector(".scroll-progress");
+      const updateProgress = () => {
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+        progress.style.transform = `scaleX(${Math.min(1, Math.max(0, ratio))})`;
+      };
+      document.addEventListener("scroll", updateProgress, { passive: true });
+      window.addEventListener("resize", updateProgress);
+      updateProgress();
+    </script>
   </body>
 </html>

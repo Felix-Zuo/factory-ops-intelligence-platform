@@ -193,6 +193,7 @@ Live integrations are represented by mock/stub/sample adapters. Credentials and 
 - [Product requirements](PRODUCT_REQUIREMENTS.md)
 - [Technical analysis](TECHNICAL_ANALYSIS.md)
 - [Quality standard](QUALITY_STANDARD.md)
+- [Release notes v0.3.2](RELEASE_NOTES_v0.3.2.md)
 - [Release notes v0.3.1](RELEASE_NOTES_v0.3.1.md)
 - [Release notes v0.3.0](RELEASE_NOTES_v0.3.0.md)
 - [Changelog](CHANGELOG.md)

@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+## 0.3.2
+
+- Added interactive showcase controls for product modes, release-gate inspection, evidence screenshots and scroll progress.
 - Polished the GitHub README entry with a rendered Pages link, product system map and evidence-first screenshot section.
 - Updated the Pages showcase hero and repository links so the public demo opens as a product page instead of repo-relative source files.
 - Replaced the busy showcase hero background with a cleaner control-tower product asset and stabilized release-card title wrapping.

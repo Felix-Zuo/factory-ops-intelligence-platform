@@ -35,7 +35,7 @@ class DecisionBriefRequest(BaseModel):
 
 app = FastAPI(
     title="Operations Intelligence API",
-    version="0.3.1",
+    version="0.3.2",
     description="Product-grade public demo API for S&OP, inventory, capacity, policy signals and agent-readable manufacturing operations intelligence.",
 )
 
