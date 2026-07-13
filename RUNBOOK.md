@@ -31,9 +31,22 @@ npm --prefix apps/web-dashboard run dev -- --host 127.0.0.1 --port 5178
 ## Validate
 
 ```powershell
-python scripts/self_check.py
-python -m pytest tests
-python scripts/smoke_demo.py
-python scripts/check_ai_tone.py
-npm --prefix apps/web-dashboard run build
+npm run test:all
+npm audit --prefix apps/web-dashboard --omit=dev
+git diff --check
 ```
+
+`npm run test:all` is the single local and CI validation entrypoint. It includes data seeding, snapshot generation, self-check, pytest, smoke coverage, public-copy scanning, showcase checks, public-surface integrity checks and the production frontend build.
+
+## Publish GitHub Pages
+
+The Pages artifact is the `docs/` directory. `.github/workflows/pages.yml` uploads and deploys that directory through the `github-pages` environment.
+
+After a `main` push:
+
+```powershell
+gh run list --workflow pages.yml --limit 3
+Invoke-WebRequest https://felix-zuo.github.io/factory-ops-intelligence-platform/showcase.html -UseBasicParsing
+```
+
+Repository Pages settings must use `build_type: workflow`; do not restore the legacy branch-based Pages builder.
