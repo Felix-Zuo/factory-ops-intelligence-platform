@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1280, initial-scale=1" />
+    <title>Operations Intelligence Social Preview</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body { width: 1280px; height: 640px; margin: 0; overflow: hidden; }
+      body {
+        display: grid;
+        grid-template-columns: 470px 1fr;
+        background: #111917;
+        color: #f4f7f4;
+        font-family: Inter, "Segoe UI", Arial, sans-serif;
+      }
+      .copy {
+        display: grid;
+        grid-template-rows: 1fr auto;
+        padding: 54px 42px 42px 52px;
+        border-right: 1px solid #31423b;
+      }
+      .mark {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: #8fd9ca;
+        font: 800 17px Consolas, monospace;
+      }
+      .mark::before { content: ""; width: 14px; height: 14px; background: #69d2bd; }
+      h1 { margin: 48px 0 18px; font-size: 54px; line-height: 1.02; letter-spacing: 0; }
+      p { margin: 0; color: #c8d5cf; font-size: 21px; line-height: 1.45; }
+      .meta { color: #8fd9ca; font: 800 14px Consolas, monospace; }
+      .product {
+        display: grid;
+        align-items: center;
+        padding: 42px 0 42px 42px;
+        background: #e9eee9;
+      }
+      .frame {
+        width: 840px;
+        overflow: hidden;
+        border: 1px solid #aeb9b2;
+        border-radius: 8px 0 0 8px;
+        background: #ffffff;
+        box-shadow: 0 28px 60px rgba(11, 18, 17, 0.24);
+      }
+      .bar {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        height: 38px;
+        padding: 0 14px;
+        background: #f2f5f1;
+        color: #566159;
+        font: 700 13px Consolas, monospace;
+      }
+      .bar i { width: 8px; height: 8px; border-radius: 50%; background: #97a39b; }
+      .bar span { margin-left: 8px; }
+      img { display: block; width: 800px; height: 450px; object-fit: cover; object-position: left top; }
+    </style>
+  </head>
+  <body>
+    <section class="copy">
+      <div>
+        <div class="mark">OPS INTELLIGENCE / v0.3.3</div>
+        <h1>Know what can ship. See what blocks it.</h1>
+        <p>Demand, inventory, capacity and release evidence in one operating view.</p>
+      </div>
+      <div class="meta">LOCAL-FIRST · SYNTHETIC DATA · SOURCE-LINKED</div>
+    </section>
+    <section class="product">
+      <div class="frame">
+        <div class="bar"><i></i><i></i><i></i><span>Operations Intelligence Control Tower</span></div>
+        <img src="screenshots/overview.png" alt="Operations intelligence control tower" />
+      </div>
+    </section>
+  </body>
+</html>

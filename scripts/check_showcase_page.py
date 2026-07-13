@@ -53,6 +53,8 @@ def main() -> None:
         SHOWCASE,
         DOCS / "assets" / "hero-control-tower.png",
         DOCS / "assets" / "product-system-map.png",
+        DOCS / "assets" / "social-preview.jpg",
+        DOCS / "assets" / "social-preview.html",
         DOCS / "assets" / "screenshots" / "overview.png",
     ]:
         if not path.exists():
@@ -82,6 +84,8 @@ def main() -> None:
         errors.append("showcase hero must use assets/hero-control-tower.png")
     if re.search(r"url\([\"']?assets/product-system-map\.png[\"']?\)", showcase_text):
         errors.append("product-system-map.png must not be used as the showcase hero background")
+    if 'class="shot-grid"' in showcase_text:
+        errors.append("showcase must not restore the repetitive screenshot grid")
     control_title_css = css_block(showcase_text, ".control-title")
     status_css = css_block(showcase_text, ".status")
     control_grid_css = css_block(showcase_text, ".control-grid")
@@ -96,9 +100,11 @@ def main() -> None:
     if "Showcase page: [docs/showcase.html](docs/showcase.html)" in readme_text:
         errors.append("README must not send reviewers to the source-code HTML path")
     for required in [
-        "OPS INTELLIGENCE / v0.3.2",
+        "OPS INTELLIGENCE / v0.3.3",
         "data-mode=\"tower\"",
         "data-mode=\"materials\"",
+        "role=\"tab\"",
+        "tabindex=\"-1\"",
         "data-control=\"material\"",
         "data-control=\"approval\"",
         "aria-pressed=\"true\"",
@@ -106,15 +112,20 @@ def main() -> None:
         "class=\"release-inspector\"",
         "data-evidence=\"material\"",
         "data-evidence=\"capacity\"",
+        "class=\"evidence-ledger\"",
+        "data-section-link",
         "class=\"scroll-progress\"",
         "const productModes",
         "const releaseControls",
         "const evidenceItems",
+        "bindArrowNavigation",
+        "prefers-reduced-motion",
+        "assets/social-preview.jpg",
     ]:
         if required not in showcase_text:
             errors.append(f"Missing interactive showcase marker: {required}")
-    if "RELEASE_NOTES_v0.3.2.md" not in showcase_text or "RELEASE_NOTES_v0.3.2.md" not in readme_text:
-        errors.append("v0.3.2 release notes must be linked from showcase and README")
+    if "RELEASE_NOTES_v0.3.3.md" not in showcase_text or "RELEASE_NOTES_v0.3.3.md" not in readme_text:
+        errors.append("v0.3.3 release notes must be linked from showcase and README")
 
     if errors:
         print("Showcase page check failed:")

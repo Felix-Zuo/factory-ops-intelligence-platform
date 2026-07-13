@@ -1,20 +1,17 @@
 # Social Preview Spec
 
-Target file: `docs/assets/social-preview.png`
+Target file: `docs/assets/social-preview.jpg`
 
 ## Intent
 
-GitHub social preview for a manufacturing operations open-source demo.
+Social preview for the public Operations Intelligence product page.
 
 ## Visual Direction
 
-- Engineering console
-- BOM and inventory panel
-- Line simulation panel
-- Production notice panel
-- Agent tool trace panel
-- Neutral industrial palette
-- Grid background and status-board layout
+- Real control-tower screenshot
+- Clear release-decision value statement
+- Dark neutral product identity with restrained teal status color
+- 1280 x 640 output for link previews
 
 ## Avoid
 
@@ -23,4 +20,5 @@ GitHub social preview for a manufacturing operations open-source demo.
 - Startup-style gradients
 - Generic chatbot imagery
 - Claims that imply live factory deployment
-
+- AI-first or chatbot-first language
+- Decorative diagrams when a real product screen is available

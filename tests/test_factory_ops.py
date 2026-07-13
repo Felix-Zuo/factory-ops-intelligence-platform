@@ -1,13 +1,19 @@
 from __future__ import annotations
 
+from dataclasses import replace
 from pathlib import Path
 import sys
+
+from fastapi.testclient import TestClient
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "apps" / "api-server"))
 
 from factory_ops_api import domain  # noqa: E402
 from factory_ops_api import main as api  # noqa: E402
+
+
+client = TestClient(api.app)
 
 
 def test_inventory_risk_keeps_source_trace() -> None:
@@ -41,6 +47,24 @@ def test_notice_generation_contains_material_gate() -> None:
     assert notice["notice_id"].startswith("PN-")
     assert notice["template_version"] == domain.NOTICE_TEMPLATE_VERSION
     assert "Release Notice" in notice["html_preview"]
+
+
+def test_notice_preview_escapes_source_text() -> None:
+    data = domain.load_factory_data()
+    unsafe_bom = [
+        {**row, "product_name": "<script>alert(1)</script>"}
+        if row["product_id"] == domain.DEFAULT_PRODUCT_ID
+        else row
+        for row in data.bom
+    ]
+    notice = domain.generate_production_notice(
+        domain.DEFAULT_PRODUCT_ID,
+        domain.DEFAULT_ORDER_QTY,
+        domain.DEFAULT_ORDER_ID,
+        replace(data, bom=unsafe_bom),
+    )
+    assert "<script>" not in notice["html_preview"]
+    assert "&lt;script&gt;" in notice["html_preview"]
 
 
 def test_simulation_detects_bottleneck() -> None:
@@ -133,6 +157,30 @@ def test_api_smoke_routes_return_expected_payloads() -> None:
     answer = api.agent_chat(api.AgentRequest(question=f"Can {domain.DEFAULT_PRODUCT_ID} be released?"))
     assert answer["trace"]["tool_calls"]
     assert api.integrations()[0]["accepted_payloads"]
+
+
+def test_api_rejects_invalid_ids_payloads_and_stub_execution() -> None:
+    assert client.get("/api/products/UNKNOWN/bom").status_code == 404
+    assert client.get("/api/inventory/risk", params={"quantity": -1}).status_code == 422
+    assert client.get("/api/simulation/UNKNOWN/report").status_code == 404
+    assert client.post("/api/agent/run-workflow", json={"workflow": "unknown"}).status_code == 422
+    assert client.post("/api/files/classify", json={"file_name": "../private.csv"}).status_code == 422
+    assert client.post("/api/integrations/UNKNOWN/import", json={"records": []}).status_code == 404
+    assert client.post("/api/integrations/MES/import", json={"records": []}).status_code == 409
+
+    accepted = client.post(
+        "/api/integrations/ERP/import",
+        json={"payload_type": "customer_order", "records": [{"order_id": "SO-DEMO"}]},
+    )
+    assert accepted.status_code == 200
+    assert accepted.json()["mode"] == "mock"
+
+
+def test_agent_trace_buffer_is_bounded() -> None:
+    domain.AGENT_TRACES.clear()
+    for index in range(domain.AGENT_TRACE_LIMIT + 4):
+        domain.answer_factory_question(f"material readiness check {index}")
+    assert len(domain.AGENT_TRACES) == domain.AGENT_TRACE_LIMIT
 
 
 def test_frontend_snapshot_contains_demo_evidence() -> None:

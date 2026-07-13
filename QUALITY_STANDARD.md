@@ -18,6 +18,8 @@ git diff --check
 - pytest domain/API coverage;
 - smoke demo;
 - AI-tone/public-copy scan;
+- static showcase asset and interaction-contract checks;
+- README link, implementation-path, version and social-preview integrity checks;
 - React TypeScript production build;
 - release-gate and scenario-profile coverage in the generated frontend snapshot.
 
@@ -26,6 +28,8 @@ git diff --check
 The project follows a practical public-demo baseline inspired by OWASP ASVS and OpenSSF Scorecard:
 
 - bounded request models for public API routes;
+- explicit 404/409/422 behavior for unknown IDs, unavailable adapters and invalid payloads;
+- escaped notice HTML and a bounded in-memory tool-trace buffer;
 - no credentials, live URLs, private exports or generated runtime folders in Git;
 - explicit adapter modes instead of hidden network calls;
 - synthetic data only;
@@ -40,5 +44,7 @@ The project follows a practical public-demo baseline inspired by OWASP ASVS and 
 - Release gate must show owner, evidence, status and next action for every control.
 - Product plan must expose scenario profiles with domain, data sources, controls and operating roles.
 - Static showcase page must load through local HTTP with screenshot assets present and no horizontal overflow.
+- Product and evidence tabs must support mouse and arrow-key navigation with visible selected state.
+- Public capability claims must link to implementation and tests that exist in the current tree.
 - Tables must be horizontally scrollable rather than overlapping.
 - Chinese and English labels must render from UTF-8 source files.

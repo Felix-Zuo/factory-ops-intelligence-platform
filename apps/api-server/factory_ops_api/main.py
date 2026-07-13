@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Annotated, Any
+from typing import Annotated, Any, Literal
 
 from fastapi import FastAPI, HTTPException, Path, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -33,18 +33,36 @@ class DecisionBriefRequest(BaseModel):
     question: str = Field(default="What should operations review today?", min_length=1, max_length=2000)
 
 
+class FileClassifyRequest(BaseModel):
+    file_name: str = Field(min_length=1, max_length=255, pattern=r"^[^/\\\x00]+$")
+
+
+class WorkflowRequest(BaseModel):
+    workflow: Literal[
+        "order_to_material_risk",
+        "line_simulation_to_report",
+        "order_to_production_notice",
+        "daily_factory_review",
+    ] = "order_to_material_risk"
+
+
+class IntegrationImportRequest(BaseModel):
+    payload_type: str | None = Field(default=None, min_length=1, max_length=80)
+    records: list[dict[str, Any]] = Field(default_factory=list, max_length=1000)
+
+
 app = FastAPI(
     title="Operations Intelligence API",
-    version="0.3.2",
-    description="Product-grade public demo API for S&OP, inventory, capacity, policy signals and agent-readable manufacturing operations intelligence.",
+    version="0.3.3",
+    description="Reviewable public demo API for demand, inventory, capacity, policy signals, release governance and source-linked operations decisions.",
 )
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://127.0.0.1:5178", "http://localhost:5178"],
     allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"],
 )
 
 
@@ -54,6 +72,7 @@ def health() -> dict[str, Any]:
     return {
         "status": "ok",
         "mode": "demo",
+        "version": app.version,
         "products": len(domain.list_products(data)),
         "materials": len(data.materials),
         "orders": len(data.customer_orders),
@@ -109,12 +128,12 @@ def file_imports() -> list[dict[str, Any]]:
 
 
 @app.post("/api/files/classify")
-def classify_file(payload: dict[str, str]) -> dict[str, Any]:
-    return domain.classify_factory_file(payload.get("file_name", ""))
+def classify_file(request: FileClassifyRequest) -> dict[str, Any]:
+    return domain.classify_factory_file(request.file_name)
 
 
 @app.get("/api/materials/search")
-def search_materials(query: str = Query(default="")) -> list[dict[str, Any]]:
+def search_materials(query: Annotated[str, Query(max_length=200)] = "") -> list[dict[str, Any]]:
     return domain.search_materials(query)
 
 
@@ -124,7 +143,7 @@ def products() -> list[dict[str, Any]]:
 
 
 @app.get("/api/products/{product_id}/bom")
-def product_bom(product_id: str) -> dict[str, Any]:
+def product_bom(product_id: Annotated[str, Path(min_length=1, max_length=80)]) -> dict[str, Any]:
     try:
         return domain.get_product_bom(product_id)
     except ValueError as exc:
@@ -133,32 +152,53 @@ def product_bom(product_id: str) -> dict[str, Any]:
 
 @app.post("/api/bom/explode")
 def explode_bom(request: BomRequest) -> dict[str, Any]:
-    return domain.explode_bom(request.product_id, request.quantity)
+    try:
+        return domain.explode_bom(request.product_id, request.quantity)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
 @app.get("/api/inventory/risk")
-def inventory_risk(product_id: str = domain.DEFAULT_PRODUCT_ID, quantity: float = domain.DEFAULT_ORDER_QTY) -> dict[str, Any]:
-    return domain.calculate_inventory_risk(product_id, quantity)
+def inventory_risk(
+    product_id: Annotated[str, Query(min_length=1, max_length=80)] = domain.DEFAULT_PRODUCT_ID,
+    quantity: Annotated[float, Query(gt=0, le=10_000_000)] = domain.DEFAULT_ORDER_QTY,
+) -> dict[str, Any]:
+    try:
+        return domain.calculate_inventory_risk(product_id, quantity)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
 @app.get("/api/inventory/coverage")
-def inventory_coverage(product_id: str = domain.DEFAULT_PRODUCT_ID, quantity: float = domain.DEFAULT_ORDER_QTY) -> dict[str, Any]:
-    return domain.calculate_inventory_risk(product_id, quantity)
+def inventory_coverage(
+    product_id: Annotated[str, Query(min_length=1, max_length=80)] = domain.DEFAULT_PRODUCT_ID,
+    quantity: Annotated[float, Query(gt=0, le=10_000_000)] = domain.DEFAULT_ORDER_QTY,
+) -> dict[str, Any]:
+    return inventory_risk(product_id, quantity)
 
 
 @app.get("/api/products/{product_id}/material-trace")
-def material_trace(product_id: str, quantity: float = 12000) -> dict[str, Any]:
-    return domain.product_material_trace(product_id, quantity)
+def material_trace(
+    product_id: Annotated[str, Path(min_length=1, max_length=80)],
+    quantity: Annotated[float, Query(gt=0, le=10_000_000)] = domain.DEFAULT_ORDER_QTY,
+) -> dict[str, Any]:
+    try:
+        return domain.product_material_trace(product_id, quantity)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
 @app.post("/api/production-notices/generate")
 def generate_notice(request: NoticeRequest) -> dict[str, Any]:
-    return domain.generate_production_notice(request.product_id, request.quantity, request.order_id)
+    try:
+        return domain.generate_production_notice(request.product_id, request.quantity, request.order_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
 @app.post("/api/production-notices/export")
 def export_notice(request: NoticeRequest) -> dict[str, Any]:
-    notice = domain.generate_production_notice(request.product_id, request.quantity, request.order_id)
+    notice = generate_notice(request)
     return {"notice_id": notice["notice_id"], "format": "html", "content": notice["html_preview"]}
 
 
@@ -169,17 +209,26 @@ def notice_templates() -> list[dict[str, str]]:
 
 @app.post("/api/simulation/run")
 def run_simulation(request: SimulationRequest) -> dict[str, Any]:
-    return domain.run_line_simulation(request.line_id, request.hours)
+    try:
+        return domain.run_line_simulation(request.line_id, request.hours)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
 @app.get("/api/simulation/{run_id}/report")
-def simulation_report(run_id: str) -> dict[str, Any]:
-    return domain.get_simulation_report(run_id)
+def simulation_report(run_id: Annotated[str, Path(min_length=1, max_length=120)]) -> dict[str, Any]:
+    try:
+        return domain.get_simulation_report(run_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
 @app.get("/api/production-lines/{line_id}/bottlenecks")
-def line_bottleneck(line_id: str) -> dict[str, Any]:
-    report = domain.run_line_simulation(line_id, 24)
+def line_bottleneck(line_id: Annotated[str, Path(min_length=1, max_length=80)]) -> dict[str, Any]:
+    try:
+        report = domain.run_line_simulation(line_id, 24)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
     return {"line_id": line_id, **domain.detect_bottleneck(report)}
 
 
@@ -194,8 +243,8 @@ def agent_chat(request: AgentRequest) -> dict[str, Any]:
 
 
 @app.post("/api/agent/run-workflow")
-def run_workflow(payload: dict[str, Any]) -> dict[str, Any]:
-    workflow = payload.get("workflow", "order_to_material_risk")
+def run_workflow(request: WorkflowRequest) -> dict[str, Any]:
+    workflow = request.workflow
     if workflow == "line_simulation_to_report":
         report = domain.run_line_simulation(domain.DEFAULT_LINE_ID, 24)
         return {"workflow": workflow, "result": report, "bottleneck": domain.detect_bottleneck(report)}
@@ -207,10 +256,10 @@ def run_workflow(payload: dict[str, Any]) -> dict[str, Any]:
 
 
 @app.get("/api/agent/traces")
-def agent_traces() -> list[dict[str, Any]]:
+def agent_traces(limit: Annotated[int, Query(ge=1, le=25)] = 10) -> list[dict[str, Any]]:
     if not domain.AGENT_TRACES:
         domain.answer_factory_question(f"Can {domain.DEFAULT_PRODUCT_ID} be released for production?")
-    return domain.AGENT_TRACES
+    return domain.AGENT_TRACES[:limit]
 
 
 @app.get("/api/integrations/status")
@@ -219,5 +268,21 @@ def integrations() -> list[dict[str, Any]]:
 
 
 @app.post("/api/integrations/{adapter}/import")
-def integration_import(adapter: str, payload: dict[str, Any]) -> dict[str, Any]:
-    return {"adapter": adapter, "status": "accepted", "mode": "mock", "records": len(payload.get("records", []))}
+def integration_import(
+    adapter: Annotated[str, Path(min_length=1, max_length=40, pattern=r"^[A-Za-z0-9_-]+$")],
+    request: IntegrationImportRequest,
+) -> dict[str, Any]:
+    contract = next((item for item in domain.integration_status() if item["adapter"].lower() == adapter.lower()), None)
+    if contract is None:
+        raise HTTPException(status_code=404, detail=f"Unknown adapter: {adapter}")
+    if contract["mode"] not in {"mock", "sample"}:
+        raise HTTPException(status_code=409, detail=f"Adapter {contract['adapter']} is not executable in {contract['mode']} mode")
+    if request.payload_type and request.payload_type not in contract["accepted_payloads"]:
+        raise HTTPException(status_code=422, detail=f"Unsupported payload_type for {contract['adapter']}: {request.payload_type}")
+    return {
+        "adapter": contract["adapter"],
+        "status": "accepted",
+        "mode": contract["mode"],
+        "payload_type": request.payload_type,
+        "records": len(request.records),
+    }

@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 0.3.3
+
+- Aligned showcase and README claims with real implementation and test paths.
+- Replaced repetitive evidence screenshots with an interactive view and implementation ledger.
+- Added keyboard tab behavior, active navigation, reduced-motion handling and social metadata.
+- Hardened API validation, error semantics, integration modes, HTML output and trace retention.
+- Added public-surface integrity validation and unified the CI validation command.
+
 ## 0.3.2
 
 - Added interactive showcase controls for product modes, release-gate inspection, evidence screenshots and scroll progress.

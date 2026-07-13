@@ -3,7 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Operations Intelligence Platform Showcase</title>
+    <meta name="description" content="A local-first operations intelligence control tower for demand, inventory, capacity, policy signals and release governance." />
+    <meta name="theme-color" content="#111917" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Operations Intelligence Platform" />
+    <meta property="og:description" content="Know what can ship, what is blocked and which evidence supports the decision." />
+    <meta property="og:image" content="https://felix-zuo.github.io/factory-ops-intelligence-platform/assets/social-preview.jpg" />
+    <meta property="og:url" content="https://felix-zuo.github.io/factory-ops-intelligence-platform/showcase.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://felix-zuo.github.io/factory-ops-intelligence-platform/showcase.html" />
+    <title>Operations Intelligence Platform</title>
     <style>
       :root {
         color: #18211e;
@@ -27,6 +36,8 @@
 
       html {
         scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
       }
 
       body {
@@ -74,10 +85,10 @@
       }
 
       h1 {
-        max-width: 860px;
+        max-width: 780px;
         margin-bottom: 18px;
-        font-size: 68px;
-        line-height: 0.96;
+        font-size: 64px;
+        line-height: 1;
       }
 
       h2 {
@@ -149,6 +160,11 @@
         color: #ffffff;
       }
 
+      .topbar nav a[aria-current="location"] {
+        color: #ffffff;
+        box-shadow: inset 0 -2px #69d2bd;
+      }
+
       .topbar .repo-link {
         min-height: 32px;
         display: inline-flex;
@@ -178,6 +194,11 @@
 
       .hero-inner {
         padding: 72px 0 34px;
+      }
+
+      section,
+      header[id] {
+        scroll-margin-top: 58px;
       }
 
       .kicker {
@@ -753,12 +774,6 @@
         font-size: 13px;
       }
 
-      .shot-grid {
-        display: grid;
-        grid-template-columns: repeat(12, minmax(0, 1fr));
-        gap: 12px;
-      }
-
       .evidence-focus {
         display: grid;
         grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.55fr);
@@ -778,6 +793,7 @@
         aspect-ratio: 16 / 8.3;
         object-fit: cover;
         object-position: left top;
+        transition: opacity 160ms ease;
       }
 
       .evidence-panel {
@@ -800,28 +816,55 @@
         background: var(--line);
       }
 
-      .shot {
-        grid-column: span 6;
+      .evidence-ledger {
         overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--paper);
       }
 
-      .shot.feature {
-        grid-column: span 8;
+      .evidence-row {
+        display: grid;
+        grid-template-columns: 86px minmax(150px, 0.7fr) minmax(240px, 1.2fr) minmax(210px, 1fr);
+        gap: 16px;
+        align-items: center;
+        min-height: 58px;
+        padding: 10px 14px;
+        border-top: 1px solid var(--line);
       }
 
-      .shot.compact {
-        grid-column: span 4;
+      .evidence-row:first-child {
+        border-top: 0;
       }
 
-      .shot img {
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
-        object-position: left top;
-        border-bottom: 1px solid var(--line);
+      .evidence-row.header {
+        min-height: 40px;
+        background: #eef2ef;
+        color: #66736b;
+        font-size: 12px;
+        font-weight: 850;
+        text-transform: uppercase;
       }
 
-      .shot div {
-        padding: 16px;
+      .evidence-row code {
+        min-width: 0;
+        overflow-wrap: anywhere;
+        color: #4f5d55;
+        font-size: 12px;
+      }
+
+      .evidence-row a {
+        color: #0f6a64;
+        font-weight: 760;
+        text-decoration: none;
+      }
+
+      .evidence-row a:hover {
+        text-decoration: underline;
+      }
+
+      .is-switching {
+        opacity: 0.45;
       }
 
       .architecture {
@@ -906,7 +949,6 @@
           font-size: 34px;
         }
 
-        .topbar,
         .section-head,
         .product-stage,
         .release-grid,
@@ -917,12 +959,15 @@
         }
 
         .topbar {
-          align-items: start;
-          padding: 12px 20px;
+          grid-template-columns: auto minmax(0, 1fr);
+          align-items: center;
+          padding: 0 18px;
         }
 
         .topbar nav {
-          flex-wrap: wrap;
+          justify-content: flex-end;
+          flex-wrap: nowrap;
+          overflow-x: auto;
         }
 
         .hero {
@@ -941,7 +986,6 @@
         }
 
         .system-grid,
-        .shot-grid,
         .arch-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
@@ -949,11 +993,16 @@
         .module,
         .module.large,
         .module.medium,
-        .module.wide,
-        .shot,
-        .shot.feature,
-        .shot.compact {
+        .module.wide {
           grid-column: span 1;
+        }
+
+        .evidence-row {
+          grid-template-columns: 72px minmax(130px, 0.7fr) minmax(0, 1fr);
+        }
+
+        .evidence-row > :last-child {
+          display: none;
         }
       }
 
@@ -983,6 +1032,14 @@
           font-size: 16px;
         }
 
+        .kicker {
+          max-width: 100%;
+          min-height: 0;
+          padding: 6px 9px;
+          line-height: 1.3;
+          white-space: normal;
+        }
+
         .hero-proof {
           display: none;
         }
@@ -1001,10 +1058,34 @@
         .system-grid,
         .profiles,
         .control-grid,
-        .shot-grid,
         .arch-grid,
         .quality-grid {
           grid-template-columns: 1fr;
+        }
+
+        .topbar nav a:not(.repo-link) {
+          display: none;
+        }
+
+        .evidence-row,
+        .evidence-row.header {
+          grid-template-columns: 72px minmax(0, 1fr);
+        }
+
+        .evidence-row > :nth-child(n + 3) {
+          display: none;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
         }
       }
     </style>
@@ -1012,35 +1093,35 @@
   <body>
     <div class="scroll-progress" aria-hidden="true"></div>
     <div class="topbar">
-      <a class="nav-mark" href="#top">OPS INTELLIGENCE / v0.3.2</a>
+      <a class="nav-mark" href="#top">OPS INTELLIGENCE / v0.3.3</a>
       <nav aria-label="Showcase sections">
-        <a href="#product">Product</a>
-        <a href="#release">Release Gate</a>
-        <a href="#profiles">Profiles</a>
-        <a href="#evidence">Evidence</a>
-        <a href="#quality">Quality</a>
+        <a data-section-link href="#product">Product</a>
+        <a data-section-link href="#release">Release Gate</a>
+        <a data-section-link href="#profiles">Profiles</a>
+        <a data-section-link href="#evidence">Evidence</a>
+        <a data-section-link href="#quality">Quality</a>
         <a class="repo-link" href="https://github.com/Felix-Zuo/factory-ops-intelligence-platform">Repository</a>
       </nav>
     </div>
 
     <header class="hero" id="top">
       <div class="hero-inner">
-        <span class="kicker">PUBLIC PRODUCT DEMO / RELEASE-GATED OPERATIONS</span>
-        <h1>Operations intelligence that behaves like a real control tower.</h1>
+        <span class="kicker">OPERATIONS INTELLIGENCE / PUBLIC DEMO</span>
+        <h1>From demand signal to release decision.</h1>
         <p>
-          A local-first product showcase for S&OP demand, BOM coverage, inventory, capacity,
-          policy signals, release governance and agent-readable decision evidence.
+          See what can ship, what is blocked and which source evidence supports the next action across demand,
+          materials, capacity, policy and approval.
         </p>
         <div class="hero-actions">
-          <a class="primary" href="https://github.com/Felix-Zuo/factory-ops-intelligence-platform">Read the repository</a>
-          <a href="assets/product-system-map.png">Open product map</a>
-          <a href="https://github.com/Felix-Zuo/factory-ops-intelligence-platform/blob/main/RELEASE_NOTES_v0.3.2.md">Release notes</a>
+          <a class="primary" href="#product">Explore the product</a>
+          <a href="https://github.com/Felix-Zuo/factory-ops-intelligence-platform">View source</a>
+          <a href="https://github.com/Felix-Zuo/factory-ops-intelligence-platform/blob/main/RELEASE_NOTES_v0.3.3.md">v0.3.3 release</a>
         </div>
         <div class="hero-proof" aria-label="Product proof metrics">
-          <div><span>DECISION MODEL</span><strong>6 gate controls</strong></div>
-          <div><span>SCENARIOS</span><strong>4 profiles</strong></div>
-          <div><span>VALIDATION</span><strong>CI green</strong></div>
-          <div><span>DATA POLICY</span><strong>synthetic only</strong></div>
+          <div><span>CURRENT CASE</span><strong>FG-OPS-A100</strong></div>
+          <div><span>DECISION</span><strong>controlled release</strong></div>
+          <div><span>EVIDENCE</span><strong>source-linked</strong></div>
+          <div><span>DATA</span><strong>synthetic only</strong></div>
         </div>
       </div>
     </header>
@@ -1050,9 +1131,9 @@
         <div class="metric"><span>PRODUCTS</span><strong>4</strong><p>synthetic product families</p></div>
         <div class="metric"><span>MATERIALS</span><strong>20</strong><p>BOM and stock records</p></div>
         <div class="metric"><span>FORECAST</span><strong>10,769</strong><p>4-week demand baseline</p></div>
-        <div class="metric"><span>POLICY</span><strong>4</strong><p>official-source signals</p></div>
-        <div class="metric"><span>TESTS</span><strong>11</strong><p>domain and API checks</p></div>
-        <div class="metric"><span>RELEASE</span><strong>v0.3.2</strong><p>tagged GitHub release</p></div>
+        <div class="metric"><span>GATE</span><strong>2 / 6</strong><p>checks currently pass</p></div>
+        <div class="metric"><span>TESTS</span><strong>14</strong><p>domain and API checks</p></div>
+        <div class="metric"><span>RELEASE</span><strong>v0.3.3</strong><p>tagged GitHub release</p></div>
       </div>
     </div>
 
@@ -1060,12 +1141,12 @@
       <div class="section-inner">
         <div class="section-head">
           <div>
-            <span class="section-kicker mono">PRODUCT PROOF</span>
-            <h2>The first screen shows operational state, not marketing filler.</h2>
+            <span class="section-kicker mono">TODAY'S OPERATING PICTURE</span>
+            <h2>One view for the decision that matters now.</h2>
           </div>
           <p>
-            The dashboard is generated from deterministic backend functions. The showcase leads with the actual
-            control tower, then explains the gates, data spine and adapter boundaries behind it.
+            The control tower combines demand, material coverage, capacity, policy signals and accountable next actions
+            from one reproducible demo snapshot.
           </p>
         </div>
         <div class="product-stage">
@@ -1079,7 +1160,7 @@
           </article>
           <aside class="decision-panel">
             <div>
-              <span class="badge watch">release_with_controls</span>
+              <span class="badge watch">release with controls</span>
               <h3>Today decision queue</h3>
               <p>Review material watch items, policy signals and the OP-40 quality bottleneck before notice export.</p>
             </div>
@@ -1094,12 +1175,12 @@
         </div>
         <div class="mode-console">
           <div class="mode-controls" role="tablist" aria-label="Product operating modes">
-            <button type="button" data-mode="tower" aria-selected="true">Control tower</button>
-            <button type="button" data-mode="materials" aria-selected="false">Material gate</button>
-            <button type="button" data-mode="trace" aria-selected="false">Trace graph</button>
-            <button type="button" data-mode="capacity" aria-selected="false">Capacity model</button>
+            <button id="mode-tab-tower" type="button" role="tab" data-mode="tower" aria-controls="product-mode-panel" aria-selected="true" tabindex="0">Control tower</button>
+            <button id="mode-tab-materials" type="button" role="tab" data-mode="materials" aria-controls="product-mode-panel" aria-selected="false" tabindex="-1">Material gate</button>
+            <button id="mode-tab-trace" type="button" role="tab" data-mode="trace" aria-controls="product-mode-panel" aria-selected="false" tabindex="-1">Trace graph</button>
+            <button id="mode-tab-capacity" type="button" role="tab" data-mode="capacity" aria-controls="product-mode-panel" aria-selected="false" tabindex="-1">Capacity model</button>
           </div>
-          <article class="mode-copy" aria-live="polite">
+          <article id="product-mode-panel" class="mode-copy" role="tabpanel" aria-labelledby="mode-tab-tower" aria-live="polite">
             <span id="mode-code">OPS-00</span>
             <h3 id="mode-title">Control tower</h3>
             <p id="mode-copy">Demand, material risk, policy signals, capacity and issue queues stay visible in one operating view.</p>
@@ -1112,12 +1193,11 @@
       <div class="section-inner">
         <div class="section-head">
           <div>
-            <span class="section-kicker mono">OPERATING SYSTEM</span>
-            <h2>A modular loop from demand to release evidence.</h2>
+            <span class="section-kicker mono">OPERATING LOOP</span>
+            <h2>Clear ownership at every handoff.</h2>
           </div>
           <p>
-            The page now reads like a product system: each module owns a real workflow, a data contract and a
-            reason to exist in the control tower.
+            Each module owns a bounded decision, the data it needs and the evidence it returns to the next operator.
           </p>
         </div>
         <div class="system-grid">
@@ -1155,17 +1235,16 @@
         <div class="section-head">
           <div>
             <span class="section-kicker mono">RELEASE GATE</span>
-            <h2>Release decisions are gated, assigned and auditable.</h2>
+            <h2>No release without evidence and an owner.</h2>
           </div>
           <p>
-            Inspired by enterprise operations platforms, the demo makes approval state visible instead of implying
-            that an agent can silently release production or shipment work.
+            Six controls keep material, capacity, policy, quality, traceability and final approval visible before export.
           </p>
         </div>
         <div class="release-grid">
           <article class="release-score">
             <span>Current order</span>
-            <strong>release_with_controls</strong>
+            <strong>release with controls</strong>
             <p>2 checks pass, 3 need review, 1 waits for human approval. The package keeps owner action and evidence attached.</p>
           </article>
           <div class="control-column">
@@ -1192,11 +1271,10 @@
         <div class="section-head">
           <div>
             <span class="section-kicker mono">SCENARIO PROFILES</span>
-            <h2>Reusable operating profiles beyond one factory category.</h2>
+            <h2>The same decision model, configured for different operations.</h2>
           </div>
           <p>
-            Top operations products sell portability. The showcase now makes that explicit: profiles define users,
-            sources, controls and decision loops without private project data.
+            Profiles change users, source systems and release controls without changing the core evidence contract.
           </p>
         </div>
         <div class="profiles">
@@ -1229,15 +1307,14 @@
         <div class="section-head">
           <div>
             <span class="section-kicker mono">PRODUCT EVIDENCE</span>
-            <h2>Show the system, then show the implementation proof.</h2>
+            <h2>Every visible claim points to working code.</h2>
           </div>
           <p>
-            The screenshots are not decorative thumbnails. They prove the product has concrete screens for planning,
-            material risk, release governance, traceability and capacity analysis.
+            Switch between operational views, then follow the implementation and test paths in the evidence ledger.
           </p>
         </div>
         <div class="evidence-focus">
-          <article class="evidence-preview">
+          <article id="evidence-view" class="evidence-preview" role="tabpanel" aria-labelledby="evidence-tab-material">
             <img id="evidence-image" src="assets/screenshots/material-risk.png" alt="BOM and inventory screenshot" />
           </article>
           <aside class="evidence-panel" aria-live="polite">
@@ -1247,18 +1324,19 @@
               <p id="evidence-copy">Component demand, stock coverage, supplier context and source refs are visible before release.</p>
             </div>
             <div class="evidence-selector" role="tablist" aria-label="Evidence screenshot selector">
-              <button type="button" data-evidence="material" aria-selected="true">Material gate</button>
-              <button type="button" data-evidence="release" aria-selected="false">Release package</button>
-              <button type="button" data-evidence="trace" aria-selected="false">Trace graph</button>
-              <button type="button" data-evidence="capacity" aria-selected="false">Capacity model</button>
+              <button id="evidence-tab-material" type="button" role="tab" data-evidence="material" aria-controls="evidence-view" aria-selected="true" tabindex="0">Material gate</button>
+              <button id="evidence-tab-release" type="button" role="tab" data-evidence="release" aria-controls="evidence-view" aria-selected="false" tabindex="-1">Release package</button>
+              <button id="evidence-tab-trace" type="button" role="tab" data-evidence="trace" aria-controls="evidence-view" aria-selected="false" tabindex="-1">Trace graph</button>
+              <button id="evidence-tab-capacity" type="button" role="tab" data-evidence="capacity" aria-controls="evidence-view" aria-selected="false" tabindex="-1">Capacity model</button>
             </div>
           </aside>
         </div>
-        <div class="shot-grid">
-          <article class="shot feature"><img src="assets/screenshots/material-risk.png" alt="BOM and inventory screenshot" /><div><h3>BOM and inventory gate</h3><p>Component demand, stock coverage, supplier context and source refs.</p></div></article>
-          <article class="shot compact"><img src="assets/screenshots/notice-page.png" alt="Release gate screenshot" /><div><h3>Release package</h3><p>Notice export context with gate decision attached.</p></div></article>
-          <article class="shot compact"><img src="assets/screenshots/product-material-trace.png" alt="Material trace screenshot" /><div><h3>Trace graph</h3><p>Product, BOM, stock, inbound and supplier evidence chain.</p></div></article>
-          <article class="shot feature"><img src="assets/screenshots/simulation-page.png" alt="Capacity model screenshot" /><div><h3>Capacity model</h3><p>Machine states, output, utilization, blocking and bottleneck evidence.</p></div></article>
+        <div class="evidence-ledger" aria-label="Implementation evidence ledger">
+          <div class="evidence-row header"><span>Surface</span><span>Decision</span><span>Implementation</span><span>Verification</span></div>
+          <div class="evidence-row"><span class="badge good">INV-03</span><strong>Material gate</strong><a href="https://github.com/Felix-Zuo/factory-ops-intelligence-platform/blob/main/apps/api-server/factory_ops_api/domain.py"><code>domain.py / calculate_inventory_risk</code></a><a href="https://github.com/Felix-Zuo/factory-ops-intelligence-platform/blob/main/tests/test_factory_ops.py"><code>test_inventory_risk_keeps_source_trace</code></a></div>
+          <div class="evidence-row"><span class="badge watch">REL-05</span><strong>Release package</strong><a href="https://github.com/Felix-Zuo/factory-ops-intelligence-platform/blob/main/apps/api-server/factory_ops_api/domain.py"><code>domain.py / generate_production_notice</code></a><a href="https://github.com/Felix-Zuo/factory-ops-intelligence-platform/blob/main/tests/test_factory_ops.py"><code>test_notice_generation_contains_material_gate</code></a></div>
+          <div class="evidence-row"><span class="badge">TRC-04</span><strong>Trace graph</strong><a href="https://github.com/Felix-Zuo/factory-ops-intelligence-platform/blob/main/apps/api-server/factory_ops_api/domain.py"><code>domain.py / product_material_trace</code></a><a href="https://github.com/Felix-Zuo/factory-ops-intelligence-platform/blob/main/tests/test_factory_ops.py"><code>test_product_material_trace_links_chain</code></a></div>
+          <div class="evidence-row"><span class="badge">CAP-06</span><strong>Capacity model</strong><a href="https://github.com/Felix-Zuo/factory-ops-intelligence-platform/blob/main/apps/api-server/factory_ops_api/domain.py"><code>domain.py / run_line_simulation</code></a><a href="https://github.com/Felix-Zuo/factory-ops-intelligence-platform/blob/main/tests/test_factory_ops.py"><code>test_simulation_detects_bottleneck</code></a></div>
         </div>
       </div>
     </section>
@@ -1268,11 +1346,10 @@
         <div class="section-head">
           <div>
             <span class="section-kicker mono">ARCHITECTURE</span>
-            <h2>Local-first, adapter-ready and source-backed.</h2>
+            <h2>Local first, with explicit integration boundaries.</h2>
           </div>
           <p>
-            The repo is public-safe by construction: synthetic records, deterministic calculations, explicit adapter
-            modes and generated UI snapshots.
+            Synthetic records, deterministic calculations and declared adapter modes keep the public demo reviewable.
           </p>
         </div>
         <div class="architecture">
@@ -1293,10 +1370,10 @@
         <div class="section-head">
           <div>
             <span class="section-kicker mono">QUALITY SIGNALS</span>
-            <h2>Maintained like a product, not a throwaway demo.</h2>
+            <h2>What keeps the demo trustworthy.</h2>
           </div>
           <p>
-            The page now surfaces the trust signals a reviewer expects from a serious public engineering project.
+            Validation, bounded inputs, public-data rules and tracked gaps are part of the product surface.
           </p>
         </div>
         <div class="quality-grid">
@@ -1311,8 +1388,8 @@
     <footer class="footer-cta">
       <div class="section-inner">
         <div>
-          <h2>Inspect the repo like a product review.</h2>
-          <p>Start with the README, then open the release notes and data contract to see how the demo stays generic and verifiable.</p>
+          <h2>Review the implementation behind the decisions.</h2>
+          <p>Start with the README, then follow the data contract and tests behind each public capability.</p>
         </div>
         <div class="footer-actions">
           <a class="primary" href="https://github.com/Felix-Zuo/factory-ops-intelligence-platform#readme">README</a>
@@ -1427,8 +1504,38 @@
 
       const setSelected = (buttons, activeButton) => {
         buttons.forEach((button) => {
-          button.setAttribute("aria-selected", button === activeButton ? "true" : "false");
-          button.classList.toggle("active", button === activeButton);
+          const active = button === activeButton;
+          button.setAttribute("aria-selected", active ? "true" : "false");
+          button.setAttribute("tabindex", active ? "0" : "-1");
+          button.classList.toggle("active", active);
+        });
+      };
+
+      const swapImage = (image, source, alt) => {
+        image.classList.add("is-switching");
+        image.src = source;
+        image.alt = alt;
+        requestAnimationFrame(() => image.classList.remove("is-switching"));
+      };
+
+      const bindArrowNavigation = (selector) => {
+        const buttons = [...document.querySelectorAll(selector)];
+        buttons.forEach((button, index) => {
+          button.addEventListener("keydown", (event) => {
+            const keys = ["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp", "Home", "End"];
+            if (!keys.includes(event.key)) return;
+            event.preventDefault();
+            const last = buttons.length - 1;
+            const nextIndex = event.key === "Home"
+              ? 0
+              : event.key === "End"
+                ? last
+                : event.key === "ArrowRight" || event.key === "ArrowDown"
+                  ? (index + 1) % buttons.length
+                  : (index - 1 + buttons.length) % buttons.length;
+            buttons[nextIndex].focus();
+            buttons[nextIndex].click();
+          });
         });
       };
 
@@ -1443,8 +1550,8 @@
           document.getElementById("product-screen-title").textContent = mode.screen;
           document.getElementById("product-screen-state").textContent = mode.state;
           const image = document.getElementById("product-screen-image");
-          image.src = mode.image;
-          image.alt = mode.alt;
+          swapImage(image, mode.image, mode.alt);
+          document.getElementById("product-mode-panel").setAttribute("aria-labelledby", button.id);
         });
       });
 
@@ -1472,16 +1579,40 @@
           document.getElementById("evidence-title").textContent = item.title;
           document.getElementById("evidence-copy").textContent = item.copy;
           const image = document.getElementById("evidence-image");
-          image.src = item.image;
-          image.alt = item.alt;
+          swapImage(image, item.image, item.alt);
+          document.getElementById("evidence-view").setAttribute("aria-labelledby", button.id);
         });
       });
+
+      bindArrowNavigation("[data-mode]");
+      bindArrowNavigation("[data-evidence]");
+
+      const sectionLinks = [...document.querySelectorAll("[data-section-link]")];
+      const setCurrentSection = (id) => {
+        sectionLinks.forEach((link) => {
+          if (link.getAttribute("href") === `#${id}`) link.setAttribute("aria-current", "location");
+          else link.removeAttribute("aria-current");
+        });
+      };
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            const visible = entries.find((entry) => entry.isIntersecting);
+            if (visible) setCurrentSection(visible.target.id);
+          },
+          { rootMargin: "-18% 0px -68%", threshold: 0 },
+        );
+        sectionLinks.forEach((link) => {
+          const section = document.querySelector(link.getAttribute("href"));
+          if (section) observer.observe(section);
+        });
+      }
 
       const progress = document.querySelector(".scroll-progress");
       const updateProgress = () => {
         const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
         const ratio = maxScroll > 0 ? window.scrollY / maxScroll : 0;
-        progress.style.transform = `scaleX(${Math.min(1, Math.max(0, ratio))})`;
+        if (progress) progress.style.transform = `scaleX(${Math.min(1, Math.max(0, ratio))})`;
       };
       document.addEventListener("scroll", updateProgress, { passive: true });
       window.addEventListener("resize", updateProgress);

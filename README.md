@@ -1,20 +1,23 @@
 # Operations Intelligence Platform
 
 [![CI](https://github.com/Felix-Zuo/factory-ops-intelligence-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/Felix-Zuo/factory-ops-intelligence-platform/actions/workflows/ci.yml)
-![Demo ready](https://img.shields.io/badge/demo-ready-4f6f46)
-![Frontend build](https://img.shields.io/badge/frontend-buildable-26352d)
-![Adapters](https://img.shields.io/badge/adapters-mock%20%2F%20stub-c7a24a)
-![License](https://img.shields.io/badge/license-MIT-2f3a34)
+[![Release](https://img.shields.io/github/v/release/Felix-Zuo/factory-ops-intelligence-platform)](https://github.com/Felix-Zuo/factory-ops-intelligence-platform/releases/latest)
+[![License](https://img.shields.io/github/license/Felix-Zuo/factory-ops-intelligence-platform)](LICENSE)
 
-A reproducible operations intelligence control tower for fragmented manufacturing and fulfillment data.
+[![Open the Operations Intelligence product page](docs/assets/hero-control-tower.png)](https://felix-zuo.github.io/factory-ops-intelligence-platform/showcase.html)
 
-The project connects S&OP demand, BOM records, inventory exports, finished goods, customer orders, inbound shipment data, customs/policy signals, release gates, line simulation results and agent tool calls into one local product demo. The public version uses only synthetic data and generic operating profiles, so it can be inspected without private factory systems.
+Know what can ship, what is blocked, and which evidence supports the next action.
 
-中文摘要：这是一个面向制造运营、仓配履约、服务备件和质量评审等通用场景的运营智能平台演示。它把产销存、需求预测、BOM 覆盖、成品库存、供应商状态、海关/政策信号、放行通知、产线仿真和 Agent 工具轨迹放进同一套可复现的数据链路里；公开版本只使用合成数据，不依赖真实工厂系统。
+[Live product page](https://felix-zuo.github.io/factory-ops-intelligence-platform/showcase.html) · [Quick start](#quick-start) · [API](apps/api-server/factory_ops_api/main.py) · [v0.3.3 release](RELEASE_NOTES_v0.3.3.md)
 
-Live showcase: [https://felix-zuo.github.io/factory-ops-intelligence-platform/showcase.html](https://felix-zuo.github.io/factory-ops-intelligence-platform/showcase.html)
+This repository is a runnable, local-first public demo. It joins demand, BOM and inventory coverage, finished-goods position, inbound supply, capacity simulation, policy signals, release controls and source-linked tool traces. All checked-in records are synthetic; live ERP, WMS, MES and model integrations remain explicit mock, sample or stub boundaries.
 
-[![Operations intelligence product system map](docs/assets/product-system-map.png)](https://felix-zuo.github.io/factory-ops-intelligence-platform/showcase.html)
+<details>
+<summary>中文概览</summary>
+
+这是一个可本地运行的通用运营智能平台演示，覆盖需求、BOM 与库存、成品、在途供应、产能仿真、政策信号、放行控制和可追溯工具调用。仓库只包含合成数据；ERP、WMS、MES 及模型连接均明确标注为 mock、sample 或 stub。
+
+</details>
 
 ## What It Demonstrates
 
@@ -30,8 +33,8 @@ Live showcase: [https://felix-zuo.github.io/factory-ops-intelligence-platform/sh
 | BOM and material readiness | BOM explosion, inventory coverage, source-row trace |
 | Release notice generation | HTML/JSON notice preview from order, product and material gate |
 | Line takt and bottleneck analysis | Deterministic 24h simulation over configurable machine nodes |
-| Agent-readable operations tools | Tool registry, workflow routing, tool calls and source refs |
-| Adapter-ready boundaries | ERP/WMS/MES/PLC/scheduling/MCP mock or stub contracts |
+| Source-linked operations tools | Tool registry, bounded workflow routing, tool calls and source refs |
+| Declared integration boundaries | ERP/WMS/MES/PLC/scheduling/MCP mock, sample or stub contracts |
 
 ## Default Scenario
 
@@ -100,15 +103,15 @@ The full check seeds demo data, regenerates the frontend snapshot, runs self-che
 
 ## Product Evidence
 
-The README leads with a product system map instead of a raw screenshot grid. Open the [live showcase](https://felix-zuo.github.io/factory-ops-intelligence-platform/showcase.html) for the full product page, then inspect the implementation from these evidence surfaces:
+The live page uses real dashboard captures, while this table points each public claim to its current implementation and verification path:
 
 | Surface | What it proves | Primary files |
 |---|---|---|
-| Control tower | S&OP demand, open order value, forecast, material risk, policy signals and decision queue come from one generated snapshot. | `scripts/generate_frontend_snapshot.py`, `apps/web-dashboard/src/App.tsx` |
-| Release gate | Material, capacity, policy, quality, source trace and human approval checks are combined before notice export. | `packages/engines/release_gate.py`, `apps/api-server/factory_ops_api/main.py` |
-| Trace graph | Product, BOM, stock, inbound shipment, supplier and source-row references stay linked. | `packages/engines/material_trace.py`, `demo_data/*.json` |
-| Capacity model | 24h line simulation exposes output, utilization, waiting, blocking and bottleneck signals. | `packages/engines/line_simulation.py`, `tests/test_line_simulation.py` |
-| Agent trace | Natural-language workflows call deterministic tools first and keep source refs visible. | `packages/agent-runtime`, `tests/test_agent_tools.py` |
+| Control tower | Demand, open order value, forecast, material risk, policy signals and decision queue come from one generated snapshot. | `apps/api-server/factory_ops_api/domain.py`, `scripts/generate_frontend_snapshot.py`, `apps/web-dashboard/src/App.tsx` |
+| Release gate | Material, capacity, policy, quality, source trace and human approval checks are combined before notice export. | `apps/api-server/factory_ops_api/domain.py`, `apps/api-server/factory_ops_api/main.py`, `tests/test_factory_ops.py` |
+| Trace graph | Product, BOM, stock, inbound shipment, supplier and source-row references stay linked. | `apps/api-server/factory_ops_api/domain.py`, `demo_data/*.json`, `tests/test_factory_ops.py` |
+| Capacity model | 24h line simulation exposes output, utilization, waiting, blocking and bottleneck signals. | `apps/api-server/factory_ops_api/domain.py`, `tests/test_factory_ops.py` |
+| Tool trace | Natural-language questions call deterministic tools first and keep source refs visible. | `apps/api-server/factory_ops_api/domain.py`, `agent_workspace/workflows`, `tests/test_factory_ops.py` |
 
 <details>
 <summary>Detailed screen captures</summary>
@@ -147,18 +150,16 @@ The README leads with a product system map instead of a raw screenshot grid. Ope
 ```text
 apps/api-server         FastAPI operations API
 apps/web-dashboard      React operations console
-packages/core-domain    Shared domain boundary
-packages/parsers        Import parser boundary
-packages/engines        Deterministic calculation boundary
-packages/integrations   Adapter contracts
-packages/agent-runtime  Tool registry and trace boundary
+apps/api-server/factory_ops_api/domain.py
+                        Current deterministic domain implementation
+packages/*              Documented extraction boundaries for future modules
 demo_data               Synthetic manufacturing records
 database                SQLite schema and seed target
 tests                   Domain, API, trace and snapshot checks
 scripts                 Seed, smoke, tone scan, snapshot and validation
 ```
 
-The dashboard can run from a generated snapshot, so reviewers can inspect the UI without keeping the API process alive. Backend functions still produce the same values used by the smoke demo and tests.
+The dashboard can run from a generated snapshot, so reviewers can inspect the UI without keeping the API process alive. The package folders describe intended module boundaries; public capability claims point to the implementation that exists today in `domain.py` and `main.py`.
 
 ## Project History
 
@@ -193,6 +194,7 @@ Live integrations are represented by mock/stub/sample adapters. Credentials and 
 - [Product requirements](PRODUCT_REQUIREMENTS.md)
 - [Technical analysis](TECHNICAL_ANALYSIS.md)
 - [Quality standard](QUALITY_STANDARD.md)
+- [Release notes v0.3.3](RELEASE_NOTES_v0.3.3.md)
 - [Release notes v0.3.2](RELEASE_NOTES_v0.3.2.md)
 - [Release notes v0.3.1](RELEASE_NOTES_v0.3.1.md)
 - [Release notes v0.3.0](RELEASE_NOTES_v0.3.0.md)

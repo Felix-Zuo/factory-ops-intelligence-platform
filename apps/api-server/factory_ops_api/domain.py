@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta
+from html import escape
 from pathlib import Path
 from typing import Any
 import hashlib
@@ -807,16 +808,22 @@ def generate_production_notice(product_id: str, quantity: float, order_id: str |
     blocked = [row for row in risk["materials"] if row["status"] == "critical"]
     watch = [row for row in risk["materials"] if row["status"] == "watch"]
     material_gate = "blocked" if blocked else "release_with_follow_up" if watch else "release"
+    safe_notice_id = escape(str(notice_id))
+    safe_product_name = escape(str(bom["product_name"]))
+    safe_product_id = escape(str(product_id))
+    safe_order_id = escape(str(order["order_id"]))
+    safe_due_date = escape(str(order["due_date"]))
+    safe_material_gate = escape(material_gate)
     html = (
         "<section class='notice-sheet'>"
-        f"<h1>Release Notice {notice_id}</h1>"
-        f"<p><strong>Product:</strong> {bom['product_name']} ({product_id})</p>"
+        f"<h1>Release Notice {safe_notice_id}</h1>"
+        f"<p><strong>Product:</strong> {safe_product_name} ({safe_product_id})</p>"
         f"<p><strong>Quantity:</strong> {quantity:,.0f} pcs</p>"
-        f"<p><strong>Customer order:</strong> {order['order_id']} / due {order['due_date']}</p>"
-        f"<p><strong>Material gate:</strong> {material_gate}</p>"
+        f"<p><strong>Customer order:</strong> {safe_order_id} / due {safe_due_date}</p>"
+        f"<p><strong>Material gate:</strong> {safe_material_gate}</p>"
         "<table><thead><tr><th>Material</th><th>Required</th><th>Coverage</th><th>Status</th></tr></thead><tbody>"
         + "".join(
-            f"<tr><td>{row['material_id']}</td><td>{row['required_qty']:,.1f} {row['uom']}</td><td>{row['coverage_qty']:,.1f}</td><td>{row['status']}</td></tr>"
+            f"<tr><td>{escape(str(row['material_id']))}</td><td>{row['required_qty']:,.1f} {escape(str(row['uom']))}</td><td>{row['coverage_qty']:,.1f}</td><td>{escape(str(row['status']))}</td></tr>"
             for row in risk["materials"]
         )
         + "</tbody></table></section>"
@@ -922,7 +929,9 @@ def detect_bottleneck(report: dict[str, Any]) -> dict[str, Any]:
 
 def get_simulation_report(run_id: str = "latest", data: FactoryData | None = None) -> dict[str, Any]:
     report = run_line_simulation(DEFAULT_LINE_ID, 24, data)
-    return {**report, "run_id": report["run_id"] if run_id == "latest" else run_id}
+    if run_id not in {"latest", report["run_id"]}:
+        raise ValueError(f"Unknown run_id: {run_id}")
+    return report
 
 
 def integration_status(data: FactoryData | None = None) -> list[dict[str, Any]]:
@@ -1004,6 +1013,7 @@ def generate_daily_report(data: FactoryData | None = None) -> dict[str, Any]:
     }
 
 
+AGENT_TRACE_LIMIT = 25
 AGENT_TRACES: list[dict[str, Any]] = []
 
 
@@ -1121,6 +1131,7 @@ def answer_factory_question(question: str, data: FactoryData | None = None) -> d
         "created_at": DEMO_TIMESTAMP,
     }
     AGENT_TRACES.insert(0, trace)
+    del AGENT_TRACES[AGENT_TRACE_LIMIT:]
     return {"answer": final_answer, "trace": trace, "data": payload}
 
 
