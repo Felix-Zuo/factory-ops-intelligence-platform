@@ -99,6 +99,16 @@ def main() -> None:
     if not (ROOT / f"RELEASE_NOTES_v{VERSION}.md").exists():
         errors.append(f"Missing release notes for v{VERSION}")
 
+    pages_workflow = (ROOT / ".github" / "workflows" / "pages.yml").read_text(encoding="utf-8")
+    for action in [
+        "actions/checkout@v7",
+        "actions/configure-pages@v6",
+        "actions/upload-pages-artifact@v5",
+        "actions/deploy-pages@v5",
+    ]:
+        if action not in pages_workflow:
+            errors.append(f"Pages workflow must use current action: {action}")
+
     social_preview = ROOT / "docs" / "assets" / "social-preview.jpg"
     try:
         if jpeg_size(social_preview) != (1280, 640):

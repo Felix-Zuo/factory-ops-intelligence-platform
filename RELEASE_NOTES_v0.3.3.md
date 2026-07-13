@@ -11,6 +11,7 @@ This release aligns the public product story with the implementation that exists
 - Added a 1280x640 social preview based on the real control-tower interface.
 - Hardened API input bounds, unknown-resource responses, workflow selection, integration modes, notice HTML escaping and in-memory trace limits.
 - Added a public-surface validation check and made CI run the same full validation command used locally.
+- Replaced the legacy Pages build with a repository-owned deployment workflow using current official actions.
 
 ## Compatibility
 

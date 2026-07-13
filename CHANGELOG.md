@@ -9,6 +9,7 @@
 - Added keyboard tab behavior, active navigation, reduced-motion handling and social metadata.
 - Hardened API validation, error semantics, integration modes, HTML output and trace retention.
 - Added public-surface integrity validation and unified the CI validation command.
+- Replaced the legacy branch-based Pages build with a versioned GitHub Actions deployment.
 
 ## 0.3.2
 
